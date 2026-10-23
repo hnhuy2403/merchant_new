@@ -1,0 +1,74 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for bmad-tts-check-review.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-check-review.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-check-review.user.toml
+
+[workflow]
+
+# --- Standard activation surface ----------------------------------------------
+#   scalars: override wins • arrays (persistent_facts, activation_steps_*): append
+#   arrays-of-tables with `id`/`code`: replace matching items, append new ones.
+
+activation_steps_prepend = []
+activation_steps_append = []
+
+persistent_facts = [
+  "file:{project-root}/**/project-context.md",
+]
+
+# Executed when Step 5 finishes. Useful for chaining a notification (e.g. Slack)
+# or auto-triggering /bmad-dev-story for the freshly-approved stories.
+on_complete = ""
+
+# --- Bitbucket helper ---------------------------------------------------------
+
+# Path to bb-cli.py (PR list/state lookup). Defaults to the script shipped by
+# /bmad-tts-bitbucket-connect under the standard skills layout. Override only
+# if your project uses a non-standard layout.
+bb_cli_path = "{project-root}/skills/bmad-tts-bitbucket-connect/scripts/bb-cli.py"
+
+# --- Transitions --------------------------------------------------------------
+#
+# Each entry defines: a `from_state` to scan for, a PR head/base pattern to
+# look up on GitHub, and target states for merged / closed-unmerged outcomes.
+#
+# Override merge rule: arrays of tables keyed by `id` — overrides REPLACE the
+# matching entry by id, append new entries. So a team override can swap base
+# patterns for code-review without redefining the design-review row.
+#
+# Patterns support `{{story_key}}` substitution (and any other token that the
+# discovery step extracts from sprint-status.yaml — `epic_num`, `story_num`).
+
+# ─── 1) Detail-design review ────────────────────────────────────────────────
+# Mirrors the design-PR opened by /bmad-tts-design-story-pr:
+#   PR head: features/{{story_key}}-dev
+#   PR base: features/{{story_key}}
+[[workflow.transitions]]
+id = "design-review"
+from_state = "design-pr-open"
+head_pattern = "features/{{story_key}}-dev"
+base_pattern = "features/{{story_key}}"
+on_merged = "design-approved"
+on_closed_unmerged = "designed"     # revert to draft so dev can re-open after fixes
+status_description = "Detail design PR merged by techlead/SA; story is ready for implementation"
+auto_revert_in_headless = false      # require human confirmation before reverting in CI
+
+# ─── 2) Code review (template — enable when the code-PR phase exists) ───────
+# Code PR opens from features/{{story_key}} into staging (dev env) or release
+# (UAT env). Because base depends on phase, the simplest default below assumes
+# a single base; a team override can split this into two entries with
+# environment-specific from_states (e.g. ready-for-review-staging) if needed.
+#
+# DISABLED by default — uncomment + enable in a team override once a
+# corresponding skill (e.g. /bmad-tts-code-pr) populates `ready-for-review`.
+#
+# [[workflow.transitions]]
+# id = "code-review-staging"
+# from_state = "ready-for-review"
+# head_pattern = "features/{{story_key}}"
+# base_pattern = "staging"
+# on_merged = "done"
+# on_closed_unmerged = "in-progress"
+# status_description = "Code PR merged into staging; story is deployed to dev environment"
+# auto_revert_in_headless = false

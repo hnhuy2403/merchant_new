@@ -1,0 +1,92 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for bmad-tts-design-story-pr.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-design-story-pr.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-design-story-pr.user.toml
+
+[workflow]
+
+# --- Standard activation surface ----------------------------------------------
+#   scalars: override wins • arrays (persistent_facts, activation_steps_*): append
+#   arrays-of-tables with `code`/`id`: replace matching items, append new ones.
+
+# Steps to run before the standard activation (config load, greet).
+activation_steps_prepend = []
+
+# Steps to run after greet but before Step 1 of the workflow.
+activation_steps_append = []
+
+# Persistent facts loaded on activation. `file:` prefix = path/glob; bare = literal.
+persistent_facts = [
+  "file:{project-root}/**/project-context.md",
+]
+
+# Executed when Step 8 completes successfully (PR opened, sprint-status updated).
+on_complete = ""
+
+# --- PR composition templates -------------------------------------------------
+
+# Template used to render the PR body. Override to add team-specific sections
+# (e.g. compliance checklist, deployment notes).
+pr_body_template = "references/pr-body-template.md"
+
+# PR title template. Substitutions: {{story_key}}, {{story_title}}, {{phase}}.
+pr_title_template = "[Design] {{story_key}} — {{story_title}}"
+
+# Commit message used when staging the design doc + story file.
+commit_message_template = "design({{story_key}}): {{story_title}}"
+
+# Branch patterns. Substitutions: {{story_key}}, {{epic_num}}, {{story_num}}.
+#
+# Default flow (feature-internal design review):
+#   head: features/{{story_key}}-dev   <- dev's working branch
+#   base: features/{{story_key}}       <- story's integration branch (team-shared)
+#
+# Downstream PRs (features/{{story_key}} -> staging/release/master) are out of
+# scope for this skill — they happen after the story is dev-complete.
+head_branch_pattern = "features/{{story_key}}-dev"
+base_branch_pattern = "features/{{story_key}}"
+
+# --- Bitbucket helper ---------------------------------------------------------
+
+# Path to bb-cli.py (PR list/create/edit + reviewer UUID lookup). Defaults to
+# the script shipped by /bmad-tts-bitbucket-connect under the standard skills
+# layout. Override only if your project uses a non-standard layout.
+bb_cli_path = "{project-root}/skills/bmad-tts-bitbucket-connect/scripts/bb-cli.py"
+
+# --- Reviewer routing ---------------------------------------------------------
+#
+# `reviewers_by_team` maps team code -> array of reviewer IDs.
+# `default` is the fallback when a team has no explicit entry.
+#
+# Format depends on the active Bitbucket flavor (set during /bmad-tts-bitbucket-connect):
+#
+#   Cloud  → Bitbucket nickname (e.g. "techlead-tts") OR UUID in braces
+#            (e.g. "{a1b2c3d4-...}"). Nicknames get resolved via bb-cli
+#            user-lookup at runtime; UUIDs are used as-is (faster).
+#   Server → Bitbucket Server username (e.g. "thangbk", "admin"). No lookup
+#            required — passed verbatim to PR API.
+#
+# A team override file (_bmad/custom/bmad-tts-design-story-pr.toml) can swap
+# in real values without touching this template.
+
+[workflow.reviewers_by_team]
+default = ["TODO-techlead", "TODO-sa-shared"]
+# Cloud examples:
+# "team-tts"    = ["techlead-tts", "sa-tts"]
+# "team-voice"  = ["{a1b2c3d4-5e6f-7890-abcd-ef1234567890}"]
+# Server examples:
+# "team-vss"    = ["thangbk", "admin"]
+
+# Allowed team codes presented to the user during the interactive prompt.
+# Empty array = free-form input (with warning if team is not in reviewers_by_team).
+teams = []
+
+# --- Headless defaults --------------------------------------------------------
+#
+# When invoked with --headless and CLI args are missing, fall back to these.
+# Leave empty (default) to force the user to pass --team explicitly in headless
+# mode — safer for CI usage.
+
+[workflow.headless_defaults]
+team = ""

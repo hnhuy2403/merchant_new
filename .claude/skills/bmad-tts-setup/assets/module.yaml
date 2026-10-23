@@ -1,0 +1,153 @@
+code: tts
+name: "TTS Shared Bmad"
+description: "Bitbucket-backed (Cloud OR Server/Data Center) detail design, design-PR review, and review-state transition workflows for stories before implementation. Integrates the QC Test Engineering Suite (Senior QA agent + 3 helpers) for post-implementation testing (testcase authoring, codegen, bug logging, result export), a VDS PRD authoring suite (create-prd-vds orchestrator + objectives/metrics/user-stories helpers + validate-prd-vds) for the 2-planning phase, and a conversational Confluence Data Center skill (vendored Node CLI, no npm install). Expansion of the BMM module — reuses bmm config (implementation_artifacts, planning_artifacts, etc.) and slots between create-story:validate and dev-story."
+module_version: 1.6.0
+default_selected: false
+module_greeting: >
+  TTS Shared Bmad module installed. Skills available:
+
+  Design & PR workflow:
+    /bmad-tts-bitbucket-connect — paste Bitbucket credentials (Cloud App Password / Access Token,
+                                   or Server/DC HTTP Bearer Token); validates via REST API and
+                                   saves to config.user.yaml (gitignored). REQUIRED before PR skills.
+    /bmad-tts-design-story      — produce an implementation-ready detail design doc for a story
+    /bmad-tts-design-story-pr   — open a Bitbucket PR (features/{story}-dev → features/{story})
+                                   for techlead/SA design review
+    /bmad-tts-check-review      — check Bitbucket PR state for stories awaiting review and
+                                   auto-transition sprint-status when PRs are merged
+
+  QC Test Engineering (post-implementation):
+    /bmad-tts-qc-agent-senior-qa — Senior QA agent owning 34 capabilities:
+                                    • qc-testcase / qc-web-cases / qc-mobile-cases / qc-miniapp-cases
+                                      (export test cases to KBKT .xlsx)
+                                    • qc-codegen [--with-db] (generate auto scripts + DB layer)
+                                    • qc-bug / qc-bug-edit / qc-bug-status (log + manage bugs)
+                                    • qc-test-results (export run results back to KBKT .xlsx)
+                                    First launch triggers First Breath to capture project context.
+    /bmad-tts-qc-data-bulk       — bulk generate test data values for a field rule (stateless)
+    /bmad-tts-qc-sql-snippet     — one-shot SQL helper for verification queries (stateless)
+    /bmad-tts-qc-curl-gen        — generate curl + Postman request from API description (stateless)
+
+  Code quality:
+    /vds-tts-fix-sonar           — pull SonarQube issues for the project and fix them in priority
+                                   order (BLOCKER → MAJOR), one batch at a time, with a compile gate.
+                                   Creds in config.user.yaml (tts.sonar, gitignored). Optional token
+                                   paste offered during /bmad-tts-setup.
+
+  PRD-VDS (planning — tiếng Việt):
+    /bmad-create-prd-vds         — orchestrator: viết PRD chuẩn VDS (Fintech/Tech) qua 6 bước,
+                                   gọi các section helper bên dưới khi cần
+    /bmad-create-objectives-vds  — Section 3 Mục tiêu (phân tích thực trạng + nghiên cứu thị trường)
+    /bmad-create-metrics-vds     — Section 4 Tiêu chí thành công (KPI/metrics, gợi ý fintech/payment)
+    /bmad-create-user-stories-vds— Section 5.1.2 User Story Map + bảng story chi tiết
+    /bmad-validate-prd-vds       — kiểm tra PRD theo từng section (completeness/quality/consistency)
+
+  Confluence (tài liệu nội bộ):
+    /confluence-vds-skill        — kết nối Confluence Data Center nội bộ (đa domain) qua hội thoại
+                                   tiếng Việt; tìm/tạo/sửa page, đẩy Markdown kèm ảnh + mermaid.
+                                   Runtime node CLI tự chứa, node_modules vendored — KHÔNG cần npm
+                                   install. Token lưu ngoài repo (~/.confluence-vds-skill/domains.json).
+
+  First-time install:
+    1. /bmad-tts-setup                 (you just ran this — it offers to chain into bitbucket-connect
+                                        AND an optional Figma token + Sonar credentials paste so you
+                                        finish auth in a single flow; pass --skip-bitbucket /
+                                        --skip-figma / --skip-sonar to defer any gate)
+    2. then the per-story flow:
+         create-story → design-story → design-story-pr → check-review (after merge) → dev-story
+         → bmad-tts-qc-agent-senior-qa qc-testcase → qc-codegen → qc-bug → qc-test-results
+
+  Bitbucket credentials, Figma token (optional, for `tts-figma-api`), AND Sonar creds
+  (optional, for `vds-tts-fix-sonar`) live in config.user.yaml (gitignored, personal).
+  Run /bmad-tts-setup again at any time to re-register help entries, update QC config
+  values, or paste a missing token.
+
+# --- Config variables (collected at setup time) ---
+# QC-related config integrated from the QC Test Engineering Suite.
+
+qc_testcase_template_path:
+  prompt: "Đường dẫn file .xlsx template test case (KBKT)?"
+  default: "{skill-root}/../bmad-tts-qc-agent-senior-qa/assets/kbkt.xlsx"
+  required: true
+  example: "{project-root}/templates/kbkt.xlsx"
+
+qc_output_folder:
+  prompt: "Thư mục output cho file Excel/HTML/script generated?"
+  default: "{project-root}/_bmad-output/test-artifacts"
+  directories:
+    - "{project-root}/_bmad-output/qc/test-cases"
+    - "{project-root}/_bmad-output/qc/regression-suite"
+    - "{project-root}/_bmad-output/qc/test-reports"
+    - "{project-root}/_bmad-output/qc/peer-reviews"
+    - "{project-root}/_bmad-output/qc/static-traces"
+    - "{project-root}/_bmad-output/qc/automation/web"
+    - "{project-root}/_bmad-output/qc/automation/mobile"
+    - "{project-root}/_bmad-output/qc/automation/miniapp"
+    - "{project-root}/_bmad-output/qc/bugs"
+
+qc_codegen_web_framework:
+  prompt: "Framework cho web automation codegen?"
+  type: single-select
+  default: "playwright"
+  options:
+    - value: playwright
+      label: "Playwright (TypeScript) — recommended"
+    - value: cypress
+      label: "Cypress"
+    - value: selenium
+      label: "Selenium"
+
+qc_codegen_mobile_framework:
+  prompt: "Framework cho mobile automation codegen?"
+  type: single-select
+  default: "maestro"
+  options:
+    - value: maestro
+      label: "Maestro (YAML, lightweight) — recommended"
+    - value: appium
+      label: "Appium (full power)"
+
+qc_codegen_miniapp_platforms:
+  prompt: "Platforms miniapp hỗ trợ (multi-select)?"
+  type: multi-select
+  default:
+    - zalo
+    - wechat
+  options:
+    - value: zalo
+      label: "Zalo MiniApp"
+    - value: wechat
+      label: "WeChat MiniApp"
+    - value: generic
+      label: "Generic miniapp"
+
+qc_severity_scale:
+  prompt: "Thang severity dùng trong bug report?"
+  type: single-select
+  default: "S1-S4"
+  options:
+    - value: S1-S4
+      label: "S1-S4 (S1=highest)"
+    - value: Critical-High-Med-Low
+      label: "Critical-High-Med-Low"
+    - value: 1-5
+      label: "1-5 numeric"
+
+qc_priority_scale:
+  prompt: "Thang priority cho test/bug?"
+  type: single-select
+  default: "P0-P3"
+  options:
+    - value: P0-P3
+      label: "P0-P3 (P0=immediate)"
+    - value: High-Med-Low
+      label: "High-Med-Low"
+
+# --- Agent roster ---
+
+agents:
+  - code: bmad-tts-qc-agent-senior-qa
+    name: "Senior QA"
+    title: "Senior QA Engineer"
+    icon: "🧪"
+    description: "Senior QA persona owning 34 QC capabilities (analysis, authoring, codegen, regression, review, peer-review, ingest). Memory-backed with shared module memory at _bmad/memory/tts-qc/."

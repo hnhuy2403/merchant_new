@@ -1,0 +1,12 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Standalone slash skill — no overrides surface for v1.
+
+[agent]
+
+code = "bmad-tts-qc-data-bulk"
+name = ""
+title = "QC Data Bulk Generator"
+icon = "🎲"
+description = "Bulk test data values for a single field — fast, mechanical, copy-paste-ready."
+agent_type = "stateless"

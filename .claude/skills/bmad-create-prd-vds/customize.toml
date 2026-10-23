@@ -1,0 +1,69 @@
+# VDS PRD Method - Skill Customization Overrides
+# This file allows team-level customization of the VDS PRD module
+# Uncommit and modify as needed
+
+# Example: Override default metrics suggestions for fintech/payment
+# [skills.bmad-create-metrics-vds.customization]
+# business_metrics = [
+#   "DAU (Daily Active Users)",
+#   "Transaction Volume",
+#   "Average Transaction Value (ATV)",
+#   "Customer Retention Rate",
+#   "Revenue Growth Rate"
+# ]
+
+# Example: Customize user journey stages
+# [skills.bmad-create-user-stories-vds.customization]
+# journey_stages = [
+#   "Brand Awareness",
+#   "Information Discovery",
+#   "Onboarding & Signup",
+#   "Active Usage",
+#   "Support & Issue Handling",
+#   "Retention & Loyalty",
+#   "Community & Feedback"
+# ]
+
+# Example: Add company-specific KPI standards
+# [skills.bmad-validate-prd-vds.customization]
+# kpi_standards = [
+#   "API uptime >= 99.9%",
+#   "API latency < 500ms",
+#   "Transaction error rate < 0.5%",
+#   "User onboarding time < 5 minutes",
+#   "Support response time < 2 hours"
+# ]
+
+# Language & Localization
+[localization]
+communication_language = "vietnamese"
+document_output_language = "vietnamese"
+date_format = "dd/mm/yyyy"
+currency = "VND"
+
+# Output configuration
+[output]
+planning_artifacts_dir = "{project-root}/_bmad-output/planning-artifacts"
+implementation_artifacts_dir = "{project-root}/_bmad-output/implementation-artifacts"
+default_file_naming_pattern = "[project-name]-prd.md"
+
+# Module metadata
+[module]
+name = "VDS PRD Method"
+version = "1.0.0"
+author = "VDS Product Team"
+support_email = "product-team@vds.company"
+
+# Workflow customization
+[workflow]
+enable_auto_template_generation = true
+enable_section_by_section_validation = true
+enable_sub_skill_suggestions = true
+default_validation_style = "section-by-section"
+
+# Fintech-specific configuration
+[fintech]
+enable_fintech_metrics_suggestions = true
+enable_payment_journey_framework = true
+enable_kpi_compliance_checking = true
+enable_event_tracking_support = true

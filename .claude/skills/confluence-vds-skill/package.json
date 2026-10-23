@@ -1,0 +1,44 @@
+{
+  "name": "confluence-vds-skill",
+  "version": "1.0.0",
+  "description": "Claude Skill + CLI để tương tác Confluence nội bộ (đa domain) bằng hội thoại tiếng Việt — tìm kiếm, tạo/sửa page, đẩy tài liệu Markdown kèm ảnh & diagram.",
+  "main": "bin/cli.js",
+  "bin": {
+    "confluence-vds-skill": "bin/cli.js"
+  },
+  "scripts": {
+    "setup": "node setup.js",
+    "build": "tsc",
+    "help": "node bin/cli.js help"
+  },
+  "files": [
+    "bin",
+    "skills",
+    "src",
+    "setup.js",
+    "tsconfig.json",
+    "README.md",
+    "SETUP.md",
+    "LICENSE"
+  ],
+  "_mermaidNote": "@mermaid-js/mermaid-cli được CỐ Ý loại khỏi dependencies của bản phân phối: nó kéo Chromium (~hàng trăm MB). renderMermaid() trong bin/cli.js đã có fallback hiển thị mermaid dưới dạng code block khi không tìm thấy node_modules/.bin/mmdc. Nếu muốn render mermaid → PNG, tự cài trong thư mục skill này: npm i -D @mermaid-js/mermaid-cli.",
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "@types/markdown-it": "^14.1.0"
+  },
+  "keywords": [
+    "confluence",
+    "claude-skill",
+    "atlassian",
+    "markdown",
+    "mermaid"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,71 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for bmad-tts-design-story.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-design-story.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-design-story.user.toml
+
+[workflow]
+
+# --- Configurable below. Overrides merge per BMad structural rules: ---
+#   scalars: override wins • arrays (persistent_facts, activation_steps_*): append
+#   arrays-of-tables with `code`/`id`: replace matching items, append new ones.
+
+# Steps to run before the standard activation (config load, greet).
+# Overrides append.
+
+activation_steps_prepend = []
+
+# Steps to run after greet but before Step 1 of the workflow.
+# Overrides append.
+
+activation_steps_append = []
+
+# Persistent facts the workflow keeps in mind for the whole run
+# (architecture standards, design conventions, compliance constraints).
+# Overrides append.
+#
+# Each entry is either:
+#   - a literal sentence, e.g. "All public APIs must define explicit error codes."
+#   - a file reference prefixed with `file:`, e.g. "file:{project-root}/docs/standards.md"
+#     (glob patterns are supported; the file's contents are loaded and treated as facts).
+
+persistent_facts = [
+    "file:{project-root}/**/project-context.md",
+    "file:{project-root}/.claude/rules/architecture_rule.md",
+    "file:{project-root}/.claude/rules/diagram_rule.md",
+    "file:{project-root}/.claude/rules/srs_document_rule.md",
+]
+
+# Scalar: executed when Step 7 (Finalize and update sprint status) completes
+# successfully — after the design doc is saved, the story file is annotated,
+# and sprint-status.yaml is updated. Override wins. Leave empty for no
+# custom post-completion behavior.
+
+on_complete = ""
+
+# --- Workflow-specific configurables ---
+#
+# Bare paths resolve from the skill root; use `{project-root}/...` to point
+# at an org-owned resource elsewhere in the repo. Override wins.
+
+# Template used to scaffold the design doc. Override to point at an
+# org-specific template that adds extra sections (compliance, PII, etc.).
+design_template = "references/template.md"
+
+# Self-review checklist applied to the draft design doc before adversarial
+# review. Override to enforce extra org-specific checks.
+design_checklist = "references/checklist.md"
+
+# Where the generated design doc is written. Default places it next to
+# the story file in implementation_artifacts. Override to centralize
+# design docs in a different location.
+design_output_path = "{implementation_artifacts}/{{story_key}}/detail-design.md"
+
+# Skill invoked for adversarial review of the draft design. Default uses
+# the BMad edge-case hunter. Override with a different review skill if
+# your team prefers a domain-specific reviewer.
+adversarial_review_skill = "bmad-review-edge-case-hunter"
+
+# Set to true to skip adversarial review entirely (e.g. for prototype
+# stories where speed matters more than rigor).
+skip_adversarial_review = false

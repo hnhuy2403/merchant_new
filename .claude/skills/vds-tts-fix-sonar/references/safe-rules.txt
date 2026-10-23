@@ -1,0 +1,37 @@
+# Sonar rules considered "safe" — agent có thể auto-fix mà không cần ask user.
+# Mỗi dòng = 1 rule key (Sonar), comment dùng `#`.
+#
+# Tiêu chí "safe":
+#   - Fix có pattern xác định, không cần judgment về behavior.
+#   - Không thay đổi semantics public API.
+#   - Không động vào logic nghiệp vụ.
+#
+# Rules NẰM NGOÀI file này → skill phải ask user trước khi sửa.
+
+# ── Unused / dead code ────────────────────────────────────────────────────────
+java:S1481      # Unused local variable — delete
+java:S1854      # Dead store — delete assignment
+java:S1144      # Unused private method — delete
+java:S1068      # Unused private field — delete
+java:S1128      # Unused import — delete
+java:S125       # Commented-out code — delete
+
+# ── Style / formatting ────────────────────────────────────────────────────────
+java:S1123      # Missing @Deprecated since/forRemoval — add javadoc
+java:S00100     # Method name convention — rename
+java:S00101     # Class name convention — rename
+java:S1186      # Empty method should be marked abstract or have body — add comment
+
+# ── Documentation ─────────────────────────────────────────────────────────────
+java:S1133      # Deprecated code planning — add @Deprecated annotation if missing
+
+# ── Serialization / immutability ─────────────────────────────────────────────
+java:S1948      # Non-transient non-serializable field on Serializable class — add transient
+java:S1165      # Non-final static field — make final if not reassigned
+
+# ── String literals ───────────────────────────────────────────────────────────
+java:S1192      # Duplicate string literals (≥3 times) — extract to constant
+
+# ── Java 8+ idioms ────────────────────────────────────────────────────────────
+java:S1612      # Method reference instead of lambda — convert
+java:S1488      # Local variable used only in return statement — inline

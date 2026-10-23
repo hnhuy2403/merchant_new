@@ -1,0 +1,56 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for bmad-tts-create-srs.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-create-srs.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-create-srs.user.toml
+
+[workflow]
+
+# --- Configurable below. Overrides merge per BMad structural rules: ---
+#   scalars: override wins • arrays (persistent_facts, activation_steps_*): append
+#   arrays-of-tables with `code`/`id`: replace matching items, append new ones.
+
+# Steps to run before the standard activation (config load, greet).
+# Overrides append. Use for pre-flight loads, compliance checks, etc.
+
+activation_steps_prepend = []
+
+# Steps to run after greet but before Step 1 of the workflow.
+# Overrides append. Use for context-heavy setup.
+
+activation_steps_append = []
+
+# Persistent facts the workflow keeps in mind for the whole run
+# (standards, compliance constraints, domain glossary).
+# Overrides append.
+#
+# Each entry is either:
+#   - a literal sentence (loaded as a fact verbatim)
+#   - a file reference prefixed with `file:` (path or glob loaded as content)
+
+persistent_facts = [
+  "file:{project-root}/**/project-context.md",
+]
+
+# Scalar: executed when the workflow finishes, after srs.md is saved
+# and the summary is printed. Override wins. Leave empty for no chain.
+
+on_complete = ""
+
+# --- Workflow-specific configurables ---
+#
+# Templates and output paths that orgs/teams may swap without forking.
+# Bare paths resolve from the skill root; use `{project-root}/...` to
+# point at an org-owned override elsewhere in the repo.
+
+# Path to the SRS markdown template. Replace with an org template to
+# enforce a different SRS structure (e.g. compliance-flavored, tabular,
+# or English-language).
+
+srs_template = "assets/srs-template.md"
+
+# Where the rendered SRS is written. Default writes alongside the
+# story artifacts. Override only when you want SRS pulled out of the
+# story folder (e.g. to a central spec repo).
+
+srs_output_path = "{story_dir}/srs.md"

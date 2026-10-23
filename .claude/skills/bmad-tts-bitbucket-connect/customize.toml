@@ -1,0 +1,34 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for bmad-tts-bitbucket-connect.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-bitbucket-connect.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-bitbucket-connect.user.toml
+
+[workflow]
+
+# --- Standard activation surface ----------------------------------------------
+
+activation_steps_prepend = []
+activation_steps_append = []
+
+persistent_facts = [
+  "Bitbucket tokens are SECRETS — never echo them, never write them to config.yaml (committed). The skill writes only to config.user.yaml (gitignored).",
+  "When displaying any token, mask all but the last 4 characters: `****abcd`. This applies to confirmation messages, error reports, and validation output.",
+  "Two auth methods are supported. App Password = legacy basic auth (username:app-password). Access Token = modern scoped auth (Workspace/Repository/Project tokens, all use `x-token-auth:<token>` basic auth).",
+]
+
+on_complete = ""
+
+# --- Workflow-specific configurables ------------------------------------------
+
+# Path to the Bitbucket REST helper script (Cloud + Server/DC dispatch).
+# Other tts skills (design-story-pr, check-review) reference the same script
+# via their own `bb_cli_path` config — changing the location here does NOT
+# propagate; update both places if needed.
+bb_cli = "scripts/bb-cli.py"
+
+# Default API base presented to the user as a starting hint during interactive
+# setup. Cloud users keep the default; Server/DC users replace with their host
+# root (e.g. `https://bitbucket.example.com` — no `/rest/api/1.0` suffix).
+# Detected flavor (cloud vs server) is derived from the URL automatically.
+default_api_base_url = "https://api.bitbucket.org/2.0"

@@ -1,0 +1,17 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Agent customization surface for bmad-tts-qc-agent-senior-qa.
+# Team overrides:     {project-root}/_bmad/custom/bmad-tts-qc-agent-senior-qa.toml
+# Personal overrides: {project-root}/_bmad/custom/bmad-tts-qc-agent-senior-qa.user.toml
+
+[agent]
+
+# --- Metadata (install-time roster contract) ---
+# Consumed by module.yaml:agents[] and `[agents.<code>]` in central config.
+
+code = "bmad-tts-qc-agent-senior-qa"
+name = "Senior QA"
+title = "Senior QA Engineer"
+icon = "🧪"
+description = "Senior QA persona that owns 34 QC capabilities — analysis, authoring, codegen, regression, review, peer-review, ingest. TTS module integration."
+agent_type = "memory"

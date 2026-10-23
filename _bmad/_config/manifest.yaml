@@ -1,0 +1,39 @@
+installation:
+  version: 6.12.4
+  installDate: 2026-10-15T03:29:25.575Z
+  lastUpdated: 2026-10-15T03:29:25.575Z
+  installShims: false
+modules:
+  - name: core
+    version: 6.12.4
+    installDate: 2026-10-15T03:29:20.548Z
+    lastUpdated: 2026-10-15T03:29:25.551Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: bmm
+    version: 6.12.4
+    installDate: 2026-10-15T03:29:20.985Z
+    lastUpdated: 2026-10-15T03:29:25.556Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: bmb
+    version: main
+    installDate: 2026-10-15T03:29:21.282Z
+    lastUpdated: 2026-10-15T03:29:25.563Z
+    source: external
+    npmPackage: bmad-builder
+    repoUrl: https://github.com/bmad-code-org/bmad-builder
+    channel: next
+    sha: d4a921c49db71ad09c2dc62b8e62266b1f26ca4f
+  - name: tts
+    version: 1.6.0
+    installDate: 2026-10-15T03:29:25.414Z
+    lastUpdated: 2026-10-15T03:29:25.575Z
+    source: custom
+    npmPackage: null
+    repoUrl: null
+    localPath: C:\Users\huyhn8\Desktop\tts-bmad\tts-bmad
+ides:
+  - claude-code

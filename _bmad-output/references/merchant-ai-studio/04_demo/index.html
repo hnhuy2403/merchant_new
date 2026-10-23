@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merchant AI Studio Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: danh sách kịch bản bên trái · sân khấu 1–2 điện thoại ở giữa · thanh dẫn chuyện bên dưới */
+:root{
+  --red:#E1062C; --red-soft:#FDECEF;
+  --ink:#1B1517; --muted:#6C6064; --line:#E9E3E5; --bg:#FFFFFF; --surface:#F7F4F5;
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  /* Màn hình điện thoại luôn sáng như app thật */
+  --p-bg:#FFFFFF; --p-chat:#F3F4F7; --p-ink:#1B1517; --p-muted:#6B6670; --p-line:#E6E3E8; --p-bubble:#FFFFFF;
+  --tammi:#1F6FEB; --tendoo:#E1062C; --web:#0F8A6C; --ok:#138A4E; --warn:#B45309; --device:#17121A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --red:#FF4D68; --red-soft:#3A1219; --ink:#F4EFF1; --muted:#AA9DA2; --line:#352B2F; --bg:#141012; --surface:#1D181A; --device:#3B3238; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --red:#FF4D68; --red-soft:#3A1219; --ink:#F4EFF1; --muted:#AA9DA2; --line:#352B2F; --bg:#141012; --surface:#1D181A; --device:#3B3238; color-scheme:dark; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:15px; line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--red); outline-offset:2px}
+.label{font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+
+.app{max-width:1360px; margin:0 auto; display:grid; grid-template-columns:270px minmax(0,1fr); gap:32px; padding-block:24px}
+.side{position:sticky; top:calc(16px + env(safe-area-inset-top, 0px)); align-self:start; display:flex; flex-direction:column; gap:18px}
+.brand{display:flex; flex-direction:column; gap:2px}
+.brand b{font-size:1.15rem; font-weight:800}
+.brand b em{font-style:normal; color:var(--red)}
+.grp{display:flex; flex-direction:column; gap:6px}
+.sc{all:unset; cursor:pointer; display:flex; flex-direction:column; gap:3px; padding:10px 12px; border-radius:10px; border:1px solid transparent}
+.sc:hover{background:var(--surface)}
+.sc[aria-current="true"]{background:var(--surface); border-color:var(--line)}
+.sc[aria-current="true"] .sct{color:var(--red)}
+.sc:focus-visible{outline:2px solid var(--red)}
+.sct{font-weight:700; font-size:.92rem; line-height:1.3}
+.scp{font-size:.78rem; color:var(--muted); line-height:1.35}
+.back{font-size:.82rem; color:var(--muted)}
+.back a{color:var(--red)}
+
+main{min-width:0; display:flex; flex-direction:column; gap:20px}
+.head{display:flex; flex-direction:column; gap:6px}
+.head h1{margin:0; font-size:1.6rem; font-weight:800; line-height:1.2; text-wrap:balance}
+.head p{margin:0; color:var(--muted); max-width:70ch}
+.tags{display:flex; flex-wrap:wrap; gap:6px}
+.tag{font-size:.72rem; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--red-soft); color:var(--red)}
+.tag.n{background:var(--surface); color:var(--muted)}
+
+.stage{display:flex; flex-wrap:wrap; justify-content:center; gap:28px; padding:8px 0}
+.ph{display:flex; flex-direction:column; align-items:center; gap:10px}
+.cap{font-size:.82rem; font-weight:600; color:var(--muted); text-align:center}
+
+.nar{position:sticky; bottom:calc(12px + env(safe-area-inset-bottom, 0px)); background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:14px 16px; display:flex; flex-direction:column; gap:10px; box-shadow:0 8px 28px rgba(0,0,0,.08); max-width:860px; width:100%; align-self:center}
+.nar-top{display:flex; align-items:center; gap:12px}
+.bar{flex:1; height:4px; border-radius:4px; background:var(--line); overflow:hidden}
+.bar i{display:block; height:100%; background:var(--red); transition:width .3s}
+#say{margin:0; font-size:.98rem; min-height:3em}
+.ctl{display:flex; flex-wrap:wrap; gap:8px}
+.cb{border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:999px; padding:7px 16px; cursor:pointer; font-weight:600; font-size:.85rem}
+.cb.pri{background:var(--red); border-color:var(--red); color:#fff}
+.cb:disabled{opacity:.4; cursor:default}
+.hint{font-size:.75rem; color:var(--muted); margin-left:auto; align-self:center}
+
+/* ===== Điện thoại ===== */
+.dev{width:300px; height:620px; border-radius:42px; border:10px solid var(--device); background:var(--p-bg); position:relative; overflow:hidden; display:flex; flex-direction:column; color:var(--p-ink); font-size:12.5px; line-height:1.45; box-shadow:0 16px 40px rgba(0,0,0,.18)}
+.dev::before{content:""; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:84px; height:22px; border-radius:12px; background:var(--device); z-index:5}
+.sb{display:flex; justify-content:space-between; padding:11px 22px 4px; font-size:11px; font-weight:600; font-variant-numeric:tabular-nums}
+.ah{display:flex; align-items:center; gap:9px; padding:8px 12px 10px; border-bottom:1px solid var(--p-line)}
+.ah .lg{width:30px; height:30px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size:12px; flex:none}
+.ah .tt{display:flex; flex-direction:column; min-width:0}
+.ah .tt b{font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ah .tt small{font-size:10.5px; color:var(--p-muted)}
+.k-tammi .lg{background:var(--tammi)} .k-tendoo .lg{background:var(--tendoo)} .k-web .lg{background:var(--web)} .k-live .lg{background:var(--tendoo)}
+.k-tendoo .ah{background:var(--tendoo); color:#fff; border-color:transparent} .k-tendoo .ah .lg{background:#fff; color:var(--tendoo)} .k-tendoo .ah .tt small{color:rgba(255,255,255,.85)}
+.k-web .urlbar{margin:0 10px 8px; padding:6px 10px; border-radius:9px; background:#EEF1F0; font-size:10.5px; color:var(--p-muted); display:flex; gap:6px}
+.body{flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:8px; background:var(--p-chat); scroll-behavior:smooth}
+.body > *{flex:none}
+.k-live .body{background:linear-gradient(180deg,#3a2a24 0%,#1d1513 55%,#120d0c 100%); padding:10px 10px 12px; justify-content:flex-end}
+.inp{display:flex; align-items:center; gap:8px; padding:8px 10px 14px; border-top:1px solid var(--p-line); background:var(--p-bg)}
+.inp span{flex:1; background:var(--p-chat); border-radius:18px; padding:7px 12px; color:var(--p-muted); font-size:11.5px}
+.inp i{width:28px; height:28px; border-radius:50%; background:var(--tammi); flex:none}
+.k-web .inp i{background:var(--web)}
+
+.m{max-width:84%; padding:7px 10px; border-radius:14px; background:var(--p-bubble); border:1px solid var(--p-line); align-self:flex-start; word-wrap:break-word}
+.m .who{display:block; font-size:10px; font-weight:700; color:var(--p-muted); margin-bottom:2px}
+.m.me{align-self:flex-end; background:var(--tammi); border-color:var(--tammi); color:#fff}
+.k-web .m.me{background:var(--web); border-color:var(--web)}
+.m.bot .who{color:var(--tammi)}
+.m.bot.shop .who{color:var(--tendoo)}
+.m.wide{max-width:94%}
+.m .tr{display:block; margin-top:4px; padding-top:4px; border-top:1px dashed var(--p-line); font-size:10.5px; color:var(--p-muted)}
+.m.me .tr{border-color:rgba(255,255,255,.4); color:rgba(255,255,255,.85)}
+.sys{align-self:center; font-size:10.5px; color:var(--p-muted); background:rgba(0,0,0,.05); padding:3px 10px; border-radius:999px; text-align:center; max-width:92%}
+.pc{background:var(--p-bg); border:1px solid var(--p-line); border-radius:12px; padding:9px 10px; display:flex; flex-direction:column; gap:5px; align-self:stretch}
+.pc.hl{border-color:var(--tammi); box-shadow:0 0 0 2px rgba(31,111,235,.12)}
+.pc.ok{border-color:var(--ok)}
+.pc.red{border-color:var(--tendoo)}
+.pc h5{margin:0; font-size:12.5px}
+.pc .mu{color:var(--p-muted); font-size:11px}
+.r{display:flex; justify-content:space-between; gap:8px; font-variant-numeric:tabular-nums}
+.r.tot{font-weight:800; border-top:1px solid var(--p-line); padding-top:5px}
+.r .mu{font-size:11px}
+.pb{display:block; text-align:center; font-weight:700; font-size:11.5px; padding:8px; border-radius:10px; background:var(--tammi); color:#fff; cursor:default}
+.pb.red{background:var(--tendoo)} .pb.green{background:var(--web)} .pb.ghost{background:transparent; color:var(--p-ink); border:1px solid var(--p-line)}
+.pbs{display:flex; gap:6px} .pbs .pb{flex:1}
+[data-next]{cursor:pointer; animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,111,235,.45)}50%{box-shadow:0 0 0 6px rgba(31,111,235,0)}}
+.shop{display:flex; gap:9px; align-items:center}
+.shop .th{width:46px; height:46px; border-radius:10px; flex:none; display:grid; place-items:center; color:#fff; font-weight:800; font-size:15px}
+.shop .in{flex:1; min-width:0; display:flex; flex-direction:column; gap:1px}
+.chip{display:inline-block; font-size:10px; font-weight:700; padding:1px 7px; border-radius:999px; background:#E9F7EF; color:var(--ok)}
+.chip.w{background:#FFF3E0; color:var(--warn)} .chip.b{background:#E8F0FE; color:var(--tammi)} .chip.g{background:#EEF0F2; color:var(--p-muted)}
+.chips{display:flex; flex-wrap:wrap; gap:4px}
+.av{display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; color:#fff; font-size:9px; font-weight:800; flex:none}
+.mi{display:flex; flex-direction:column; gap:3px; padding:6px 0; border-bottom:1px dashed var(--p-line)}
+.mi:last-child{border-bottom:0}
+.mi .pk{display:flex; flex-wrap:wrap; gap:4px; align-items:center; min-height:18px}
+.mi .pk small{font-size:10px; color:var(--p-muted)}
+.steps{display:flex; flex-direction:column; gap:5px}
+.st{display:flex; gap:8px; align-items:center; font-size:11.5px; color:var(--p-muted)}
+.st i{width:14px; height:14px; border-radius:50%; border:2px solid var(--p-line); flex:none}
+.st.done{color:var(--p-ink)} .st.done i{background:var(--ok); border-color:var(--ok)}
+.st.now{color:var(--p-ink); font-weight:700} .st.now i{border-color:var(--tammi); background:#fff; box-shadow:inset 0 0 0 3px var(--tammi)}
+.qr{display:flex; gap:10px; align-items:center}
+.qr svg{width:96px; height:96px; flex:none; background:#fff; border:1px solid var(--p-line); border-radius:8px; padding:4px}
+.pay .opt{display:flex; justify-content:space-between; align-items:center; padding:7px 9px; border:1px solid var(--p-line); border-radius:9px; font-size:11.5px}
+.pay .opt.on{border-color:var(--tammi); background:#F2F7FF}
+.pay .opt b{font-size:11px}
+.kp{display:grid; grid-template-columns:1fr 1fr; gap:6px}
+.kp div{background:var(--p-chat); border-radius:9px; padding:7px 9px; font-size:10.5px; color:var(--p-muted)}
+.kp b{display:block; font-size:16px; color:var(--p-ink); font-variant-numeric:tabular-nums}
+.standee{align-self:center; margin-top:30px; width:200px; padding:16px; border-radius:16px; background:#fff; border:2px solid var(--p-ink); text-align:center; display:flex; flex-direction:column; gap:8px; align-items:center}
+.standee svg{width:110px; height:110px}
+.standee b{font-size:12px}
+.standee small{font-size:10.5px; color:var(--p-muted)}
+.fr{font-size:11px}
+
+/* Live */
+.livetop{position:relative; height:150px; background:linear-gradient(135deg,#5b3b2c,#1f1512); color:#fff; display:flex; flex-direction:column; justify-content:space-between; padding:8px 10px}
+.livetop .lb{align-self:flex-start; background:var(--tendoo); font-size:9.5px; font-weight:800; padding:2px 7px; border-radius:4px}
+.livetop .host{position:absolute; right:16px; top:24px; width:70px; height:70px; border-radius:50%; background:radial-gradient(circle at 50% 38%, #e7c2a6 0 30%, #7b4e3a 31% 100%); opacity:.9}
+.livetop .pin{background:rgba(255,255,255,.95); color:var(--p-ink); border-radius:9px; padding:6px 8px; font-size:11px; display:flex; justify-content:space-between; gap:6px}
+.cm{color:#fff; font-size:11.5px; line-height:1.35; text-shadow:0 1px 2px rgba(0,0,0,.6); max-width:94%}
+.cm b{color:#FFC2CE}
+.cm.ai{background:rgba(31,111,235,.85); border-radius:8px; padding:4px 7px; text-shadow:none}
+.cm.pinm{background:rgba(255,255,255,.95); color:var(--p-ink); text-shadow:none; border-radius:8px; padding:5px 8px}
+.cm.pinm b{color:var(--tendoo)}
+.hostbg{position:absolute; inset:0; background:radial-gradient(circle at 70% 22%, #e7c2a6 0 9%, transparent 9.5%), radial-gradient(ellipse at 70% 45%, #7b4e3a 0 22%, transparent 22.5%); opacity:.55; pointer-events:none}
+.k-live .ah{background:#120d0c; color:#fff; border-color:#2a201d}
+.k-live .ah .tt small{color:rgba(255,255,255,.7)}
+.dock{background:var(--p-bg); border-top:1px solid var(--p-line); padding:10px; display:flex; flex-direction:column; gap:6px; max-height:290px; overflow-y:auto}
+.dock h6{margin:0; font-size:11px; color:var(--p-muted); text-transform:uppercase; letter-spacing:.06em}
+.cl{display:flex; flex-direction:column; gap:4px; border:1px solid var(--p-line); border-radius:10px; padding:7px 9px}
+.cl .r b{font-size:12px}
+.cl .cnt{font-weight:800; color:var(--tendoo); font-variant-numeric:tabular-nums}
+.cl.done{opacity:.6}
+.cl.open{border-color:var(--tendoo)}
+.cl q{display:block; font-size:10.5px; color:var(--p-muted); quotes:none}
+.sugg{background:#FFF7E8; border-radius:8px; padding:6px 8px; font-size:11px}
+
+/* Bảng trượt */
+.sheet-bg{position:absolute; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:flex-end; z-index:4}
+.sheet{width:100%; background:var(--p-bg); border-radius:18px 18px 0 0; padding:14px 14px 22px; display:flex; flex-direction:column; gap:8px; animation:up .3s ease}
+.sheet .grab{width:36px; height:4px; border-radius:4px; background:var(--p-line); align-self:center}
+.tap{display:grid; place-items:center; gap:10px; padding:14px 0; text-align:center}
+.tap .ring{width:120px; height:120px; border-radius:50%; border:4px solid var(--web); display:grid; place-items:center; color:var(--web); font-weight:800; box-shadow:0 0 0 12px rgba(15,138,108,.12)}
+@keyframes up{from{transform:translateY(40px); opacity:0}to{transform:none; opacity:1}}
+.new{animation:pop .35s ease}
+@keyframes pop{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){.new,.sheet{animation:none} [data-next]{animation:none} .body{scroll-behavior:auto}}
+
+@media (max-width:1000px){
+  .app{grid-template-columns:minmax(0,1fr); gap:16px; padding-block:12px}
+  .side{position:static}
+  .grp{flex-direction:row; overflow-x:auto; padding-bottom:4px}
+  .sc{min-width:200px}
+}
+@media (max-width:360px){ .dev{width:280px} }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="label">Demo trải nghiệm</span><b>Merchant <em>AI</em> Studio</b><span class="back">Đi kèm <a href="../03_proposal/merchant-studio-proposal.html">proposal</a> · kịch bản minh hoạ</span></div>
+    <div class="grp" id="g-m"><span class="label">Người bán</span></div>
+    <div class="grp" id="g-u"><span class="label">Người dùng Tammi</span></div>
+  </aside>
+  <main>
+    <div class="head">
+      <div class="tags" id="tags"></div>
+      <h1 id="title"></h1>
+      <p id="persona"></p>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="nar" aria-live="polite">
+      <div class="nar-top"><span class="label" id="stepNo"></span><div class="bar"><i id="barFill"></i></div></div>
+      <p id="say"></p>
+      <div class="ctl">
+        <button class="cb" id="prev" type="button">← Trước</button>
+        <button class="cb pri" id="next" type="button">Tiếp →</button>
+        <button class="cb" id="auto" type="button" aria-pressed="false">Tự chạy</button>
+        <button class="cb" id="restart" type="button">Làm lại</button>
+        <span class="hint">Bấm nút đang nhấp nháy trên điện thoại, hoặc phím ← →</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+/* ---------- Tiện ích dựng giao diện ---------- */
+const C = {Lan:'#D9480F', Hung:'#2F9E44', Mai:'#AE3EC9', Tuan:'#1971C2', Hoa:'#E67700', Minh:'#1F6FEB'};
+const av = (n,c)=>`<span class="av" style="background:${c}">${n[0]}</span>`;
+const bot = (who,t,cls='')=>`<div class="m bot ${cls}"><span class="who">${who}</span>${t}</div>`;
+const me = (t,cls='')=>`<div class="m me ${cls}">${t}</div>`;
+const oth = (n,c,t)=>`<div class="m"><span class="who" style="color:${c}">${n}</span>${t}</div>`;
+const sys = t=>`<div class="sys">${t}</div>`;
+const btn = (t,cls='',next=true)=>`<span class="pb ${cls}"${next?' data-next':''}>${t}</span>`;
+const row = (a,b,cls='')=>`<div class="r ${cls}"><span>${a}</span><span>${b}</span></div>`;
+const card = (h,cls='')=>`<div class="pc ${cls}">${h}</div>`;
+const tr = t=>`<span class="tr">${t}</span>`;
+const steps = (labels,n)=>`<div class="steps">${labels.map((l,i)=>`<div class="st ${i<n?'done':i===n?'now':''}"><i></i>${l}</div>`).join('')}</div>`;
+function qr(seed){
+  let s=seed, out='', N=25;
+  const rnd=()=>{s=(s*9301+49297)%233280; return s/233280;};
+  const fin=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#111"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#111"/>`;
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    if((x<8&&y<8)||(x>16&&y<8)||(x<8&&y>16))continue;
+    if(rnd()>.52) out+=`<rect x="${x}" y="${y}" width="1" height="1" fill="#111"/>`;
+  }
+  return `<svg viewBox="0 0 25 25" shape-rendering="crispEdges" aria-label="Mã QR minh hoạ"><rect width="25" height="25" fill="#fff"/>${out}${fin(0,0)}${fin(18,0)}${fin(0,18)}</svg>`;
+}
+const paySheet = (amt, sel=0, title='Thanh toán qua VDF')=>`<div class="grab"></div><b>${title}</b><div style="font-size:22px;font-weight:800">${amt}</div>
+  <div class="pay" style="display:flex;flex-direction:column;gap:6px">
+   <div class="opt ${sel===0?'on':''}"><span>Viettel Money</span><b>${sel===0?'●':'○'}</b></div>
+   <div class="opt ${sel===1?'on':''}"><span>Tài khoản ngân hàng liên kết</span><b>${sel===1?'●':'○'}</b></div>
+   <div class="opt ${sel===2?'on':''}"><span>Thẻ nội địa / quốc tế</span><b>${sel===2?'●':'○'}</b></div>
+  </div>${btn('Xác thực vân tay & thanh toán')}`;
+const tapSheet = (amt,who)=>`<div class="grab"></div><b>Nhận thanh toán chạm</b><div class="tap"><div class="ring">CHẠM</div><div style="font-size:20px;font-weight:800">${amt}</div><span class="mu" style="color:var(--p-muted)">Đưa máy cho ${who}: chạm thẻ Visa, Mastercard… hoặc điện thoại</span></div>`;
+
+/* ---------- Kịch bản ---------- */
+const SC = [];
+
+/* 1. Livestream – khách chat, lên đơn, thanh toán */
+SC.push({ id:'live-chat', g:'m', title:'Trợ lý Livestream: tư vấn và lên đơn trong chat',
+  menu:'① Livestream · Khách nhắn riêng khi xem live',
+  persona:'Chị Lan (chủ Lan\'s House) đang livestream trên Tammi. Chị Hà xem live và nhắn riêng cho shop. Trợ lý tư vấn, lên đơn; chị Hà xác nhận, thanh toán và chờ giao hàng. Chị Lan không phải dừng live để ghi đơn.',
+  tags:['Vận hành hiệu quả','Tăng doanh số','Thanh toán đa nguồn tiền'],
+  phones:{
+    a:{label:'Điện thoại của chị Hà · người xem', kind:'tammi', title:"Lan's House", sub:'Nhắn riêng · đang LIVE', time:'20:15',
+       top:`<div class="livetop"><span class="lb">LIVE · 1.284 xem</span><div class="host"></div><div class="pin"><span>📌 Trà sen Tây Hồ · hộp quà</span><b>280.000đ</b></div></div>`},
+    b:{label:'Điện thoại của chị Lan · Tendoo', kind:'tendoo', title:'Đơn hàng', sub:'Phiên live 20:00', time:'20:15', input:false}
+  },
+  steps:[
+    {say:'Chị Hà đang xem live của Lan\'s House. Chị bấm “Nhắn shop” ngay trên màn hình live để hỏi riêng. Trợ lý của cửa hàng trả lời và nói rõ mình là trợ lý AI.',
+     do:A=>{A.add('a',sys('Bạn đang nhắn riêng với Lan\'s House')); A.add('a',bot("Trợ lý AI · Lan's House",'Chào chị, em là trợ lý AI của Lan\'s House. Chị đang quan tâm sản phẩm nào trên live ạ?','shop')); A.add('b',sys('Trợ lý Livestream đang hoạt động')); A.add('b',card('<h5>Phiên live 20:00</h5>'+row('Đơn đã tạo','12')+row('Đã thanh toán','9')))}},
+    {say:'Chị Hà hỏi về sản phẩm đang được giới thiệu.',
+     do:A=>A.add('a',me('Trà sen này uống buổi tối có bị mất ngủ không em? Chị mua biếu mẹ 65 tuổi.'))},
+    {say:'Trợ lý tư vấn theo thông tin sản phẩm do cửa hàng cung cấp và gợi ý thêm một lựa chọn phù hợp.',
+     do:A=>{A.add('a',bot("Trợ lý AI · Lan's House",'Dạ trà sen có caffeine nhẹ từ lá trà, nên bác dùng buổi sáng hoặc đầu giờ chiều sẽ hợp hơn ạ. Nếu bác hay uống buổi tối, chị có thể lấy thêm trà hoa cúc, không có caffeine.','shop'));
+       A.add('a',card(`<div class="shop"><div class="th" style="background:#B5651D">Sen</div><div class="in"><b>Hộp quà Trà sen Tây Hồ</b><span class="mu"><s>350.000đ</s> · giá live</span></div><b>280.000đ</b></div><div class="shop"><div class="th" style="background:#C99A2E">Cúc</div><div class="in"><b>Trà hoa cúc</b><span class="mu">Không caffeine</span></div><b>150.000đ</b></div>`))}},
+    {say:'Chị Hà chốt luôn trong khung chat.',
+     do:A=>A.add('a',me('Lấy chị 1 hộp trà sen với 1 trà hoa cúc nhé, giao về Thanh Xuân.'))},
+    {say:'Trợ lý tự lên đơn: điền địa chỉ từ hồ sơ Tammi, áp giá live, tính phí giao. Chị Hà chỉ cần kiểm tra và xác nhận.',
+     do:A=>{A.add('a',bot("Trợ lý AI · Lan's House",'Em lên đơn cho chị nhé:','shop'));
+       A.add('a',card('<h5>Đơn hàng</h5>'+row('Hộp quà Trà sen ×1','280.000đ')+row('Trà hoa cúc ×1','150.000đ')+row('Phí giao','Miễn phí','mu')+row('Giao tới','12 Nguyễn Trãi, Thanh Xuân','mu')+row('Tổng','430.000đ','tot')+btn('Xác nhận & thanh toán','red'),'red'),'order')}},
+    {say:'Chị Hà bấm xác nhận. Bảng thanh toán của VDF hiện ngay trong khung chat, với nhiều nguồn tiền để chọn.',
+     do:A=>A.sheet('a',paySheet('430.000đ',0))},
+    {say:'Thanh toán thành công. Đơn được tạo tự động trong Tendoo của chị Lan, kèm nhãn “Tạo bởi Trợ lý Livestream”.',
+     do:A=>{A.sheet('a',null); A.up('a','order',card('<h5>Đơn #LH-2107</h5>'+row('Hộp quà Trà sen ×1','280.000đ')+row('Trà hoa cúc ×1','150.000đ')+row('Tổng','430.000đ','tot')+'<span class="chip">✓ Đã thanh toán · Viettel Money</span>','ok'));
+       A.add('a',bot("Trợ lý AI · Lan's House",'Em đã nhận thanh toán. Đơn sẽ được đóng gói sáng mai, em sẽ báo chị khi giao ạ.','shop'));
+       A.add('a',card(steps(['Đã thanh toán','Đang đóng gói','Đang giao','Đã giao'],1)),'st');
+       A.add('b',card('<div class="r"><h5>Đơn #LH-2107 · Chị Hà</h5><span class="chip">Đã thanh toán</span></div>'+row('Trà sen ×1, Trà hoa cúc ×1','430.000đ')+'<span class="mu">Tạo bởi Trợ lý Livestream · 20:17</span>','ok'),'ob')}},
+    {say:'Sáng hôm sau, cửa hàng tạo vận đơn. Trợ lý báo trạng thái ngay trong khung chat; chị Hà chỉ việc chờ nhận hàng.',
+     do:A=>{A.set('a',{time:'09:30',sub:'Tin nhắn'}); A.set('b',{time:'09:30'}); A.add('a',sys('16/10'));
+       A.up('a','st',card(steps(['Đã thanh toán','Đã đóng gói','Đang giao · Viettel Post','Đã giao'],2)));
+       A.add('a',bot("Trợ lý AI · Lan's House",'Đơn của chị đã giao cho Viettel Post, dự kiến tới ngày 17/10 ạ.','shop'));
+       A.up('b','ob',card('<div class="r"><h5>Đơn #LH-2107 · Chị Hà</h5><span class="chip b">Đang giao</span></div>'+row('Vận đơn','VTP 8812 0457')+'<span class="mu">Sổ doanh thu đã ghi tự động</span>','ok'))}}
+  ]});
+
+/* 2. Livestream – gom câu hỏi */
+const comments = [['Hà','trà sen pha sao vậy shop'],['Tú','ship Đà Nẵng mấy ngày ạ'],['Ngọc','pha mấy độ thì ngon?'],['Long','có hộp quà không c'],['Vy','trà này pha sao ạ'],['Quân','ship ra ĐN bao lâu'],['Thảo','hạn dùng bao lâu shop'],['Bình','cách pha trà sen??'],['An','có hộp quà tặng sếp ko'],['Hiếu','pha được mấy nước'],['My','ship đi Đà Nẵng được k'],['Khoa','ủ bao nhiêu phút ạ']];
+const clusters = (state)=>{
+  const L=[['Cách pha trà sen?',14,'“trà sen pha sao vậy shop” · “pha mấy độ thì ngon?” · “ủ bao nhiêu phút ạ”'],['Giao đi Đà Nẵng mấy ngày?',9,'“ship Đà Nẵng mấy ngày ạ” · “ship ra ĐN bao lâu”'],['Có hộp quà tặng không?',6,'“có hộp quà không c” · “có hộp quà tặng sếp ko”'],['Hạn dùng bao lâu?',4,'“hạn dùng bao lâu shop”']];
+  return '<h6>Trợ lý gom câu hỏi · 2 phút qua</h6>'+L.map((c,i)=>{
+    const done = state.done && state.done.includes(i), open = state.open===i;
+    let h=`<div class="cl ${done?'done':''} ${open?'open':''}"><div class="r"><b>${c[0]}</b><span class="cnt">${done?'✓':c[1]+' người'}</span></div><q>${c[2]}</q>`;
+    if(open) h+=`<div class="sugg"><b>Gợi ý từ thông tin sản phẩm:</b> 1 túi 5g · nước 85–90°C · ủ 3 phút · pha được 3–4 nước</div>${btn('Tôi đã trả lời trên live','red')}`;
+    else if(i===0 && state.cta && !done) h+=btn('Xem & trả lời','red');
+    if(done && i>0 && state.auto) h+=`<span class="mu">Trợ lý đã tự trả lời dưới comment</span>`;
+    return h+'</div>';
+  }).join('')+(state.summary?`<div class="kp"><div>Trợ lý tự trả lời<b>23 câu</b></div><div>Chờ chị trả lời<b>1 nhóm</b></div></div>`:'');
+};
+SC.push({ id:'live-faq', g:'m', title:'Trợ lý Livestream: gom câu hỏi để trả lời một lần',
+  menu:'① Livestream · Gom câu hỏi giống nhau',
+  persona:'Khi live đông, rất nhiều người hỏi cùng một ý. Trợ lý đọc toàn bộ comment, gom các câu giống nhau và xếp theo số người hỏi, để chị Lan trả lời một lần thay vì tự đọc và lọc từng comment.',
+  tags:['Vận hành hiệu quả','Tăng doanh số'],
+  phones:{
+    a:{label:'Điện thoại của chị Lan · người live', kind:'live', title:"Lan's House · LIVE", sub:'1.284 người xem', time:'20:10', input:false, bg:true},
+    b:{label:'Điện thoại của chị Hà · người xem', kind:'live', title:"Lan's House · LIVE", sub:'Đang xem', time:'20:10', bg:true}
+  },
+  steps:[
+    {say:'20:10, phiên live đông người. Comment đổ về liên tục, nhiều người hỏi cùng một ý. Chị Lan không thể vừa giới thiệu sản phẩm vừa đọc hết.',
+     do:A=>{comments.forEach(c=>A.add('a',`<div class="cm"><b>${c[0]}:</b> ${c[1]}</div>`)); comments.slice(0,6).forEach(c=>A.add('b',`<div class="cm"><b>${c[0]}:</b> ${c[1]}</div>`))}},
+    {say:'Trợ lý gom các câu hỏi giống nhau thành nhóm và xếp theo số người hỏi. Chị Lan nhìn một lần là biết khách đang quan tâm điều gì nhất.',
+     do:A=>A.set('a',{dock:clusters({cta:true})})},
+    {say:'Chị Lan chạm vào nhóm câu hỏi nhiều nhất. Trợ lý hiện ý chính lấy từ thông tin sản phẩm để chị trả lời trên live.',
+     do:A=>A.set('a',{dock:clusters({open:0})})},
+    {say:'Chị Lan trả lời bằng lời trên live rồi bấm “Đã trả lời”. Trợ lý gửi tóm tắt tới đúng 14 người đã hỏi và ghim lên live cho người vào sau.',
+     do:A=>{A.set('a',{dock:clusters({done:[0]})});
+       A.add('b',`<div class="cm pinm"><b>📌 Chị Lan đã trả lời:</b> Cách pha trà sen: 1 túi 5g, nước 85–90°C, ủ 3 phút, pha được 3–4 nước.</div>`);
+       A.add('b',`<div class="cm ai">🤖 Trợ lý: @Hà chị Lan vừa trả lời câu hỏi của bạn ở trên nhé!</div>`)}},
+    {say:'Các câu đơn giản như thời gian giao hay hạn dùng, trợ lý trả lời ngay dưới comment. Chị Lan chỉ phải trả lời những nhóm câu hỏi cần chính mình nói.',
+     do:A=>{A.set('a',{dock:clusters({done:[0,1,3],auto:true,summary:true})});
+       A.add('a',`<div class="cm ai">🤖 Trợ lý: @Tú @Quân @My giao đi Đà Nẵng 2–3 ngày ạ</div>`); A.add('a',`<div class="cm ai">🤖 Trợ lý: @Thảo hạn dùng 12 tháng ạ</div>`);
+       A.add('b',`<div class="cm ai">🤖 Trợ lý: @Tú @Quân @My giao đi Đà Nẵng 2–3 ngày ạ</div>`)}}
+  ]});
+
+/* 3. OA ban đêm */
+SC.push({ id:'oa-night', g:'m', title:'Trợ lý Bán hàng trên OA cửa hàng: 23 giờ đêm',
+  menu:'② Bán hàng trên OA cửa hàng · 23h',
+  persona:'Nhân viên trực page của Lan\'s House làm đến 21h. Lúc 23h, Minh xem Tammi Shop và nhắn tin tới OA của cửa hàng. Trợ lý tư vấn, chốt đơn và nhận thanh toán. Sáng hôm sau chị Lan nhận bản tin.',
+  tags:['Vận hành hiệu quả','Tăng doanh số','Thanh toán đa nguồn tiền'],
+  phones:{
+    a:{label:'Điện thoại của Minh · Tammi', kind:'tammi', title:"Lan's House", sub:'Tammi Shop · OA ✓ đã xác thực', time:'23:15'},
+    b:{label:'Điện thoại của chị Lan · Tendoo', kind:'tendoo', title:'Tin nhắn OA', sub:'Lan\'s House', time:'23:15', input:false}
+  },
+  steps:[
+    {say:'23:15, Minh xem Tammi Shop của Lan\'s House để tìm quà biếu sếp, rồi bấm “Nhắn tin” tới OA của cửa hàng.',
+     do:A=>{A.add('a',card(`<div class="shop"><div class="th" style="background:var(--tendoo)">LH</div><div class="in"><b>Lan's House</b><span class="mu">Trà, đặc sản Hội An · ★ 4,9</span></div></div><div class="chips"><span class="chip">✓ Cửa hàng đã xác thực</span><span class="chip b">Tammi Shop</span></div>`+btn('Nhắn tin')));
+       A.add('b',sys('Nhân viên đã hết ca lúc 21:00')); A.add('b',card('<h5>Trợ lý Bán hàng đang trực</h5><span class="mu">Tự trả lời tin nhắn OA đến 08:00</span>'))}},
+    {say:'Trợ lý AI của cửa hàng trả lời ngay và nói rõ mình là trợ lý AI. Minh nêu nhu cầu.',
+     do:A=>{A.add('a',bot("Trợ lý AI · Lan's House",'Chào anh, chị Lan đang nghỉ, em là trợ lý AI của cửa hàng, em hỗ trợ anh ngay nhé!','shop')); A.add('a',me('Mình cần quà biếu sếp tầm 500k, sếp thích trà.'))}},
+    {say:'Trợ lý hỏi thêm một câu để tư vấn đúng.',
+     do:A=>{A.add('a',bot("Trợ lý AI · Lan's House",'Anh cần giao trước ngày nào ạ? Anh có muốn kèm thiệp viết tay không?','shop')); A.add('a',me('Trước thứ Sáu, có thiệp thì tốt.'))}},
+    {say:'Trợ lý gợi ý 3 hộp quà theo tồn kho thật, đều giao kịp trước thứ Sáu.',
+     do:A=>{A.add('a',bot("Trợ lý AI · Lan's House",'Em gợi ý 3 hộp quà còn hàng, giao kịp thứ Sáu ạ:','shop'));
+       A.add('a',card(`<div class="shop"><div class="th" style="background:#B5651D">Sen</div><div class="in"><b>Hộp Trà sen + bánh đậu xanh</b><span class="mu">Có thiệp viết tay · bán chạy</span></div><b>480k</b></div><div class="shop"><div class="th" style="background:#5C7F3A">Shan</div><div class="in"><b>Trà Shan tuyết cổ thụ</b><span class="mu">Hộp gỗ</span></div><b>450k</b></div><div class="shop"><div class="th" style="background:#7A5C99">Ấm</div><div class="in"><b>Bộ ấm chén + trà</b><span class="mu">Gốm Bát Tràng</span></div><b>520k</b></div>`))}},
+    {say:'Minh hỏi so sánh, trợ lý giải thích theo thông tin sản phẩm cửa hàng đã nhập.',
+     do:A=>{A.add('a',me('Trà sen khác trà Shan tuyết thế nào?')); A.add('a',bot("Trợ lý AI · Lan's House",'Trà sen ướp hoa sen Tây Hồ, thơm dịu, hợp người lớn tuổi. Shan tuyết là trà cổ thụ Hà Giang, vị đậm, hậu ngọt, hợp người uống trà lâu năm ạ.','shop'))}},
+    {say:'Minh chốt hộp quà và gửi nội dung thiệp. Trợ lý lên đơn với địa chỉ lấy từ hồ sơ Tammi.',
+     do:A=>{A.add('a',me('Lấy hộp 480k. Thiệp ghi: “Kính chúc anh sức khoẻ, thành công”.'));
+       A.add('a',card('<h5>Đơn hàng</h5>'+row('Hộp Trà sen + bánh','480.000đ')+row('Thiệp viết tay','Miễn phí','mu')+row('Giao tới','Toà nhà Viettel, Cầu Giấy','mu')+row('Dự kiến giao','Thứ Năm','mu')+row('Tổng','480.000đ','tot')+btn('Thanh toán','red'),'red'),'order')}},
+    {say:'Minh thanh toán ngay trong chat, chọn thẻ ngân hàng đã liên kết.',
+     do:A=>A.sheet('a',paySheet('480.000đ',1))},
+    {say:'Thanh toán xong, đơn vào Tendoo của chị Lan với trạng thái “Chờ đóng gói”. Minh đi ngủ.',
+     do:A=>{A.sheet('a',null); A.up('a','order',card('<h5>Đơn #LH-2110</h5>'+row('Hộp Trà sen + bánh, thiệp','480.000đ')+'<span class="chip">✓ Đã thanh toán</span>','ok'));
+       A.add('a',bot("Trợ lý AI · Lan's House",'Em đã nhận thanh toán. Sáng mai cửa hàng đóng gói, em sẽ báo anh khi giao ạ. Chúc anh ngủ ngon!','shop'));
+       A.add('b',card('<div class="r"><h5>Đơn #LH-2110 · Minh</h5><span class="chip">Đã thanh toán</span></div>'+row('Hộp Trà sen + bánh, thiệp','480.000đ')+'<span class="mu">Trợ lý chốt lúc 23:19</span>','ok'))}},
+    {say:'8 giờ sáng, chị Lan mở Tendoo và đọc bản tin đêm qua. Chị chỉ cần xử lý 2 hội thoại được gắn cờ.',
+     do:A=>{A.set('b',{time:'08:00',title:'Bản tin đêm qua',sub:'21:00 – 08:00'}); A.clear('b');
+       A.add('b',card('<div class="kp"><div>Khách được trả lời<b>23</b></div><div>Đơn chốt<b>7</b></div><div>Doanh thu<b>3,1tr</b></div><div>Cần chị xử lý<b>2</b></div></div>'));
+       A.add('b',card('<h5>Cần chị xử lý</h5>'+row('Khách hỏi giá sỉ 50 hộp','<span class="chip w">Gắn cờ</span>')+row('Khách phản ánh giao chậm','<span class="chip w">Gắn cờ</span>'),'red'));
+       A.add('b',card('<h5>Dạy thêm cho trợ lý</h5><span class="mu">1 câu trả lời khách đánh giá chưa hữu ích</span>'+btn('Xem & sửa','ghost',false)));
+       A.set('a',{time:'08:05'}); A.add('a',sys('Sáng nay')); A.add('a',bot("Lan's House",'Chào anh Minh, đơn của anh đã đóng gói và giao cho Viettel Post, dự kiến tới thứ Năm ạ.','shop'))}}
+  ]});
+
+/* 4. Tại cửa hàng – anh Kim Min-jun (Hàn Quốc) */
+SC.push({ id:'store-kim', g:'m', title:'Trợ lý Tại cửa hàng: anh Kim Min-jun, du khách Hàn Quốc',
+  menu:'③ Tại cửa hàng · Anh Kim Min-jun (Hàn Quốc)',
+  persona:'Anh Kim Min-jun, người Hàn Quốc, vào cửa hàng quà tặng Lan\'s House ở Hội An. Anh không dùng Tammi và không muốn cài app. Anh quét QR để hỏi bằng tiếng Hàn, đặt hàng trên web, rồi chạm thẻ để trả tiền.',
+  tags:['Vận hành hiệu quả','Tăng doanh số','Thanh toán xuyên biên giới'],
+  phones:{
+    a:{label:'Điện thoại của anh Kim Min-jun · trình duyệt web', kind:'web', title:'Camera', sub:'', time:'14:20', net:'LTE', input:false},
+    b:{label:'Điện thoại của nhân viên · Tendoo', kind:'tendoo', title:'Màn hình đơn', sub:"Lan's House · Quầy 1", time:'14:20', input:false}
+  },
+  steps:[
+    {say:'Anh Kim Min-jun (du khách Hàn Quốc) đứng ở quầy, mở camera và quét mã QR trên tấm standee.',
+     do:A=>{A.add('a',`<div class="standee">${qr(7)}<b>Scan to ask &amp; order<br>in your language</b><small>언어 선택 · 扫码咨询 · Scannez-moi</small></div>`); A.add('b',sys('Chưa có đơn mới'))}},
+    {say:'Trang web mở ngay trong trình duyệt, tự chuyển sang tiếng Hàn theo ngôn ngữ của máy. Không cài app, không đăng ký. Giá hiện cả VND và won.',
+     do:A=>{A.clear('a'); A.set('a',{title:"Lan's House",sub:'한국어 · AI 도우미',url:'lanshouse.tammi.vn/qr/quay-1',input:true});
+       A.add('a',bot('AI 도우미','안녕하세요! Lan\'s House AI 도우미입니다. 무엇이든 한국어로 물어보세요.'+tr('Xin chào! Tôi là trợ lý AI của Lan\'s House. Hãy hỏi bằng tiếng Hàn.')));
+       A.add('a',card(`<div class="shop"><div class="th" style="background:#B5651D">茶</div><div class="in"><b>연꽃차 선물세트</b><span class="mu">Hộp quà trà sen</span></div><div style="text-align:right"><b>480.000₫</b><div class="mu">≈ 26,000원</div></div></div><div class="shop"><div class="th" style="background:#C99A2E">餠</div><div class="in"><b>녹두 케이크</b><span class="mu">Bánh đậu xanh</span></div><div style="text-align:right"><b>120.000₫</b><div class="mu">≈ 6,500원</div></div></div>`))}},
+    {say:'Anh Kim hỏi bằng tiếng Hàn: có mang lên máy bay được không, hạn dùng bao lâu, có gói quà không.',
+     do:A=>A.add('a',me('연꽃차 비행기에 가지고 탈 수 있나요? 유통기한은요? 선물 포장도 되나요?'+tr('Mang lên máy bay được không? Hạn dùng? Có gói quà không?')))},
+    {say:'Trợ lý trả lời bằng tiếng Hàn theo thông tin cửa hàng đã duyệt.',
+     do:A=>A.add('a',bot('AI 도우미','네, 밀봉된 건조 차라서 기내 반입이 가능합니다. 유통기한은 12개월이고, 선물 포장은 무료입니다.'+tr('Có, trà khô đóng kín nên mang lên máy bay được. Hạn dùng 12 tháng, gói quà miễn phí.')))},
+    {say:'Anh Kim chọn 2 hộp quà và bấm đặt hàng. Thanh toán không làm trên web.',
+     do:A=>{A.add('a',me('2개 주세요. 선물 포장해 주세요.'+tr('Cho tôi 2 hộp, gói quà giúp.')));
+       A.add('a',card('<h5>주문 내역 · Đơn hàng</h5>'+row('연꽃차 선물세트 ×2','960.000₫')+row('선물 포장','무료','mu')+row('합계','≈ 52,000원','tot')+btn('주문하기 · Đặt hàng','green'),''),'order')}},
+    {say:'Đơn hiện trên điện thoại của nhân viên bằng tiếng Việt, kèm ghi chú đã dịch. Web báo anh Kim chạm thẻ để thanh toán.',
+     do:A=>{A.up('a','order',card('<h5>주문 접수 · Đã nhận đơn</h5>'+row('연꽃차 선물세트 ×2','960.000₫')+'<span class="mu">결제는 직원 휴대폰에 카드나 휴대폰을 터치해 주세요</span>'+tr('Thanh toán: chạm thẻ hoặc điện thoại vào máy của nhân viên'),'ok'));
+       A.clear('b'); A.add('b',card('<div class="r"><h5>Đơn mới · Khách Hàn Quốc</h5><span class="chip b">Quầy 1</span></div>'+row('Hộp quà Trà sen ×2','960.000đ')+'<span class="mu">Ghi chú (đã dịch): gói quà</span>'+btn('Nhận thanh toán chạm','red'),'red'),'ob')}},
+    {say:'Nhân viên mở màn hình nhận thanh toán và đưa máy cho anh Kim. Anh chạm thẻ Visa vào điện thoại của nhân viên.',
+     do:A=>A.sheet('b',tapSheet('960.000đ','khách'))},
+    {say:'Thanh toán thẻ quốc tế qua VDF thành công. Anh Kim nhận hoá đơn song ngữ trên web. Đơn và tiền tự vào sổ Tendoo.',
+     do:A=>{A.sheet('b',null); A.up('b','ob',card('<div class="r"><h5>Đơn #LH-Q118 · Khách Hàn Quốc</h5><span class="chip">Đã thanh toán</span></div>'+row('Hộp quà Trà sen ×2','960.000đ')+row('Visa ••4821','Thẻ quốc tế','mu')+'<span class="mu">Đã ghi sổ doanh thu</span>','ok'));
+       A.add('a',card('<h5>결제 완료 · Đã thanh toán</h5>'+row('Visa ••4821','960.000₫')+row('영수증 · Hoá đơn','Song ngữ KO/VI','mu')+btn('이메일로 받기 · Gửi email','ghost',false),'ok'));
+       A.add('a',bot('AI 도우미','감사합니다! 즐거운 여행 되세요 🙂'+tr('Cảm ơn anh! Chúc chuyến đi vui vẻ.')))}}
+  ]});
+
+/* 5. Tại cửa hàng – chị Camille Laurent (Pháp), ăn kiêng */
+SC.push({ id:'store-camille', g:'m', title:'Trợ lý Tại cửa hàng: chị Camille Laurent, du khách Pháp ăn kiêng',
+  menu:'③ Tại cửa hàng · Chị Camille Laurent (Pháp)',
+  persona:'Chị Camille Laurent, người Pháp, ăn chay và không dung nạp gluten, lactose. Chị ngồi Bàn 6 tại nhà hàng Bếp Nhà Hội An (một cửa hàng khác dùng Tendoo) và muốn biết rõ từng thành phần trước khi gọi món.',
+  tags:['Vận hành hiệu quả','Tăng doanh số','Thanh toán xuyên biên giới'],
+  phones:{
+    a:{label:'Điện thoại của chị Camille Laurent · trình duyệt web', kind:'web', title:'Camera', sub:'', time:'12:30', net:'4G', input:false},
+    b:{label:'Màn hình bếp & nhân viên · Tendoo', kind:'tendoo', title:'Màn hình đơn', sub:'Bếp Nhà Hội An', time:'12:30', input:false}
+  },
+  steps:[
+    {say:'Chị Camille Laurent quét mã QR dán trên Bàn 6.',
+     do:A=>{A.add('a',`<div class="standee">${qr(23)}<b>Bàn 6 · Table 6</b><small>Scan to ask &amp; order · Scannez pour commander</small></div>`); A.add('b',sys('Bếp đang mở · 8 bàn có khách'))}},
+    {say:'Web mở bằng tiếng Pháp. Chị bật bộ lọc chế độ ăn: chay, không gluten, không lactose.',
+     do:A=>{A.clear('a'); A.set('a',{title:'Bếp Nhà Hội An',sub:'Français · Assistant IA',url:'bepnha.tammi.vn/qr/ban-6',input:true});
+       A.add('a',bot('Assistant IA','Bonjour ! Je suis l\'assistant IA du restaurant. Posez-moi vos questions en français.'+tr('Xin chào! Tôi là trợ lý AI của nhà hàng.')));
+       A.add('a',card('<h5>Mon régime · Chế độ ăn</h5><div class="chips"><span class="chip">✓ Végétarien</span><span class="chip">✓ Sans gluten</span><span class="chip">✓ Sans lactose</span></div>'))}},
+    {say:'Chị Camille hỏi món phù hợp và muốn biết toàn bộ thành phần.',
+     do:A=>A.add('a',me('Je suis végétarienne et intolérante au gluten et au lactose. Quels plats me conseillez-vous ? Je voudrais connaître tous les ingrédients.'+tr('Tôi ăn chay, không dung nạp gluten và lactose. Nên gọi món nào? Tôi muốn biết mọi thành phần.')))},
+    {say:'Trợ lý gợi ý món và liệt kê đầy đủ thành phần theo dữ liệu nhà hàng. Nước chấm thường có nước tương (chứa lúa mì) nên trợ lý đề xuất đổi sang nước chấm khác.',
+     do:A=>{A.add('a',bot('Assistant IA','Voici les plats compatibles avec votre régime :'));
+       A.add('a',card(`<h5>Gỏi cuốn chay · Rouleaux de printemps</h5><span class="fr">Galette de riz, tofu, vermicelles de riz, laitue, menthe, basilic thaï.</span><div class="chips"><span class="chip">Sans gluten</span><span class="chip">Sans lactose</span><span class="chip w">Sauce hoisin (blé) → remplacée</span></div>`+row('65.000₫','≈ 2,20 €','mu')));
+       A.add('a',card(`<h5>Canh bí đỏ · Soupe de potiron</h5><span class="fr">Potiron, échalote, sel, coriandre. Bouillon de légumes maison.</span><div class="chips"><span class="chip">Sans gluten</span><span class="chip">Sans lactose</span><span class="chip">Végétarien</span></div>`+row('55.000₫','≈ 1,85 €','mu')));
+       A.add('a',`<div class="sys">Merci de confirmer vos allergies avec notre personnel · Vui lòng xác nhận dị ứng với nhân viên</div>`)}},
+    {say:'Chị hỏi kỹ về nước chấm thay thế: có đường hay nước mắm không. Câu hỏi này quan trọng với người ăn chay.',
+     do:A=>{A.add('a',me('La sauce de remplacement contient-elle du sucre ou de la sauce de poisson ?'+tr('Nước chấm thay thế có đường hoặc nước mắm không?')));
+       A.add('a',bot('Assistant IA','Notre sauce citron vert-piment végétarienne contient : jus de citron vert, piment, ail, sel et 1 c. à café de sucre de canne. Sans sauce de poisson. Nous pouvons la préparer sans sucre.'+tr('Nước chấm chanh ớt chay: nước cốt chanh, ớt, tỏi, muối, 1 thìa đường mía. Không nước mắm. Có thể làm không đường.')))}},
+    {say:'Chị Camille gọi 2 món, yêu cầu nước chấm không đường, rồi gửi đơn.',
+     do:A=>{A.add('a',me('Parfait ! Un rouleau de printemps et une soupe de potiron, sauce sans sucre s\'il vous plaît.'+tr('Cho tôi 1 gỏi cuốn chay, 1 canh bí đỏ, nước chấm không đường.')));
+       A.add('a',card('<h5>Ma commande · Table 6</h5>'+row('Gỏi cuốn chay ×1','65.000₫')+row('Canh bí đỏ ×1','55.000₫')+'<span class="mu">Végétarien · sans gluten · sans lactose · sauce sans sucre</span>'+row('Total','120.000₫ ≈ 4,05 €','tot')+btn('Commander · Gửi đơn','green'),''),'order')}},
+    {say:'Bếp nhận đơn bằng tiếng Việt, kèm cảnh báo chế độ ăn nổi bật để không làm sai.',
+     do:A=>{A.up('a','order',card('<h5>Commande envoyée en cuisine</h5>'+row('Gỏi cuốn chay, Canh bí đỏ','120.000₫')+'<span class="mu">Paiement à table : touchez votre carte ou votre téléphone</span>','ok'));
+       A.clear('b'); A.add('b',card('<div class="r"><h5>Bàn 6 · Khách Pháp</h5><span class="chip b">12:34</span></div>'+row('Gỏi cuốn chay ×1','đổi sốt hoisin → nước chấm chanh ớt chay')+row('Canh bí đỏ ×1','')+'<div class="chips"><span class="chip w">⚠ ĂN CHAY</span><span class="chip w">⚠ KHÔNG GLUTEN (không nước tương)</span><span class="chip w">⚠ KHÔNG LACTOSE</span><span class="chip w">Nước chấm KHÔNG ĐƯỜNG, không nước mắm</span></div>','red'),'ob')}},
+    {say:'Ăn xong, chị bấm “Payer”. Nhân viên mang điện thoại tới bàn; chị chạm iPhone (Apple Pay) để trả.',
+     do:A=>{A.add('a',btn('Payer · Thanh toán','green',false)); A.up('b','ob',card('<div class="r"><h5>Bàn 6 · Khách Pháp</h5><span class="chip w">Gọi thanh toán</span></div>'+row('Tổng','120.000đ','tot'),'red')); A.sheet('b',tapSheet('120.000đ','khách'))}},
+    {say:'Thanh toán thẻ quốc tế qua VDF thành công. Chị Camille nhận hoá đơn song ngữ Pháp – Việt.',
+     do:A=>{A.sheet('b',null); A.up('b','ob',card('<div class="r"><h5>Bàn 6 · Khách Pháp</h5><span class="chip">Đã thanh toán</span></div>'+row('Apple Pay · Visa','120.000đ')+'<span class="mu">Đã ghi sổ doanh thu</span>','ok'));
+       A.add('a',card('<h5>Paiement réussi · Đã thanh toán</h5>'+row('Apple Pay','120.000₫')+row('Reçu · Hoá đơn','FR / VI','mu'),'ok'));
+       A.add('a',bot('Assistant IA','Merci et bon appétit ! À bientôt à Hội An.'+tr('Cảm ơn chị, chúc ngon miệng!')))}}
+  ]});
+
+/* 6. Tammi OA – đặt món nhóm & chia hoá đơn */
+const PICK = {
+  thuong:[], dacbiet:[], nem:[], tra:[]
+};
+function menuCard(p, final){
+  const items=[['thuong','Bún chả suất thường','45.000đ'],['dacbiet','Bún chả suất đặc biệt','65.000đ'],['nem','Nem cua bể (chiếc)','20.000đ'],['tra','Trà đá','5.000đ']];
+  return card(`<div class="r"><h5>Menu · Bún chả Hàng Mành</h5><span class="chip b">${final?'Đã chốt':'Đang chọn'}</span></div>`+items.map(it=>`<div class="mi"><div class="r"><b>${it[1]}</b><span>${it[2]}</span></div><div class="pk">${(p[it[0]]||[]).map(x=>av(x[0],C[x[1]])+(x[2]?`<small>${x[2]}</small>`:'')).join('')}${final?'':`<small style="margin-left:auto;color:var(--tammi);font-weight:700">+ Chọn</small>`}</div></div>`).join(''),'hl');
+}
+const P1={thuong:[['Lan','Lan'],['Mai','Mai','không hành']],dacbiet:[['Hùng','Hung']],nem:[['Hùng','Hung','×2']],tra:[]};
+const P2={thuong:[['Lan','Lan'],['Mai','Mai','không hành'],['Minh','Minh']],dacbiet:[['Hùng','Hung'],['Tuấn','Tuan']],nem:[['Hùng','Hung','×2'],['Minh','Minh','×1']],tra:[]};
+function splitCard(paid){
+  const L=[['Lan','Lan'],['Hùng','Hung'],['Mai','Mai'],['Tuấn','Tuan']];
+  const n=L.filter(x=>paid.includes(x[0])).length;
+  return card(`<div class="r"><h5>Chia hoá đơn</h5><span class="chip ${n===4?'':'w'}">${n}/4 đã trả</span></div>`+
+   row('320.000đ ÷ 5 người đã đặt','<b>64.000đ/người</b>')+
+   `<div class="qr">${qr(41)}<div style="display:flex;flex-direction:column;gap:3px"><b>Chuyển cho Minh</b><span class="mu">Viettel Money · quét bằng bất kỳ ứng dụng ngân hàng hoặc ví</span></div></div>`+
+   row(av('M',C.Minh)+' Minh','<span class="chip">Đã trả trước</span>')+
+   L.map(x=>row(av(x[0],C[x[1]])+' '+x[0],paid.includes(x[0])?'<span class="chip">✓ 64.000đ</span>':'<span class="chip g">Chờ</span>')).join('')+
+   `<span class="mu">Hoa không đặt món nên không tính.</span>`,'hl');
+}
+const STL=['Quán đã nhận đơn','Đang chuẩn bị','Shipper đang giao','Giao thành công'];
+const statusCard=(n,eta)=>card(`<div class="r"><h5>Đơn #TM-2841 · Bún chả Hàng Mành</h5></div>`+steps(STL.map((l,i)=>i===2&&eta?l+' · dự kiến '+eta:l),n),n>=4?'ok':'');
+const TAM='Tammi OA';
+SC.push({ id:'group', g:'u', title:'Tammi OA: đặt món cho cả nhóm và chia hoá đơn',
+  menu:'④ Tammi OA · Đặt món nhóm, chia hoá đơn',
+  persona:'Nhóm “Team Marketing” có 6 người trên Tammi. Minh gọi Tammi OA vào nhóm để tìm quán bún chả, mọi người tự chọn món trên menu, Tammi OA tổng hợp, thanh toán, theo dõi giao hàng và chia hoá đơn cho những người đã đặt.',
+  tags:['Tăng doanh số','Thanh toán đa nguồn tiền'],
+  phones:{
+    a:{label:'Điện thoại của Minh · nhóm “Team Marketing”', kind:'tammi', title:'Team Marketing 🔥', sub:'6 thành viên · Tammi OA', time:'10:45'},
+    b:{label:'Điện thoại của Hùng', kind:'tammi', title:'Team Marketing 🔥', sub:'6 thành viên', time:'11:22', hidden:true}
+  },
+  steps:[
+    {say:'10:45, nhóm bàn chuyện ăn trưa. Minh gọi Tammi OA ngay trong nhóm chat, nêu món muốn ăn, nơi giao và giờ giao.',
+     do:A=>{A.add('a',oth('Hùng',C.Hung,'Trưa nay ăn gì mọi người ơi')); A.add('a',oth('Mai',C.Mai,'Bún chả đi!')); A.add('a',me('@Tammi trưa nay nhóm mình muốn ăn bún chả, giao về công ty trước 12h nhé'))}},
+    {say:'Tammi OA tìm quán theo đúng nhu cầu: đúng món, gần công ty, giao kịp giờ, đánh giá tốt. Kết quả là 3 quán để nhóm chọn.',
+     do:A=>{A.add('a',bot(TAM,'Mình tìm được 3 quán bún chả gần Toà nhà Viettel (Cầu Giấy), giao kịp trước 12h:'));
+       A.add('a',card(`<div class="shop"><div class="th" style="background:#A0522D">HM</div><div class="in"><b>Bún chả Hàng Mành</b><span class="mu">★ 4,8 · 1,2 km · giao ~25 phút</span><span class="chip">Giảm 20k đơn từ 300k</span></div></div>`+btn('Chọn quán này')+`<div class="shop"><div class="th" style="background:#8B5E3C">ST</div><div class="in"><b>Bún chả Sinh Từ</b><span class="mu">★ 4,6 · 0,8 km · giao ~20 phút</span></div></div>`+btn('Chọn quán này','ghost',false)+`<div class="shop"><div class="th" style="background:#6F4E37">ĐK</div><div class="in"><b>Bún chả Đắc Kim</b><span class="mu">★ 4,7 · 2,1 km · giao ~35 phút</span></div></div>`+btn('Chọn quán này','ghost',false)))}},
+    {say:'Hùng góp ý trong nhóm. Minh bấm chọn Bún chả Hàng Mành.',
+     do:A=>{A.add('a',oth('Hùng',C.Hung,'Hàng Mành ngon nhất đấy, lại đang giảm giá')); A.add('a',sys('Minh đã chọn Bún chả Hàng Mành'))}},
+    {say:'Tammi OA gửi menu của quán vào nhóm. Ai muốn ăn gì thì tự chọn trên menu, không cần nhắn qua lại.',
+     do:A=>{A.add('a',bot(TAM,'Mời cả nhóm chọn món nhé 👇 Ai không ăn thì bỏ qua.')); A.add('a',menuCard({}),'menu')}},
+    {say:'Lan, Hùng, Mai lần lượt chọn món, có thể ghi chú riêng. Menu trong nhóm cập nhật ngay ai đã chọn gì.',
+     do:A=>{A.set('a',{time:'11:05'}); A.up('a','menu',menuCard(P1)); A.add('a',oth('Mai',C.Mai,'Mình không ăn hành nha'))}},
+    {say:'Tuấn chọn món. Hoa báo không đặt vì đã mang cơm. Minh chọn phần của mình.',
+     do:A=>{A.up('a','menu',menuCard(P2)); A.add('a',oth('Hoa',C.Hoa,'Mình mang cơm rồi, mọi người cứ đặt nhé'))}},
+    {say:'Mọi người chọn xong. Minh nhắn Tammi OA đặt đơn.',
+     do:A=>{A.set('a',{time:'11:15'}); A.add('a',me('@Tammi mọi người chọn xong rồi đó, đặt đơn đi'))}},
+    {say:'Tammi OA tổng hợp toàn bộ đơn theo từng người, áp ưu đãi của quán, tính phí giao và nhờ cả nhóm xác nhận lại.',
+     do:A=>{A.up('a','menu',menuCard(P2,true));
+       A.add('a',bot(TAM,'Mình tổng hợp đơn, mọi người kiểm tra giúp nhé:'));
+       A.add('a',card('<h5>Đơn tại Bún chả Hàng Mành</h5>'+row(av('L',C.Lan)+' Lan · suất thường','45.000đ')+row(av('H',C.Hung)+' Hùng · đặc biệt + 2 nem','105.000đ')+row(av('M',C.Mai)+' Mai · suất thường, không hành','45.000đ')+row(av('T',C.Tuan)+' Tuấn · suất đặc biệt','65.000đ')+row(av('M',C.Minh)+' Minh · suất thường + 1 nem','65.000đ')+row('Tạm tính','325.000đ','mu')+row('Phí giao','15.000đ','mu')+row('Ưu đãi của quán','−20.000đ','mu')+row('Tổng','320.000đ','tot')+row('Giao tới','Toà nhà Viettel, Cầu Giấy · trước 12:00','mu')+btn('Xác nhận đơn')),'sum');
+       A.add('a',oth('Hùng',C.Hung,'Chuẩn rồi 👍'))}},
+    {say:'Minh xác nhận. Hộp thanh toán hiện ngay trong đoạn chat.',
+     do:A=>A.add('a',card('<h5>Thanh toán đơn #TM-2841</h5><div style="font-size:20px;font-weight:800">320.000đ</div><div class="pay" style="display:flex;flex-direction:column;gap:6px"><div class="opt on"><span>Viettel Money</span><b>●</b></div><div class="opt"><span>Tài khoản ngân hàng liên kết</span><b>○</b></div><div class="opt"><span>Thẻ nội địa / quốc tế</span><b>○</b></div></div>'+btn('Xác thực vân tay & thanh toán'),'hl'),'pay')},
+    {say:'Thanh toán xong, Tammi OA đặt đơn với quán và hiện trạng thái đơn ngay trong nhóm. Tammi OA hỏi có cần chia hoá đơn không.',
+     do:A=>{A.up('a','pay',card('<div class="r"><h5>Đơn #TM-2841</h5><span class="chip">✓ Minh đã thanh toán 320.000đ</span></div>','ok'));
+       A.add('a',bot(TAM,'Đã đặt đơn với Bún chả Hàng Mành!')); A.add('a',statusCard(0),'status');
+       A.add('a',bot(TAM,'Minh có muốn chia hoá đơn cho những người đã đặt món không?'+`<div class="pbs" style="margin-top:6px">${btn('Có, chia giúp mình')}${btn('Không','ghost',false)}</div>`))}},
+    {say:'Minh đồng ý. Tammi OA chia đều cho 5 người đã đặt món (Hoa không đặt nên không tính) và hiện mã QR nhận tiền của Minh.',
+     do:A=>{A.add('a',me('Có, chia giúp mình'));
+       A.add('a',bot(TAM,'Mỗi người 64.000đ. Mọi người quét mã QR hoặc bấm trả ngay bên dưới để chuyển cho Minh nhé:')); A.add('a',splitCard([]),'split');
+       A.show('b'); A.add('b',sys('Tin nhắn trước đó…')); A.add('b',bot(TAM,'Mỗi người 64.000đ. Mọi người quét mã QR hoặc bấm trả ngay bên dưới để chuyển cho Minh nhé:'));
+       A.add('b',card(`<div class="r"><h5>Phần của bạn</h5><b>64.000đ</b></div><div class="qr">${qr(41)}<span class="mu">Chuyển cho Minh · Viettel Money</span></div>`+btn('Trả Minh 64.000đ'),'hl'),'hp')}},
+    {say:'Trên máy của Hùng: bấm trả, chọn nguồn tiền bất kỳ, xác thực.',
+     do:A=>A.sheet('b',paySheet('64.000đ',1,'Chuyển cho Minh'))},
+    {say:'Mỗi khoản thanh toán thành công được Tammi OA cập nhật vào nhóm. Lan cũng vừa trả. Trong lúc đó quán đang chuẩn bị món.',
+     do:A=>{A.sheet('b',null); A.up('b','hp',card('<div class="r"><h5>Phần của bạn</h5><span class="chip">✓ Đã trả 64.000đ</span></div>','ok'));
+       A.set('a',{time:'11:25'}); A.up('a','split',splitCard(['Hùng','Lan'])); A.up('a','status',statusCard(1)); A.add('a',sys('Hùng và Lan đã trả 64.000đ'))}},
+    {say:'Shipper đang giao. Mai và Tuấn cũng đã trả.',
+     do:A=>{A.set('a',{time:'11:40'}); A.up('a','split',splitCard(['Hùng','Lan','Mai','Tuấn'])); A.up('a','status',statusCard(2,'11:52')); A.add('a',sys('Mai và Tuấn đã trả 64.000đ'))}},
+    {say:'Đơn giao thành công. Tammi OA báo tổng kết vào nhóm: đã thu đủ 4/4, Minh nhận lại 256.000đ.',
+     do:A=>{A.set('a',{time:'11:50'}); A.up('a','status',statusCard(4));
+       A.add('a',bot(TAM,'Đơn đã giao thành công lúc 11:50. Đã thu đủ 4/4 người, Minh đã nhận lại 256.000đ. Chúc cả nhóm ăn ngon!'));
+       A.add('a',oth('Tuấn',C.Tuan,'Tiện thật 😄'))}}
+  ]});
+
+/* ---------- Bộ máy chạy kịch bản ---------- */
+const $=s=>document.querySelector(s);
+let sc=0, i=0, timer=null, cur=0, st=null;
+const API = {
+  add:(p,h,k)=>st[p].items.push({k:k||('_'+st[p].items.length+'_'+cur),h,s:cur}),
+  up:(p,k,h)=>{const it=st[p].items.find(x=>x.k===k); if(it){it.h=h; it.s=cur;} else st[p].items.push({k,h,s:cur});},
+  set:(p,o)=>Object.assign(st[p],o),
+  clear:p=>{st[p].items=[]},
+  sheet:(p,h)=>{st[p].sheet=h; st[p].sheetS=cur;},
+  show:p=>{st[p].hidden=false}
+};
+function build(){
+  const S=SC[sc];
+  st={}; for(const k in S.phones){ st[k]=Object.assign({items:[],input:true,sheet:null,dock:'',top:'',url:''},JSON.parse(JSON.stringify(S.phones[k]))); }
+  for(cur=0; cur<=i; cur++){ S.steps[cur].do(API); }
+}
+const strip=h=>h.replace(/ data-next/g,'');
+function phone(k){
+  const p=st[k]; if(p.hidden) return '';
+  const lg={tammi:'t',tendoo:'T',web:'AI',live:'LH'}[p.kind]||'';
+  const items=p.items.map(it=>{let h=it.s<i?strip(it.h):it.h; return it.s===i?h.replace(/^<(\w+) class="/,'<$1 class="new '):h;}).join('');
+  return `<div class="ph"><div class="dev k-${p.kind}">
+    <div class="sb"><span>${p.time}</span><span>${p.net||'5G'} ▮▮▮</span></div>
+    <div class="ah"><span class="lg">${lg}</span><div class="tt"><b>${p.title}</b><small>${p.sub||''}</small></div></div>
+    ${p.url?`<div class="urlbar">🔒 ${p.url}</div>`:''}
+    ${p.top||''}
+    <div class="body" data-p="${k}">${p.bg?'<div class="hostbg"></div>':''}${items}</div>
+    ${p.dock?`<div class="dock">${p.dock}</div>`:''}
+    ${p.input?`<div class="inp"><span>${p.kind==='web'?'Message…':'Nhắn tin…'}</span><i></i></div>`:''}
+    ${p.sheet?`<div class="sheet-bg"><div class="sheet">${p.sheetS<i?strip(p.sheet):p.sheet}</div></div>`:''}
+  </div><div class="cap">${p.label}</div></div>`;
+}
+function render(){
+  const S=SC[sc];
+  build();
+  $('#title').textContent=S.title; $('#persona').textContent=S.persona;
+  $('#tags').innerHTML=S.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+  $('#stage').innerHTML=Object.keys(st).map(phone).join('');
+  $('#say').textContent=S.steps[i].say;
+  $('#stepNo').textContent=`Bước ${i+1}/${S.steps.length}`;
+  $('#barFill').style.width=((i+1)/S.steps.length*100)+'%';
+  $('#prev').disabled=i===0; $('#next').disabled=i===S.steps.length-1;
+  document.querySelectorAll('.body').forEach(b=>{b.scrollTop=b.scrollHeight;});
+  document.querySelectorAll('.sc').forEach((b,n)=>b.setAttribute('aria-current',String(n===sc)));
+}
+function go(n){ const L=SC[sc].steps.length; i=Math.max(0,Math.min(L-1,n)); render(); if(i===L-1) stopAuto(); }
+function pick(n){ sc=n; i=0; stopAuto(); render(); try{ history.replaceState(null,'','#'+SC[n].id);}catch(e){} window.scrollTo({top:0}); }
+function stopAuto(){ if(timer){clearInterval(timer); timer=null;} $('#auto').setAttribute('aria-pressed','false'); $('#auto').textContent='Tự chạy'; }
+// Danh sách kịch bản
+SC.forEach((S,n)=>{ const b=document.createElement('button'); b.className='sc'; b.type='button';
+  b.innerHTML=`<span class="sct">${S.menu}</span><span class="scp">${S.steps.length} bước</span>`; b.addEventListener('click',()=>pick(n));
+  $(S.g==='m'?'#g-m':'#g-u').appendChild(b); });
+$('#prev').addEventListener('click',()=>go(i-1));
+$('#next').addEventListener('click',()=>go(i+1));
+$('#restart').addEventListener('click',()=>{stopAuto(); go(0);});
+$('#auto').addEventListener('click',()=>{ if(timer){stopAuto(); return;} if(i===SC[sc].steps.length-1) go(0);
+  $('#auto').setAttribute('aria-pressed','true'); $('#auto').textContent='Dừng'; timer=setInterval(()=>go(i+1),3800); });
+$('#stage').addEventListener('click',e=>{ if(e.target.closest('[data-next]')) go(i+1); });
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') go(i+1); if(e.key==='ArrowLeft') go(i-1); });
+const h=(location.hash||'').slice(1); const start=SC.findIndex(s=>s.id===h);
+sc = start>=0?start:0; render();
+})();
+</script>
+</body>
+</html>

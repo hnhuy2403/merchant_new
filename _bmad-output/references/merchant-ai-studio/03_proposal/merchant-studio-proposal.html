@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merchant AI Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: tài liệu đề xuất cuộn dọc — mục lục cố định bên trái, cột nội dung ~68ch, dải khung điện thoại tràn rộng cho phần trải nghiệm */
+:root{
+  --red:#E1062C;          /* đỏ Viettel — điểm nhấn duy nhất */
+  --red-soft:#FDECEF;
+  --ink:#1B1517;          /* chữ chính, xám ấm nghiêng đỏ */
+  --muted:#6C6064;
+  --line:#E9E3E5;
+  --bg:#FFFFFF;
+  --surface:#F7F4F5;
+  --device:#1B1517;       /* viền khung điện thoại */
+  --screen:#FFFFFF;
+  --bubble:#F1ECEE;
+  --tammi:#1F6FEB;        /* màu nhận diện kênh trong mockup */
+  --web:#0F8A6C;
+  --ok:#138A4E;
+  --warn:#B45309;
+  --font-display:"Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body:"Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --step--1:.8125rem; --step-0:1rem; --step-1:1.1875rem; --step-2:1.5rem; --step-3:2rem; --step-4:clamp(2.25rem, 5vw, 3.5rem);
+  --radius:10px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --red:#FF4D68; --red-soft:#3A1219; --ink:#F4EFF1; --muted:#AA9DA2; --line:#352B2F;
+    --bg:#141012; --surface:#1D181A; --device:#3A3134; --screen:#1D181A; --bubble:#2A2326;
+    --tammi:#6EA8FF; --web:#3CC79F; --ok:#43C27E; --warn:#F2A243; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --red:#FF4D68; --red-soft:#3A1219; --ink:#F4EFF1; --muted:#AA9DA2; --line:#352B2F;
+  --bg:#141012; --surface:#1D181A; --device:#3A3134; --screen:#1D181A; --bubble:#2A2326;
+  --tammi:#6EA8FF; --web:#3CC79F; --ok:#43C27E; --warn:#F2A243; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:24px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:var(--step-0); line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px));}
+a{color:var(--red)}
+a:focus-visible, button:focus-visible, summary:focus-visible{outline:2px solid var(--red); outline-offset:3px; border-radius:4px}
+h1,h2,h3,h4{font-family:var(--font-display); line-height:1.2; text-wrap:balance; margin:0}
+h2{font-size:var(--step-3); font-weight:800; letter-spacing:-.01em}
+h3{font-size:var(--step-1); font-weight:700}
+h4{font-size:var(--step-0); font-weight:700}
+p{margin:0}
+.label{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Khung trang */
+.shell{max-width:1240px; margin:0 auto; display:grid; grid-template-columns:230px minmax(0,1fr); gap:56px; padding-block:32px 80px}
+.toc{position:sticky; top:calc(24px + env(safe-area-inset-top, 0px)); align-self:start; display:flex; flex-direction:column; gap:20px}
+.toc nav{display:flex; flex-direction:column; gap:2px; border-left:1px solid var(--line)}
+.toc nav a{color:var(--muted); text-decoration:none; font-size:.875rem; padding:5px 0 5px 14px; margin-left:-1px; border-left:2px solid transparent; line-height:1.35}
+.toc nav a:hover{color:var(--ink)}
+.toc nav a.on{color:var(--ink); border-left-color:var(--red); font-weight:600}
+.controls{display:flex; flex-direction:column; gap:10px}
+.seg{display:inline-flex; border:1px solid var(--line); border-radius:999px; padding:3px; background:var(--surface); width:max-content}
+.seg button{font:inherit; font-size:.8rem; border:0; background:transparent; color:var(--muted); padding:5px 12px; border-radius:999px; cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--bg); color:var(--ink); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.08)}
+main{min-width:0; display:flex; flex-direction:column; gap:88px}
+section{display:flex; flex-direction:column; gap:22px; min-width:0}
+.prose{max-width:68ch; display:flex; flex-direction:column; gap:14px}
+.sec-head{display:flex; flex-direction:column; gap:10px; max-width:68ch}
+.sec-head .label{color:var(--red)}
+.lead{font-size:var(--step-1); line-height:1.55}
+
+/* Bìa */
+.cover{padding-top:24px; gap:28px}
+.cover .kicker{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+.pill{display:inline-flex; align-items:center; gap:6px; font-size:.78rem; font-weight:600; padding:4px 10px; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
+.pill.red{background:var(--red-soft); border-color:transparent; color:var(--red)}
+.cover h1{font-size:var(--step-4); font-weight:800; letter-spacing:-.02em; max-width:16ch}
+.cover h1 em{font-style:normal; color:var(--red)}
+.cover .sub{font-size:var(--step-1); color:var(--muted); max-width:52ch}
+.meta{display:flex; flex-wrap:wrap; gap:28px; border-top:1px solid var(--line); padding-top:18px}
+.meta div{display:flex; flex-direction:column; gap:2px}
+.meta b{font-weight:600}
+
+/* Chuỗi giá trị Viettel */
+.chain{display:flex; flex-wrap:wrap; align-items:stretch; gap:0; margin-top:4px}
+.chain .node{display:flex; flex-direction:column; gap:2px; padding:12px 16px; border:1px solid var(--line); background:var(--bg); min-width:0; flex:1 1 120px}
+.chain .node + .node{border-left:0}
+.chain .node:first-child{border-radius:var(--radius) 0 0 var(--radius)}
+.chain .node:last-child{border-radius:0 var(--radius) var(--radius) 0}
+.chain .node b{font-size:.92rem}
+.chain .node span{font-size:.75rem; color:var(--muted)}
+.chain .node.vdf{background:var(--red-soft); border-color:var(--red)}
+.chain .node.vdf + .node{border-left:1px solid var(--line)}
+@media (max-width:760px){
+  .chain{flex-direction:column}
+  .chain .node + .node{border-left:1px solid var(--line); border-top:0}
+  .chain .node:first-child{border-radius:var(--radius) var(--radius) 0 0}
+  .chain .node:last-child{border-radius:0 0 var(--radius) var(--radius)}
+}
+
+/* Thẻ số liệu */
+.stats{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.stat{background:var(--bg); padding:18px; display:flex; flex-direction:column; gap:6px; min-width:0}
+.stat .v{font-family:var(--font-display); font-size:var(--step-3); font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.stat .v small{font-size:.5em; font-weight:700; color:var(--muted); margin-left:2px}
+.stat p{font-size:.86rem; line-height:1.45}
+.stat .src{font-size:.72rem; color:var(--muted)}
+.stat .src a{color:var(--muted)}
+
+/* Lưới thẻ */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px}
+.card{border:1px solid var(--line); border-radius:var(--radius); padding:20px; display:flex; flex-direction:column; gap:10px; min-width:0; background:var(--bg)}
+.card ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px}
+.card.tint{background:var(--surface); border-color:transparent}
+.who{display:flex; align-items:center; gap:8px; font-weight:700}
+.dot{width:10px; height:10px; border-radius:50%; background:var(--red); flex:none}
+.dot.u{background:var(--tammi)} .dot.t{background:var(--web)} .dot.n{background:var(--muted)}
+
+/* Trợ lý */
+.assist{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px}
+.ac{border:1px solid var(--line); border-radius:var(--radius); padding:20px; display:flex; flex-direction:column; gap:12px; min-width:0}
+.ac .no{font-family:var(--font-mono); font-size:.8rem; color:var(--red); font-weight:500}
+.ac dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:6px 12px; font-size:.86rem}
+.ac dt{color:var(--muted)}
+.ac dd{margin:0}
+.ac .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto}
+.tag{font-size:.72rem; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--surface); color:var(--muted)}
+
+/* Kiến trúc */
+.arch{display:flex; flex-direction:column; gap:8px}
+.layer{border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; display:grid; grid-template-columns:150px minmax(0,1fr); gap:16px; align-items:center}
+.layer .chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{font-size:.82rem; padding:5px 10px; border-radius:6px; background:var(--surface)}
+.layer.core{border-color:var(--red); background:var(--red-soft)}
+.layer.core .chip{background:var(--bg)}
+.layer .label{line-height:1.3}
+@media (max-width:640px){.layer{grid-template-columns:1fr; gap:8px}}
+
+/* Bảng */
+.tbl{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius)}
+table{border-collapse:collapse; width:100%; font-size:.86rem; min-width:560px}
+th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-weight:600; background:var(--surface); font-size:.8rem}
+tr:last-child td{border-bottom:0}
+td.c{text-align:center}
+.yes{color:var(--ok); font-weight:700} .part{color:var(--warn); font-weight:700} .no{color:var(--muted)}
+
+/* Lớp chi tiết */
+details.tech{border:1px dashed var(--line); border-radius:var(--radius); background:var(--surface)}
+details.tech > summary{cursor:pointer; list-style:none; padding:12px 16px; display:flex; align-items:center; gap:10px; font-weight:600; font-size:.9rem}
+details.tech > summary::-webkit-details-marker{display:none}
+details.tech > summary::before{content:"+"; font-family:var(--font-mono); width:20px; height:20px; display:inline-grid; place-items:center; border-radius:4px; background:var(--bg); color:var(--red); flex:none}
+details.tech[open] > summary::before{content:"−"}
+details.tech > summary .label{margin-left:auto}
+details.tech .body{padding:0 16px 16px; display:flex; flex-direction:column; gap:14px; min-width:0}
+
+/* Hành trình & khung điện thoại */
+.journey{display:flex; flex-direction:column; gap:14px}
+.jhead{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 16px}
+.need{border-left:3px solid var(--red); padding:4px 0 4px 14px; max-width:68ch; font-size:.95rem}
+.strip{display:flex; gap:20px; overflow-x:auto; padding:6px 2px 14px; scroll-snap-type:x proximity}
+.step{flex:none; width:228px; display:flex; flex-direction:column; gap:10px; scroll-snap-align:start; margin:0}
+.step figcaption{font-size:.82rem; line-height:1.45; display:flex; gap:8px}
+.step figcaption b{font-family:var(--font-mono); font-weight:500; color:var(--red); flex:none}
+.phone{width:228px; height:440px; border:7px solid var(--device); border-radius:30px; background:var(--screen); overflow:hidden; display:flex; flex-direction:column; position:relative}
+.phone::before{content:""; position:absolute; top:6px; left:50%; transform:translateX(-50%); width:56px; height:6px; border-radius:6px; background:var(--device); opacity:.9}
+.sbar{display:flex; justify-content:space-between; font-size:.62rem; padding:16px 14px 4px; color:var(--muted); font-variant-numeric:tabular-nums}
+.abar{display:flex; align-items:center; gap:8px; padding:6px 12px 8px; border-bottom:1px solid var(--line); font-size:.78rem; font-weight:700}
+.abar .logo{width:18px; height:18px; border-radius:5px; display:grid; place-items:center; color:#fff; font-size:.6rem; font-weight:800; flex:none}
+.abar.tendoo .logo{background:var(--red)}
+.abar.tammi .logo{background:var(--tammi)}
+.abar.web .logo{background:var(--web)}
+.abar small{font-weight:500; color:var(--muted); margin-left:auto; font-size:.66rem}
+.scr{flex:1; padding:10px; display:flex; flex-direction:column; gap:7px; font-size:.7rem; line-height:1.4; overflow:hidden}
+.b{padding:7px 9px; border-radius:12px; max-width:88%; background:var(--bubble)}
+.b.me{align-self:flex-end; background:var(--tammi); color:#fff}
+.b.bot{align-self:flex-start}
+.b .ai{display:block; font-size:.58rem; font-weight:700; color:var(--muted); margin-bottom:2px}
+.mini{border:1px solid var(--line); border-radius:9px; padding:8px; display:flex; flex-direction:column; gap:4px; background:var(--screen)}
+.mini b{font-size:.72rem}
+.mini .row{display:flex; justify-content:space-between; gap:6px}
+.btn{display:block; text-align:center; font-weight:700; font-size:.7rem; padding:7px; border-radius:8px; background:var(--red); color:#fff}
+.btn.blue{background:var(--tammi)} .btn.green{background:var(--web)}
+.btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line)}
+.kpis{display:grid; grid-template-columns:1fr 1fr; gap:6px}
+.kpis div{background:var(--surface); border-radius:8px; padding:6px 8px}
+.kpis b{display:block; font-size:.9rem; font-variant-numeric:tabular-nums}
+.live{background:#120d0f; color:#fff; border-radius:9px; padding:8px; display:flex; flex-direction:column; gap:5px; flex:1}
+.live .tagl{align-self:flex-start; background:#E1062C; color:#fff; font-size:.56rem; font-weight:800; padding:1px 6px; border-radius:4px}
+.live .cm{font-size:.64rem; line-height:1.35}
+.live .cm i{font-style:normal; color:#ffb3c0; font-weight:700}
+.live .cm.ai{background:rgba(255,255,255,.12); border-radius:6px; padding:3px 6px}
+.ok{color:var(--ok); font-weight:700}
+.tap{flex:1; display:grid; place-items:center; text-align:center; gap:6px}
+.tap .ring{width:96px; height:96px; border-radius:50%; border:3px solid var(--web); display:grid; place-items:center; font-weight:800; font-size:.8rem; color:var(--web); box-shadow:0 0 0 10px color-mix(in srgb, var(--web) 15%, transparent)}
+.demo{align-self:flex-start; font-size:.85rem; font-weight:600; border:1px solid var(--red); color:var(--red); background:var(--red-soft); padding:7px 14px; border-radius:999px; text-decoration:none}
+.demo:hover{background:var(--red); color:#fff}
+.demolinks{display:flex; flex-wrap:wrap; gap:8px}
+
+/* Bức tranh tổng quan */
+.eco{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:24px}
+.eco figure{margin:0; display:flex; flex-direction:column; gap:12px; min-width:0}
+.eco .fhead{display:flex; align-items:center; gap:10px}
+.eco svg{width:100%; height:auto; display:block}
+.eco .band{fill:var(--surface)}
+.eco .box{fill:var(--bg); stroke:var(--line); stroke-width:1.5}
+.eco .box.dim{stroke-dasharray:5 4}
+.eco .box.vdf{fill:var(--red-soft); stroke:var(--red); stroke-width:2}
+.eco .box.meet{fill:var(--bg); stroke:var(--red); stroke-width:2}
+.eco text{fill:var(--ink); font-family:var(--font-body); font-size:13px}
+.eco .t{font-weight:800; font-size:15px}
+.eco .tb{font-weight:700}
+.eco .s{fill:var(--muted); font-size:12px}
+.eco .r{fill:var(--red); font-weight:700}
+.eco .lab{fill:var(--muted); font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em}
+.eco .ln{stroke:var(--muted); stroke-width:1.5; fill:none}
+.eco .ln.dash{stroke-dasharray:5 5}
+.eco .ln.red{stroke:var(--red); stroke-width:3}
+.eco .ln.reddash{stroke:var(--red); stroke-width:2; stroke-dasharray:6 5}
+.eco ul{margin:0; padding-left:18px; font-size:.9rem; display:flex; flex-direction:column; gap:4px}
+@media (max-width:900px){.eco{grid-template-columns:minmax(0,1fr)}}
+.story{border-top:3px solid var(--red); border-radius:0; padding:16px 0 0; display:flex; flex-direction:column; gap:8px; min-width:0}
+.story .label{color:var(--red)}
+
+.note{font-size:.8rem; color:var(--muted)}
+.callout{border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; display:flex; flex-direction:column; gap:8px}
+.callout.pending{border-style:dashed}
+ol.steps{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:8px}
+.sources{font-size:.8rem; display:flex; flex-direction:column; gap:6px; padding-left:18px; margin:0}
+footer{border-top:1px solid var(--line); padding-top:20px; font-size:.8rem; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px 24px}
+
+@media (max-width:960px){
+  .shell{grid-template-columns:minmax(0,1fr); gap:28px; padding-block:16px 64px}
+  .toc{position:static; flex-direction:column-reverse}
+  .toc nav{flex-direction:row; overflow-x:auto; border-left:0; border-bottom:1px solid var(--line); gap:16px; padding-bottom:2px}
+  .toc nav a{border-left:0; padding:6px 0; white-space:nowrap; border-bottom:2px solid transparent; margin:0}
+  .toc nav a.on{border-bottom-color:var(--red)}
+  .controls{flex-direction:row; flex-wrap:wrap}
+  main{gap:64px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="toc" aria-label="Mục lục">
+  <div class="controls">
+    <span class="label">Chế độ đọc</span>
+    <div class="seg" role="group" aria-label="Chế độ đọc">
+      <button type="button" id="mode-brief" aria-pressed="true">Tóm tắt</button>
+      <button type="button" id="mode-full" aria-pressed="false">Đầy đủ</button>
+    </div>
+    <div class="seg" role="group" aria-label="Giao diện">
+      <button type="button" id="th-system" aria-pressed="true">Hệ thống</button>
+      <button type="button" id="th-light" aria-pressed="false">Sáng</button>
+      <button type="button" id="th-dark" aria-pressed="false">Tối</button>
+    </div>
+  </div>
+  <nav id="toc">
+    <a href="#tom-tat">1. Tóm tắt điều hành</a>
+    <a href="#tong-quan">2. Bức tranh tổng quan</a>
+    <a href="#boi-canh">3. Bối cảnh &amp; cơ hội</a>
+    <a href="#van-de">4. Vấn đề cần giải quyết</a>
+    <a href="#giai-phap">5. Giải pháp</a>
+    <a href="#trai-nghiem">6. Trải nghiệm người dùng</a>
+    <a href="#viettel">7. Vì sao là Viettel</a>
+    <a href="#gia-tri">8. Giá trị cho từng bên</a>
+    <a href="#kien-truc">9. Kiến trúc &amp; tích hợp</a>
+    <a href="#quan-tri">10. Quản trị AI &amp; tuân thủ</a>
+    <a href="#buoc-tiep">11. Đo lường &amp; bước tiếp theo</a>
+    <a href="#phu-luc">Phụ lục</a>
+  </nav>
+</aside>
+
+<main>
+
+<!-- BÌA -->
+<section class="cover" id="bia">
+  <div class="kicker">
+    <span class="pill red">Đề xuất hợp tác</span>
+    <span class="pill">VDF × Tendoo × Tammi</span>
+    <span class="pill">Tài liệu thảo luận · v0.1</span>
+  </div>
+  <h1>Merchant AI Studio — <em>mỗi cửa hàng</em> một đội trợ lý AI</h1>
+  <p class="sub">Nền tảng để người bán trên Tendoo tự tạo trợ lý AI, bán hàng tới người dùng Tammi và khách quốc tế, cả online lẫn tại cửa hàng, thanh toán qua Viettel Digital Finance.</p>
+  <div class="chain" aria-label="Chuỗi giá trị khép kín trong hệ sinh thái Viettel">
+    <div class="node"><b>Danh tính</b><span>Thuê bao đã xác thực</span></div>
+    <div class="node"><b>Kênh</b><span>Tammi: Shop, OA, Live, chat</span></div>
+    <div class="node"><b>Hàng hoá</b><span>Tendoo: kho, đơn</span></div>
+    <div class="node vdf"><b>Trợ lý AI + Thanh toán</b><span>VDF: Merchant AI Studio</span></div>
+    <div class="node"><b>Giao hàng</b><span>Viettel Post</span></div>
+    <div class="node"><b>Hoá đơn, thuế</b><span>Tendoo</span></div>
+  </div>
+  <div class="meta">
+    <div><span class="label">Đơn vị đề xuất</span><b>Viettel Digital Finance</b></div>
+    <div><span class="label">Gửi tới</span><b>Tendoo · Viettel Tammi</b></div>
+    <div><span class="label">Ngày</span><b class="num">15/10/2026</b></div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="tom-tat">
+  <div class="sec-head"><span class="label">1 · Tóm tắt điều hành</span><h2>Để người bán của Tendoo và người dùng của Tammi gặp nhau, mua bán và thanh toán dễ dàng</h2></div>
+  <div class="prose">
+    <p class="lead">Tendoo đang giữ hàng hoá, đơn và sổ sách của hộ kinh doanh. Tammi có hàng triệu người dùng đã xác thực, trò chuyện mỗi ngày. Hai bên chưa nối với nhau, và Tammi chưa có lớp thương mại.</p>
+    <p>VDF đề xuất <b>Merchant AI Studio</b>: người bán tạo trợ lý AI ngay trong app Tendoo, chỉ trong vài phút, từ dữ liệu cửa hàng sẵn có. Trợ lý làm việc trên Tammi và tại cửa hàng, kết hợp thanh toán đa nguồn tiền của VDF. Merchant AI Studio giúp người bán giải quyết ba câu chuyện:</p>
+  </div>
+  <div class="grid3">
+    <div class="story"><span class="label">Câu chuyện 1</span><h3>Vận hành bán hàng hiệu quả</h3><p class="muted">Trợ lý trả lời khách và tạo đơn khi livestream, trực tin nhắn ban đêm, giúp nhân viên phục vụ khách quốc tế. Đơn, kho, sổ sách tự đồng bộ về Tendoo.</p></div>
+    <div class="story"><span class="label">Câu chuyện 2</span><h3>Tiếp cận khách hàng và tăng doanh số</h3><p class="muted">Có thêm kênh bán tới hàng triệu người dùng Tammi qua Tammi Shop, livestream, Tammi OA và Tammi OA; bán được cho khách quốc tế ghé cửa hàng.</p></div>
+    <div class="story"><span class="label">Câu chuyện 3</span><h3>Thanh toán đa nguồn tiền, xuyên biên giới</h3><p class="muted">Viettel Money, tài khoản ngân hàng, thẻ nội địa và quốc tế. Khách nước ngoài chạm thẻ hoặc điện thoại tại cửa hàng; người Việt ra nước ngoài thanh toán qua hệ sinh thái Viettel (lộ trình).</p></div>
+  </div>
+  <div class="assist">
+    <div class="ac"><span class="no">①  Người bán</span><h3>Trợ lý Livestream</h3><p class="muted">Trả lời người xem, đọc comment để tạo đơn nháp; khách chốt là đơn lên tự động.</p></div>
+    <div class="ac"><span class="no">②  Người bán</span><h3>Trợ lý Bán hàng trên OA cửa hàng</h3><p class="muted">Trực thay khi thiếu người và ban đêm: tư vấn, chốt đơn, gửi yêu cầu thanh toán.</p></div>
+    <div class="ac"><span class="no">③  Người bán</span><h3>Trợ lý Tại cửa hàng</h3><p class="muted">Khách quốc tế quét QR, hỏi và đặt hàng bằng tiếng của mình, chạm thẻ để trả. Mọi ngành hàng.</p></div>
+    <div class="ac"><span class="no">④  Người dùng Tammi</span><h3>Tammi OA</h3><p class="muted">Cầu nối người dùng với cửa hàng: đặt món theo nhóm, tìm và tư vấn hàng, đồng hành khi đi nước ngoài.</p></div>
+  </div>
+  <div class="callout"><span class="label">Đề nghị</span><p>Ba bên thống nhất phạm vi giải pháp và tổ chức buổi làm việc kỹ thuật để chốt điểm tích hợp, nhóm cửa hàng thí điểm và lộ trình (mục 11).</p></div>
+</section>
+
+<!-- 2 · TỔNG QUAN -->
+<section id="tong-quan">
+  <div class="sec-head"><span class="label">2 · Bức tranh tổng quan</span><h2>Trước và sau khi có Merchant AI Studio</h2><p class="muted">Mô hình có hai lớp. <b>Lớp Nền tảng hệ sinh thái</b> gồm Tendoo, Tammi và VDF. <b>Lớp Thị trường</b> là nơi người bán và người mua gặp nhau, cả online lẫn tại cửa hàng.</p></div>
+  <div class="eco">
+    <figure>
+      <div class="fhead"><span class="pill">Trước</span><span class="muted">Hiện nay</span></div>
+      <svg viewBox="0 0 560 480" role="img" aria-labelledby="eco-before-t">
+        <title id="eco-before-t">Trước: Tendoo, Tammi và VDF hoạt động riêng; người bán và người mua gặp nhau qua nền tảng ngoài</title>
+        <rect class="band" x="0" y="0" width="560" height="215" rx="12"/>
+        <text class="lab" x="16" y="24">LỚP NỀN TẢNG HỆ SINH THÁI</text>
+        <rect class="box" x="20" y="48" width="165" height="96" rx="10"/>
+        <text class="t" x="102.5" y="82" text-anchor="middle">Tendoo</text>
+        <text class="s" x="102.5" y="104" text-anchor="middle">Quản lý bán hàng</text>
+        <text class="s" x="102.5" y="122" text-anchor="middle">Kê khai thuế</text>
+        <rect class="box" x="375" y="48" width="165" height="96" rx="10"/>
+        <text class="t" x="457.5" y="82" text-anchor="middle">Tammi</text>
+        <text class="s" x="457.5" y="104" text-anchor="middle">Hàng triệu</text>
+        <text class="s" x="457.5" y="122" text-anchor="middle">người dùng cuối</text>
+        <line class="ln dash" x1="185" y1="86" x2="375" y2="86"/>
+        <text class="s" x="280" y="72" text-anchor="middle">Chưa kết nối</text>
+        <text class="r" x="280" y="91" text-anchor="middle">✕</text>
+        <rect class="box dim" x="210" y="130" width="140" height="62" rx="10"/>
+        <text class="tb" x="280" y="156" text-anchor="middle">VDF</text>
+        <text class="s" x="280" y="176" text-anchor="middle">Thanh toán riêng lẻ</text>
+        <line class="ln" x1="102.5" y1="144" x2="102.5" y2="300"/>
+        <line class="ln" x1="457.5" y1="144" x2="457.5" y2="300"/>
+        <rect class="band" x="0" y="250" width="560" height="230" rx="12"/>
+        <line class="ln" x1="102.5" y1="250" x2="102.5" y2="300"/>
+        <line class="ln" x1="457.5" y1="250" x2="457.5" y2="300"/>
+        <text class="lab" x="16" y="274">LỚP THỊ TRƯỜNG · NGƯỜI BÁN – NGƯỜI MUA</text>
+        <rect class="box" x="20" y="300" width="165" height="110" rx="10"/>
+        <text class="t" x="102.5" y="332" text-anchor="middle">Người bán</text>
+        <text class="s" x="102.5" y="354" text-anchor="middle">Merchant của Tendoo</text>
+        <text class="s" x="102.5" y="374" text-anchor="middle">Online · Tại cửa hàng</text>
+        <rect class="box" x="375" y="300" width="165" height="110" rx="10"/>
+        <text class="t" x="457.5" y="332" text-anchor="middle">Người mua</text>
+        <text class="s" x="457.5" y="354" text-anchor="middle">Người dùng Tammi</text>
+        <text class="s" x="457.5" y="372" text-anchor="middle">Khách quốc tế</text>
+        <text class="s" x="457.5" y="392" text-anchor="middle">Online · Tại cửa hàng</text>
+        <line class="ln dash" x1="185" y1="355" x2="210" y2="355"/>
+        <line class="ln dash" x1="350" y1="355" x2="375" y2="355"/>
+        <rect class="box dim" x="210" y="318" width="140" height="76" rx="10"/>
+        <text class="tb" x="280" y="344" text-anchor="middle">Nền tảng ngoài</text>
+        <text class="s" x="280" y="364" text-anchor="middle">MXH, sàn TMĐT</text>
+        <text class="s" x="280" y="382" text-anchor="middle">phí cao, rời rạc</text>
+        <text class="s" x="280" y="446" text-anchor="middle">Tại cửa hàng: khách quốc tế khó trao đổi, thiếu tiền mặt</text>
+      </svg>
+      <ul>
+        <li>Tendoo, Tammi và VDF hoạt động riêng, chưa chia sẻ người dùng và dữ liệu.</li>
+        <li>Người bán tìm khách qua mạng xã hội, sàn thương mại điện tử: phí cao, dữ liệu và dòng tiền nằm ngoài hệ sinh thái.</li>
+        <li>Tại cửa hàng, người bán khó phục vụ khách quốc tế.</li>
+      </ul>
+    </figure>
+    <figure>
+      <div class="fhead"><span class="pill red">Sau</span><span class="muted">Khi có Merchant AI Studio</span></div>
+      <svg viewBox="0 0 560 480" role="img" aria-labelledby="eco-after-t">
+        <title id="eco-after-t">Sau: VDF là chất xúc tác nối Tendoo và Tammi; người bán và người mua gặp nhau qua trợ lý AI và thanh toán</title>
+        <rect class="band" x="0" y="0" width="560" height="215" rx="12"/>
+        <text class="lab" x="16" y="24">LỚP NỀN TẢNG HỆ SINH THÁI</text>
+        <rect class="box" x="20" y="60" width="160" height="96" rx="10"/>
+        <text class="t" x="100" y="94" text-anchor="middle">Tendoo</text>
+        <text class="s" x="100" y="116" text-anchor="middle">Quản lý bán hàng</text>
+        <text class="s" x="100" y="134" text-anchor="middle">Kê khai thuế</text>
+        <rect class="box" x="380" y="60" width="160" height="96" rx="10"/>
+        <text class="t" x="460" y="94" text-anchor="middle">Tammi</text>
+        <text class="s" x="460" y="116" text-anchor="middle">Hàng triệu</text>
+        <text class="s" x="460" y="134" text-anchor="middle">người dùng cuối</text>
+        <rect class="box vdf" x="205" y="40" width="150" height="142" rx="12"/>
+        <text class="t" x="280" y="68" text-anchor="middle">VDF</text>
+        <text class="r" x="280" y="90" text-anchor="middle">Merchant AI Studio</text>
+        <text class="s" x="280" y="112" text-anchor="middle">Trợ lý AI</text>
+        <text class="s" x="280" y="130" text-anchor="middle">Thanh toán đa nguồn</text>
+        <text class="s" x="280" y="148" text-anchor="middle">tiền, xuyên biên giới</text>
+        <line class="ln red" x1="180" y1="108" x2="205" y2="108"/>
+        <line class="ln red" x1="355" y1="108" x2="380" y2="108"/>
+        <line class="ln" x1="100" y1="156" x2="100" y2="300"/>
+        <line class="ln" x1="460" y1="156" x2="460" y2="300"/>
+        <rect class="band" x="0" y="250" width="560" height="230" rx="12"/>
+        <line class="ln" x1="100" y1="250" x2="100" y2="300"/>
+        <line class="ln" x1="460" y1="250" x2="460" y2="300"/>
+        <line class="ln reddash" x1="280" y1="182" x2="280" y2="315"/>
+        <text class="r" x="290" y="234" font-size="12">chất xúc tác</text>
+        <text class="lab" x="16" y="274">LỚP THỊ TRƯỜNG · NGƯỜI BÁN – NGƯỜI MUA</text>
+        <rect class="box" x="20" y="300" width="160" height="110" rx="10"/>
+        <text class="t" x="100" y="332" text-anchor="middle">Người bán</text>
+        <text class="s" x="100" y="354" text-anchor="middle">Merchant của Tendoo</text>
+        <text class="s" x="100" y="374" text-anchor="middle">Online · Tại cửa hàng</text>
+        <rect class="box" x="380" y="300" width="160" height="110" rx="10"/>
+        <text class="t" x="460" y="332" text-anchor="middle">Người mua</text>
+        <text class="s" x="460" y="354" text-anchor="middle">Người dùng Tammi</text>
+        <text class="s" x="460" y="372" text-anchor="middle">Khách quốc tế</text>
+        <text class="s" x="460" y="392" text-anchor="middle">Online · Tại cửa hàng</text>
+        <line class="ln red" x1="180" y1="355" x2="205" y2="355"/>
+        <line class="ln red" x1="355" y1="355" x2="380" y2="355"/>
+        <rect class="box meet" x="205" y="315" width="150" height="80" rx="10"/>
+        <text class="tb" x="280" y="343" text-anchor="middle">Gặp nhau, gắn kết</text>
+        <text class="s" x="280" y="363" text-anchor="middle">qua trợ lý AI</text>
+        <text class="s" x="280" y="381" text-anchor="middle">và thanh toán</text>
+        <text class="s" x="280" y="436" text-anchor="middle">Online: Tammi Shop · Live · OA cửa hàng · Tammi OA</text>
+        <text class="s" x="280" y="456" text-anchor="middle">Tại cửa hàng: QR đa ngôn ngữ · Chạm thẻ, điện thoại</text>
+      </svg>
+      <ul>
+        <li>VDF là chất xúc tác: Merchant AI Studio nối dữ liệu hàng hoá của Tendoo với kênh người dùng của Tammi.</li>
+        <li>Người bán và người mua gặp nhau ngay trong hệ sinh thái Viettel, online lẫn tại cửa hàng.</li>
+        <li>Mọi giao dịch đi qua thanh toán đa nguồn tiền của VDF, kể cả khách quốc tế.</li>
+      </ul>
+    </figure>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Lớp</th><th>Thực thể</th><th>Vai trò trong mô hình</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3">Nền tảng hệ sinh thái</td><td><b>Tendoo</b></td><td>Nền tảng quản lý bán hàng, kê khai thuế; nguồn dữ liệu hàng hoá, đơn, sổ sách của người bán</td></tr>
+      <tr><td><b>Tammi</b></td><td>Nơi tập trung hàng triệu người dùng cuối; kênh Tammi Shop (đề xuất xây), livestream, OA cửa hàng, chat; trợ lý Tammi OA</td></tr>
+      <tr><td><b>VDF</b></td><td>Chất xúc tác: Merchant AI Studio và thanh toán đa nguồn tiền làm nền để người bán của Tendoo và người dùng của Tammi gặp nhau, gắn kết</td></tr>
+      <tr><td rowspan="2">Thị trường</td><td><b>Người bán</b></td><td>Toàn bộ merchant của Tendoo, bán online và tại cửa hàng, ở mọi ngành hàng</td></tr>
+      <tr><td><b>Người mua</b></td><td>Người dùng Tammi; khách du lịch quốc tế mua hàng, dùng dịch vụ của merchant Tendoo, online hoặc tại cửa hàng</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 2 -->
+<section id="boi-canh">
+  <div class="sec-head"><span class="label">3 · Bối cảnh &amp; cơ hội</span><h2>Thị trường đã sẵn sàng, hệ sinh thái Viettel còn thiếu mắt nối</h2></div>
+  <div class="stats">
+    <div class="stat"><span class="v num">01/01<small>/2026</small></span><p>Hộ kinh doanh bỏ thuế khoán, chuyển sang tự kê khai: nhu cầu số hoá bán hàng tăng mạnh.</p><span class="src">NQ 198/2025/QH15</span></div>
+    <div class="stat"><span class="v num">5<small>triệu+</small></span><p>Người dùng Tammi sau vài tháng ra mắt; top 1 kho ứng dụng tháng 8/2026.</p><span class="src">Viettel công bố, <a href="https://vnexpress.net/ung-dung-tammi-nam-trong-top-tai-nhieu-tai-viet-nam-5110618.html" target="_blank" rel="noopener">VnExpress</a></span></div>
+    <div class="stat"><span class="v num">~20<small>%</small></span><p>Doanh thu TMĐT đến từ livestream bán hàng.</p><span class="src">AccessTrade, đầu 2026 (số liệu tổng hợp)</span></div>
+    <div class="stat"><span class="v num">21,2<small>triệu</small></span><p>Lượt khách quốc tế năm 2025; mục tiêu 25 triệu năm 2026.</p><span class="src"><a href="https://en.baochinhphu.vn/foreign-arrivals-soar-to-record-high-in-2025-111260106100233228.htm" target="_blank" rel="noopener">Báo Chính phủ</a></span></div>
+    <div class="stat"><span class="v num">~6<small>%</small></span><p>Điểm chấp nhận thanh toán nhận được QR quốc tế (VietQR Global), trên hơn 2,5 triệu điểm.</p><span class="src">NHNN, hội thảo 25/9/2026</span></div>
+    <div class="stat"><span class="v num">6,7<small>triệu</small></span><p>Lượt người Việt ra nước ngoài năm 2025, tăng 26,4%.</p><span class="src"><a href="https://nhandan.vn/khach-viet-ngay-cang-chuong-xuat-ngoai-va-sanh-du-lich-post936688.html" target="_blank" rel="noopener">Nhân Dân</a></span></div>
+  </div>
+  <div class="grid2">
+    <div class="card tint"><h3>AI đã thành tính năng phổ biến</h3><p>Các nền tảng quản lý bán hàng đều đã có AI nhập liệu từ ảnh, giọng nói và chatbot hỏi đáp. Lợi thế đang chuyển sang <b>trợ lý biết hành động</b>, gắn với kênh bán và dòng tiền thật.</p></div>
+    <div class="card tint"><h3>Mắt nối còn thiếu</h3><p>Tendoo có nguồn hàng nhưng thiếu kênh người mua riêng. Tammi có người dùng nhưng chưa có thương mại. Hai bên chưa kết nối, và thanh toán chưa đi chung một hệ.</p></div>
+  </div>
+  <details class="tech"><summary>Chi tiết: hiện trạng Tendoo và Tammi <span class="label">Sản phẩm</span></summary><div class="body">
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Tendoo</th><th>Tammi</th></tr></thead>
+      <tbody>
+        <tr><td>Vai trò</td><td>Bán hàng, ghi sổ, khai thuế cho hộ kinh doanh và SME</td><td>Super-app "cuộc sống số": gọi, chat, họp, quản lý dịch vụ Viettel</td></tr>
+        <tr><td>Quy mô (tự công bố)</td><td>Hơn 200.000 lượt hộ kinh doanh được hỗ trợ chuyển đổi thuế</td><td>Hơn 5 triệu người dùng (8/2026)</td></tr>
+        <tr><td>AI hiện có</td><td>Trợ lý thuế; tạo hàng hoá từ ảnh; đọc ảnh sổ tay, ảnh chat; lên đơn bằng giọng nói; sinh nội dung</td><td>AI Agent gợi ý dịch vụ; chatbot Tammi AI; AI tìm kiếm</td></tr>
+        <tr><td>Thương mại</td><td>POS, kết nối sàn và mạng xã hội, website bán hàng</td><td>Chưa có cửa hàng, livestream hay công cụ cho người bán</td></tr>
+        <tr><td>Thanh toán</td><td>QR qua ngân hàng</td><td>Viettel Money cho cước và hoá đơn</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Nguồn: nghiên cứu thông tin công khai đến 10/2026. Số liệu người dùng do Viettel tự công bố, chưa có số người dùng hoạt động hằng tháng.</p>
+  </div></details>
+</section>
+
+<!-- 3 -->
+<section id="van-de">
+  <div class="sec-head"><span class="label">4 · Vấn đề cần giải quyết</span><h2>Người bán bán ở cả hai nơi, người mua cũng vậy</h2><p class="muted">Cửa hàng bán online lẫn tại quầy. Người mua cũng mua ở cả hai nơi. Giải pháp phải có mặt ở cả hai.</p></div>
+  <div class="grid3">
+    <div class="card"><div class="who"><span class="dot"></span>Người bán</div><ul>
+      <li>Khi livestream vừa phải giới thiệu, vừa trả lời hàng trăm câu hỏi, vừa ghi đơn: sót đơn, khách bỏ đi.</li>
+      <li>Không đủ người trực tin nhắn, nhất là buổi tối và ban đêm.</li>
+      <li>Khách nước ngoài vào cửa hàng nhưng không trao đổi được, mất đơn ở mọi ngành hàng.</li>
+      <li>Phụ thuộc nền tảng ngoài: phí cao, thuật toán khó đoán.</li>
+    </ul></div>
+    <div class="card"><div class="who"><span class="dot u"></span>Người dùng Tammi</div><ul>
+      <li>Mua online sợ lừa đảo, người bán ẩn danh.</li>
+      <li>Phải chuyển qua lại nhiều app: xem live, nhắn tin, chuyển khoản.</li>
+      <li>Đặt đồ ăn, đồ uống cho cả nhóm rất rườm rà.</li>
+      <li>Đi nước ngoài phải dùng nhiều công cụ rời rạc: dịch, sim, thanh toán.</li>
+    </ul></div>
+    <div class="card"><div class="who"><span class="dot t"></span>Khách quốc tế tại cửa hàng</div><ul>
+      <li>Không đọc được thông tin sản phẩm, không hỏi được nhân viên.</li>
+      <li>Lo ngại về giá, thành phần, chất liệu, kích cỡ.</li>
+      <li>Thiếu tiền mặt; nhiều cửa hàng nhỏ chưa nhận thẻ quốc tế.</li>
+      <li>Không muốn tải thêm app chỉ để mua một lần.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="giai-phap">
+  <div class="sec-head"><span class="label">5 · Giải pháp</span><h2>Merchant AI Studio: người bán tự tạo trợ lý, không cần code</h2></div>
+  <div class="prose"><p>Merchant AI Studio nằm trong app Tendoo. Người bán chọn một mẫu trợ lý, AI tự đọc hàng hoá, giá, tồn kho và chính sách cửa hàng từ Tendoo, người bán tinh chỉnh bằng lời nói rồi bật trợ lý lên kênh bán. Tammi OA do Tammi chủ trì, VDF làm nền tảng hỗ trợ, phát triển và tối ưu; trợ lý nối người dùng với các trợ lý của từng cửa hàng.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Câu chuyện của người bán</th><th>Online (Tammi)</th><th>Tại cửa hàng</th></tr></thead>
+    <tbody>
+      <tr><td><b>Vận hành bán hàng hiệu quả</b></td><td>① trả lời và tạo đơn khi live; ② trực tin nhắn ngoài giờ; đơn, kho, sổ sách tự đồng bộ</td><td>③ giải đáp và nhận đặt hàng thay nhân viên; đơn hiện bằng tiếng Việt trên Tendoo</td></tr>
+      <tr><td><b>Tiếp cận và tăng doanh số</b></td><td>Tammi Shop, livestream, OA cửa hàng; ④ Tammi OA đưa người dùng tới cửa hàng (tìm hàng, đặt món nhóm)</td><td>Bán được cho khách quốc tế; khách gần đó tìm thấy cửa hàng qua Tammi OA</td></tr>
+      <tr><td><b>Thanh toán đa nguồn tiền, xuyên biên giới</b></td><td>Viettel Money, tài khoản ngân hàng, thẻ nội địa và quốc tế ngay trong chat; người Việt ở nước ngoài thanh toán qua Viettel (lộ trình)</td><td>Khách quốc tế chạm thẻ hoặc điện thoại vào điện thoại của cửa hàng</td></tr>
+    </tbody>
+  </table></div>
+  <div class="arch" aria-label="Ba lớp của giải pháp">
+    <div class="layer"><span class="label">Kênh</span><div class="chips"><span class="chip">App Tendoo</span><span class="chip">Tammi Shop</span><span class="chip">Tammi Live</span><span class="chip">OA cửa hàng</span><span class="chip">Tammi OA trong chat &amp; nhóm</span><span class="chip">Web qua QR tại cửa hàng</span></div></div>
+    <div class="layer"><span class="label">Trợ lý AI</span><div class="chips"><span class="chip">① Livestream</span><span class="chip">② Bán hàng trên OA cửa hàng</span><span class="chip">③ Tại cửa hàng</span><span class="chip">④ Tammi OA</span></div></div>
+    <div class="layer core"><span class="label">Nền tảng VDF</span><div class="chips"><span class="chip">Merchant AI Studio: tạo &amp; vận hành trợ lý</span><span class="chip">Thanh toán đa nguồn tiền, xuyên biên giới</span><span class="chip">Dữ liệu Tendoo</span></div></div>
+  </div>
+  <div class="assist">
+    <div class="ac"><span class="no">①</span><h3>Trợ lý Livestream</h3><dl><dt>Nhu cầu</dt><dd>Chủ shop quá tải câu hỏi và ghi đơn khi live</dd><dt>Trợ lý làm</dt><dd>Trả lời comment; đọc comment muốn mua để tạo đơn nháp; khách chốt, đơn lên tự động</dd><dt>Kênh</dt><dd>Tammi Live</dd></dl><div class="tags"><span class="tag">Online</span><span class="tag">Đơn đồng bộ về kho Tendoo</span></div></div>
+    <div class="ac"><span class="no">②</span><h3>Trợ lý Bán hàng</h3><dl><dt>Nhu cầu</dt><dd>Thiếu người trực tin nhắn, mất khách ban đêm</dd><dt>Trợ lý làm</dt><dd>Tư vấn theo tồn kho thật, chốt đơn, gửi yêu cầu thanh toán, chuyển người thật khi cần</dd><dt>Kênh</dt><dd>Tammi OA của cửa hàng</dd></dl><div class="tags"><span class="tag">Online</span><span class="tag">Đặt trước, lấy tại cửa hàng</span></div></div>
+    <div class="ac"><span class="no">③</span><h3>Trợ lý Tại cửa hàng</h3><dl><dt>Nhu cầu</dt><dd>Khách quốc tế không trao đổi được với nhân viên</dd><dt>Trợ lý làm</dt><dd>Giải đáp và nhận đặt hàng bằng ngôn ngữ của khách; khách chạm thẻ hoặc điện thoại để trả</dd><dt>Kênh</dt><dd>Web qua QR, không cần cài app</dd></dl><div class="tags"><span class="tag">Tại cửa hàng</span><span class="tag">Mọi ngành hàng</span></div></div>
+    <div class="ac"><span class="no">④</span><h3>Tammi OA</h3><dl><dt>Nhu cầu</dt><dd>Người dùng muốn mua, đặt, đi lại ngay trong app chat</dd><dt>Trợ lý làm</dt><dd>Đặt món theo nhóm (có chia tiền), tìm và tư vấn hàng từ nhiều shop, Travel Mode khi đi nước ngoài</dd><dt>Kênh</dt><dd>Chat 1-1 và nhóm chat Tammi</dd></dl><div class="tags"><span class="tag">Online</span><span class="tag">Gợi ý cửa hàng gần</span></div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Đề xuất Tammi xây Tammi Shop</h3><ul><li><b>Tammi Shop</b> (tương tự TikTok Shop): mỗi cửa hàng có gian hàng trên Tammi với sản phẩm, giỏ hàng, đơn hàng, đánh giá; sản phẩm đồng bộ từ Tendoo.</li><li><b>Livestream bán hàng</b> gắn với Tammi Shop: phát trực tiếp, ghim sản phẩm, comment, nhắn riêng.</li><li><b>Mỗi shop đăng ký một OA cửa hàng</b> (Tammi đã có sẵn tính năng OA) để trò chuyện với khách. Người trả lời có thể là nhân viên hoặc trợ lý AI của cửa hàng.</li><li><b>Nhóm chat cho phép thêm trợ lý</b>, hiển thị thẻ tương tác (bình chọn, gọi món, thanh toán).</li></ul></div>
+    <div class="card"><h3>Ai chủ trì phần nào</h3><ul><li><b>VDF:</b> Merchant AI Studio, các mẫu trợ lý, thanh toán đa nguồn tiền.</li><li><b>Tendoo:</b> tích hợp Studio vào app; dữ liệu hàng hoá và đơn; tuyển, hỗ trợ cửa hàng.</li><li><b>Tammi:</b> xây Tammi Shop (gian hàng, đơn, livestream bán hàng); mở tính năng OA sẵn có cho các shop đăng ký OA cửa hàng và cho phép trợ lý AI cùng nhân viên trả lời khách; cho phép thêm trợ lý vào nhóm chat; trải nghiệm người dùng.</li><li><b>Tammi OA:</b> Tammi chủ trì; VDF làm nền tảng hỗ trợ, phát triển và tối ưu cho Tammi OA.</li></ul></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="trai-nghiem">
+  <div class="sec-head"><span class="label">6 · Trải nghiệm người dùng</span><h2>Từ lúc mở điện thoại đến khi xong việc</h2><p class="muted">Nhân vật minh hoạ: chị Lan có cửa hàng trà, đặc sản và quà tặng ở Hội An, đã dùng Tendoo, bán cả tại cửa hàng lẫn qua livestream. Minh là nhân viên văn phòng ở Hà Nội, dùng Tammi hằng ngày. Anh Kim Min-jun là du khách Hàn Quốc, không dùng Tammi. Chị Camille Laurent là du khách Pháp ăn kiêng (demo). Giải pháp áp dụng cho mọi ngành hàng.</p></div>
+
+  <!-- 5.0 -->
+  <div class="journey" id="j0">
+    <div class="jhead"><h3>6.0 · Người bán thiết lập lần đầu</h3><span class="pill">~10 phút · làm một lần</span></div>
+    <div class="strip">
+      <figure class="step"><div class="phone"><div class="sbar"><span>09:00</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Tendoo</div><div class="scr">
+        <div class="mini" style="border-color:var(--red)"><b>Mới: Trợ lý AI bán hàng</b><span class="muted">Tạo trong 5 phút từ dữ liệu cửa hàng của bạn</span><span class="btn">Mở Merchant AI Studio</span></div>
+        <div class="kpis"><div>Doanh thu hôm qua<b>4,2tr</b></div><div>Đơn<b>37</b></div></div>
+      </div></div><figcaption><b>1</b>Mở Tendoo, thấy lời mời tạo trợ lý AI, mở Merchant AI Studio.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>09:01</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Merchant AI Studio</div><div class="scr">
+        <div class="mini"><b>Mở Tammi Shop &amp; OA cửa hàng</b><span class="muted">OTP đã gửi tới 098•••••12</span><span class="btn">Xác nhận</span></div>
+        <div class="mini"><b>✓ Cửa hàng đã xác thực</b><span class="muted">Từ thông tin hộ kinh doanh trên Tendoo</span></div>
+      </div></div><figcaption><b>2</b>Mở Tammi Shop và đăng ký OA cho cửa hàng bằng OTP; cửa hàng được gắn huy hiệu xác thực.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>09:03</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Merchant AI Studio</div><div class="scr">
+        <b>AI đã đọc cửa hàng của bạn</b>
+        <div class="kpis"><div>Mặt hàng<b>48</b></div><div>Mô tả đã viết<b>48</b></div><div>Thiếu ảnh<b>6</b></div><div>Nhóm hàng<b>5</b></div></div>
+        <span class="btn">Đăng lên Tammi Shop</span>
+      </div></div><figcaption><b>3</b>AI đọc hàng hoá, giá, tồn kho từ Tendoo, tự viết mô tả; đăng sản phẩm lên Tammi Shop.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>09:05</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Thư viện trợ lý</div><div class="scr">
+        <div class="mini"><b>① Livestream</b><span class="muted">Trả lời comment, tạo đơn nháp</span></div>
+        <div class="mini"><b>② Bán hàng trên OA cửa hàng</b><span class="muted">Trực thay ngoài giờ</span></div>
+        <div class="mini"><b>③ Tại cửa hàng</b><span class="muted">Khách quốc tế, đa ngôn ngữ</span></div>
+        <div class="mini"><b>Nhận tiền</b><span class="ok">✓ Đã bật: QR, ví, thẻ, chạm thẻ quốc tế</span></div>
+      </div></div><figcaption><b>4</b>Bật nhận tiền qua VDF và chọn mẫu trợ lý cần dùng.</figcaption></figure>
+    </div>
+  </div>
+
+  <!-- 5.1 -->
+  <div class="journey" id="j1">
+    <div class="jhead"><h3>6.1 · Một buổi livestream có trợ lý</h3><span class="pill">① Trợ lý Livestream</span></div>
+    <p class="need"><b>Nhu cầu:</b> khi live, chủ shop phải tư vấn và trả lời rất nhiều câu hỏi. Trợ lý trả lời thay, đọc comment để tạo đơn nháp; khách chốt là đơn lên tự động.</p>
+    <div class="strip">
+      <figure class="step"><div class="phone"><div class="sbar"><span>19:45</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Tammi Live<small>Chuẩn bị</small></div><div class="scr">
+        <b>Chọn sản phẩm cho phiên live</b>
+        <div class="mini"><div class="row"><span>Trà sen Tây Hồ</span><span class="num">T02</span></div><span class="muted">Tồn 40 · gợi ý giảm 20%</span></div>
+        <div class="mini"><div class="row"><span>Bánh đậu xanh</span><span class="num">B05</span></div><span class="muted">Tồn 85 · bán chạy</span></div>
+        <div class="mini"><b>Kịch bản gợi ý</b><span class="muted">20:00 giới thiệu · 20:30 ưu đãi chớp nhoáng</span></div>
+        <span class="btn blue">Bắt đầu live</span>
+      </div></div><figcaption><b>1</b>Chị Lan chọn sản phẩm, trợ lý gợi ý kịch bản. Người theo dõi nhận thông báo.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>20:12</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Lan's House<small>1.284 xem</small></div><div class="scr">
+        <div class="live"><span class="tagl">LIVE</span>
+          <div class="cm"><i>Hà:</i> trà này pha được mấy lần ạ?</div>
+          <div class="cm ai"><i>🤖 Bé Trà:</i> Dạ pha 3–4 lần nước, ngon nhất lần 2 ạ</div>
+          <div class="cm"><i>Minh:</i> chốt T02 x2</div>
+          <div class="cm ai"><i>🤖 Bé Trà:</i> Em đã gửi đơn nháp vào tin nhắn cho anh Minh ạ</div>
+          <div class="cm"><i>Tú:</i> ship Đà Nẵng mấy ngày?</div>
+        </div>
+      </div></div><figcaption><b>2</b>Trợ lý trả lời câu hỏi ngay dưới comment và nhận ra comment muốn mua.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>20:12</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Lan's House<small>Tin nhắn</small></div><div class="scr">
+        <div class="b bot"><span class="ai">Trợ lý AI · Lan's House</span>Đơn nháp từ phiên live của anh:</div>
+        <div class="mini"><div class="row"><span>Trà sen Tây Hồ ×2</span><span class="num">560.000đ</span></div><div class="row muted"><span>Giao tới</span><span>Cầu Giấy, HN</span></div><div class="row muted"><span>Phí ship</span><span>Miễn phí</span></div></div>
+        <span class="btn blue">Chốt đơn</span>
+      </div></div><figcaption><b>3</b>Minh nhận đơn nháp (địa chỉ tự điền), bấm Chốt đơn. Đơn lên tự động vào Tendoo.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>20:13</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Thanh toán</div><div class="scr">
+        <b class="num">560.000đ</b>
+        <div class="mini"><div class="row"><span>◉ Viettel Money</span></div></div>
+        <div class="mini"><div class="row"><span>○ Tài khoản ngân hàng liên kết</span></div></div>
+        <div class="mini"><div class="row"><span>○ Thẻ nội địa / quốc tế</span></div></div>
+        <span class="btn blue">Xác thực vân tay</span>
+      </div></div><figcaption><b>4</b>Chọn nguồn tiền, xác thực sinh trắc. Thanh toán qua VDF.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>20:40</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Bảng live</div><div class="scr">
+        <div class="kpis"><div>Đơn<b>37</b></div><div>Đã trả<b>28</b></div><div>Doanh thu<b>12,4tr</b></div><div>T02 còn<b>5</b></div></div>
+        <div class="mini" style="border-color:var(--warn)"><b>Cần chị xử lý (1)</b><span class="muted">Khách phản ánh đơn tuần trước giao chậm</span></div>
+      </div></div><figcaption><b>5</b>Chị Lan theo dõi đơn và doanh thu trực tiếp. Comment khiếu nại được chuyển cho chị.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>21:05</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Báo cáo phiên live</div><div class="scr">
+        <div class="kpis"><div>Người xem<b>2.310</b></div><div>Tỉ lệ trả<b>76%</b></div></div>
+        <div class="mini"><b>Câu hỏi nhiều nhất</b><span class="muted">Cách pha · hạn dùng · phí ship</span></div>
+        <span class="btn ghost">Nhắc 9 khách chưa trả</span>
+        <span class="btn">Tạo vận đơn</span>
+      </div></div><figcaption><b>6</b>Sau live: báo cáo, nhắc khách chưa thanh toán, tạo vận đơn. Sổ sách tự cập nhật.</figcaption></figure>
+    </div>
+    <div class="demolinks"><a class="demo" href="../04_demo/index.html#live-chat">Xem demo: khách nhắn riêng khi xem live →</a><a class="demo" href="../04_demo/index.html#live-faq">Xem demo: gom câu hỏi giống nhau →</a></div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="journey" id="j2">
+    <div class="jhead"><h3>6.2 · 23 giờ, khách nhắn tin cho cửa hàng</h3><span class="pill">② Trợ lý Bán hàng trên OA cửa hàng</span></div>
+    <p class="need"><b>Nhu cầu:</b> cửa hàng không đủ người trực tin nhắn, nhất là ban đêm. OA của shop cho phép cả nhân viên lẫn trợ lý AI cùng trả lời khách: trợ lý tư vấn và chốt đơn khi không có người; nhân viên vào ca thì trợ lý lùi lại.</p>
+    <div class="strip">
+      <figure class="step"><div class="phone"><div class="sbar"><span>23:15</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>OA Lan's House<small>✓ Đã xác thực</small></div><div class="scr">
+        <div class="b bot"><span class="ai">Trợ lý AI · Lan's House</span>Chào anh, chị Lan đang nghỉ, em hỗ trợ anh ngay nhé!</div>
+        <div class="b me">Mình cần quà biếu sếp tầm 500k, sếp thích trà</div>
+        <div class="b bot"><span class="ai">Trợ lý AI</span>Anh cần giao trước ngày nào ạ?</div>
+      </div></div><figcaption><b>1</b>Minh xem sản phẩm trên Tammi Shop của cửa hàng, bấm nhắn tin tới OA của shop. Trợ lý tự giới thiệu là AI.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>23:16</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>OA Lan's House</div><div class="scr">
+        <div class="b bot"><span class="ai">Trợ lý AI</span>Em gợi ý 3 hộp quà phù hợp:</div>
+        <div class="mini"><div class="row"><b>Hộp Trà sen + bánh</b><span class="num">480k</span></div><span class="muted">Có thiệp viết tay · bán chạy</span></div>
+        <div class="mini"><div class="row"><b>Trà Shan tuyết cổ thụ</b><span class="num">450k</span></div></div>
+        <div class="mini"><div class="row"><b>Bộ ấm chén + trà</b><span class="num">520k</span></div></div>
+      </div></div><figcaption><b>2</b>Trợ lý gợi ý theo tồn kho thật, giải thích khác biệt giữa các loại.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>23:18</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>OA Lan's House</div><div class="scr">
+        <div class="mini"><b>Đơn hàng</b><div class="row"><span>Hộp Trà sen + bánh</span><span>480k</span></div><div class="row muted"><span>Thiệp</span><span>"Kính chúc anh…"</span></div><div class="row muted"><span>Giao dự kiến</span><span>Thứ Sáu</span></div></div>
+        <span class="btn blue">Thanh toán 480.000đ</span>
+        <div class="b bot"><span class="ai">Trợ lý AI</span><span class="ok">✓</span> Đã nhận thanh toán. Em sẽ báo anh khi đơn được giao.</div>
+      </div></div><figcaption><b>3</b>Chốt đơn kèm thiệp, thanh toán ngay trong chat. Minh đi ngủ.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>08:00</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Bản tin đêm qua</div><div class="scr">
+        <div class="kpis"><div>Khách được trả lời<b>23</b></div><div>Đơn chốt<b>7</b></div><div>Doanh thu<b>3,1tr</b></div><div>Cần xử lý<b>2</b></div></div>
+        <div class="mini"><b>Cần chị xử lý</b><span class="muted">1 khách hỏi giá sỉ · 1 khách phản ánh giao chậm</span></div>
+        <span class="btn ghost">Dạy lại một câu trả lời</span>
+      </div></div><figcaption><b>4</b>Sáng hôm sau, chị Lan đọc bản tin, xử lý 2 hội thoại được gắn cờ.</figcaption></figure>
+    </div>
+    <a class="demo" href="../04_demo/index.html#oa-night">Xem demo: khách nhắn lúc 23h →</a>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="journey" id="j3">
+    <div class="jhead"><h3>6.3 · Khách quốc tế tại cửa hàng</h3><span class="pill">③ Trợ lý Tại cửa hàng</span></div>
+    <p class="need"><b>Nhu cầu:</b> khách nước ngoài không đọc được thông tin, không hỏi được nhân viên, và không tải app. Khách quét QR để hỏi và đặt hàng trên web; thanh toán bằng cách chạm thẻ quốc tế hoặc điện thoại vào điện thoại của cửa hàng.</p>
+    <div class="strip">
+      <figure class="step"><div class="phone"><div class="sbar"><span>14:20</span><span>LTE</span></div><div class="abar web"><span class="logo">QR</span>lanshouse · 한국어<small>Web</small></div><div class="scr">
+        <div class="b bot"><span class="ai">AI 도우미</span>안녕하세요! 무엇이든 물어보세요.</div>
+        <div class="mini"><div class="row"><b>연꽃차 선물세트</b><span class="num">480.000₫</span></div><span class="muted">≈ 26.000원 · 기내 반입 가능</span></div>
+        <div class="mini"><div class="row"><b>녹두 케이크</b><span class="num">120.000₫</span></div><span class="muted">≈ 6.500원</span></div>
+      </div></div><figcaption><b>1</b>Anh Kim Min-jun (Hàn Quốc) quét QR. Trang web mở bằng tiếng Hàn, không cài app, không đăng ký. Giá có quy đổi sang won.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>14:21</span><span>LTE</span></div><div class="abar web"><span class="logo">QR</span>lanshouse · 한국어</div><div class="scr">
+        <div class="b me" style="background:var(--web)">비행기에 가져갈 수 있나요? 유통기한은요?</div>
+        <div class="b bot"><span class="ai">AI 도우미</span>네, 기내 반입 가능합니다. 유통기한은 12개월입니다. 선물 포장도 해 드려요.</div>
+        <div class="note">"Mang lên máy bay được không? Hạn dùng?"</div>
+      </div></div><figcaption><b>2</b>Anh Kim hỏi bằng tiếng Hàn, trợ lý trả lời theo dữ liệu của cửa hàng.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>14:23</span><span>LTE</span></div><div class="abar web"><span class="logo">QR</span>lanshouse · 한국어</div><div class="scr">
+        <b>주문 내역</b>
+        <div class="mini"><div class="row"><span>연꽃차 선물세트 ×2</span><span class="num">960.000₫</span></div><div class="row muted"><span>선물 포장</span><span>무료</span></div><div class="row"><b>합계</b><b class="num">≈ 52.000원</b></div></div>
+        <span class="btn green">주문하기 · Đặt hàng</span>
+        <span class="muted">결제는 매장에서 카드/휴대폰 터치</span>
+      </div></div><figcaption><b>3</b>Anh Kim đặt hàng trên web. Thanh toán không làm trên web.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>14:23</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Màn hình đơn</div><div class="scr">
+        <div class="mini" style="border-color:var(--web)"><b>Đơn mới · Quầy 1 · Khách Hàn Quốc</b><div class="row"><span>Hộp quà Trà sen ×2</span><span>960k</span></div><span class="muted">Ghi chú (đã dịch): gói quà, mang lên máy bay</span></div>
+        <span class="btn">Nhận thanh toán chạm</span>
+      </div></div><figcaption><b>4</b>Nhân viên thấy đơn bằng tiếng Việt, chuẩn bị hàng, mở màn hình nhận thanh toán.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>14:26</span><span>5G</span></div><div class="abar tendoo"><span class="logo">T</span>Nhận thanh toán</div><div class="scr">
+        <b class="num" style="text-align:center">960.000đ</b>
+        <div class="tap"><div class="ring">CHẠM</div><span class="muted">Thẻ Visa, Mastercard… hoặc điện thoại</span></div>
+        <div class="b bot" style="align-self:stretch"><span class="ok">✓ Thành công</span> · hoá đơn song ngữ đã gửi</div>
+      </div></div><figcaption><b>5</b>Anh Kim chạm thẻ hoặc iPhone vào điện thoại của nhân viên. Đơn và tiền tự vào sổ Tendoo.</figcaption></figure>
+    </div>
+    <details class="tech"><summary>Ví dụ theo ngành hàng: cùng một mẫu trợ lý <span class="label">Sản phẩm</span></summary><div class="body">
+      <div class="tbl"><table>
+        <thead><tr><th>Ngành hàng</th><th>Đặt QR ở đâu</th><th>Khách quốc tế thường hỏi</th><th>Trợ lý hỗ trợ</th></tr></thead>
+        <tbody>
+          <tr><td>Ăn uống</td><td>Bàn, quầy</td><td>Món nào không cay? Có món chay? Tôi dị ứng đậu phộng</td><td>Gọi món tại bàn, ghi chú dị ứng gửi bếp</td></tr>
+          <tr><td>Thời trang, may đo, lụa</td><td>Quầy, phòng thử</td><td>Chất liệu gì? Size tương đương? May xong mấy ngày?</td><td>Chọn mẫu, size; đặt may; hẹn lấy hoặc giao về khách sạn</td></tr>
+          <tr><td>Quà lưu niệm, gốm, đặc sản</td><td>Kệ hàng, quầy</td><td>Mang lên máy bay được không? Hạn dùng? Gói quà?</td><td>Thêm vào đơn, gói quà, lấy tại quầy</td></tr>
+          <tr><td>Mỹ phẩm, nhà thuốc</td><td>Quầy</td><td>Thành phần? Dùng cho da nhạy cảm? Tương đương thuốc nào?</td><td>Thông tin sản phẩm; câu hỏi chuyên môn luôn chuyển dược sĩ, nhân viên</td></tr>
+          <tr><td>Spa, dịch vụ</td><td>Lễ tân</td><td>Gói nào phù hợp? Bao lâu?</td><td>Chọn gói, đặt lịch</td></tr>
+          <tr><td>Tạp hoá, siêu thị mini</td><td>Quầy, cửa ra vào</td><td>Sản phẩm này là gì? Có hàng Halal?</td><td>Tìm sản phẩm trên kệ, giải thích</td></tr>
+        </tbody>
+      </table></div>
+    </div></details>
+    <div class="demolinks"><a class="demo" href="../04_demo/index.html#store-kim">Xem demo: anh Kim Min-jun (Hàn Quốc) →</a><a class="demo" href="../04_demo/index.html#store-camille">Xem demo: chị Camille Laurent (Pháp, ăn kiêng) →</a></div>
+  </div>
+
+  <!-- 5.4 -->
+  <div class="journey" id="j4">
+    <div class="jhead"><h3>6.4 · Tammi OA</h3><span class="pill">④ Cầu nối người dùng và cửa hàng</span></div>
+    <p class="need"><b>Nhu cầu:</b> người dùng muốn mua, đặt và xử lý việc ngay trong app chat quen thuộc, kể cả khi đi cùng nhóm hay ra nước ngoài.</p>
+    <div class="strip">
+      <figure class="step"><div class="phone"><div class="sbar"><span>11:00</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Team Marketing 🔥<small>6</small></div><div class="scr">
+        <div class="b me">@Tammi trưa nay đặt bún chả về công ty, trước 12h</div>
+        <div class="b bot"><span class="ai">Tammi OA</span>Bình chọn quán nhé:</div>
+        <div class="mini"><div class="row"><span>Bún chả Hàng Mành</span><b>4</b></div><div class="row"><span>Bún chả Đắc Kim</span><b>1</b></div><div class="row"><span>Bún chả Sinh Từ</span><b>1</b></div></div>
+      </div></div><figcaption><b>1</b>Trong nhóm chat, Minh gọi @Tammi. Trợ lý tìm quán gần công ty, mở bình chọn.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>11:20</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Team Marketing 🔥</div><div class="scr">
+        <div class="mini"><b>Gọi món chung · Hàng Mành</b><div class="row"><span>Lan · suất thường</span><span>45k</span></div><div class="row"><span>Hùng · đặc biệt + nem</span><span>85k</span></div><div class="row"><span>Mai · không hành</span><span>45k</span></div><div class="row muted"><span>+3 người</span><span></span></div></div>
+        <span class="btn blue">Chốt đơn &amp; thanh toán</span>
+        <div class="b bot"><span class="ai">Tammi OA</span>Đã đặt. Em hỗ trợ chia tiền cho cả nhóm nhé.</div>
+      </div></div><figcaption><b>2</b>Mỗi người tự chọn món. Minh chốt và thanh toán; trợ lý hỗ trợ chia tiền cho các thành viên.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>18:30</span><span>5G</span></div><div class="abar tammi"><span class="logo">t</span>Tammi OA</div><div class="scr">
+        <div class="b me">Cuối tuần về quê, mua quà cho bố mẹ, tầm 1 triệu</div>
+        <div class="b bot"><span class="ai">Tammi OA</span>Gợi ý combo từ 2 cửa hàng đã xác thực, giao kịp thứ Bảy:</div>
+        <div class="mini"><div class="row"><span>Trà · Lan's House</span><span>480k</span></div><div class="row"><span>Đồ ăn vặt · Shop Mộc</span><span>450k</span></div></div>
+        <span class="btn ghost">Hỏi kỹ hơn với Lan's House</span>
+      </div></div><figcaption><b>3</b>Tìm quà từ nhiều cửa hàng; khi cần tư vấn sâu, kết nối sang OA của cửa hàng. Trả một lần cho cả hai shop.</figcaption></figure>
+      <figure class="step"><div class="phone"><div class="sbar"><span>07:40</span><span>Roaming</span></div><div class="abar tammi"><span class="logo">t</span>Tammi OA<small>Travel Mode</small></div><div class="scr">
+        <div class="mini" style="border-color:var(--tammi)"><b>Chào mừng tới Nhật Bản 🇯🇵</b><span class="ok">✓ eSIM 4 ngày đã hoạt động</span></div>
+        <div class="mini"><b>Dịch menu bằng camera</b><span class="muted">味噌ラーメン → Mì ramen vị miso</span></div>
+        <div class="mini"><b>Khẩn cấp</b><span class="muted">Đại sứ quán Việt Nam tại Tokyo</span></div>
+        <div class="mini"><b>Thanh toán tại nước ngoài</b><span class="muted">Sắp ra mắt</span></div>
+      </div></div><figcaption><b>4</b>Đi công tác Nhật: Travel Mode tự bật khi máy bắt sóng nước ngoài. Thanh toán ở nước ngoài nằm trong lộ trình của VDF.</figcaption></figure>
+    </div>
+    <a class="demo" href="../04_demo/index.html#group">Xem demo: đặt món nhóm và chia hoá đơn →</a>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="viettel">
+  <div class="sec-head"><span class="label">7 · Vì sao là Viettel</span><h2>Đối thủ có thể làm AI, nhưng không có cả chuỗi</h2></div>
+  <div class="grid3">
+    <div class="card"><h3>Kênh người mua có sẵn</h3><p>Tammi có người dùng đã xác thực bằng thuê bao, trò chuyện hằng ngày. Cửa hàng không phải mua khách từ nền tảng ngoài.</p></div>
+    <div class="card"><h3>Dòng tiền khép kín</h3><p>Thanh toán VDF nhận Viettel Money, tài khoản ngân hàng, thẻ nội địa và thẻ quốc tế bằng chạm. Tiền về tự ghi sổ trên Tendoo.</p></div>
+    <div class="card"><h3>Trợ lý biết hành động</h3><p>Trợ lý tạo đơn nháp, gửi yêu cầu thanh toán, đồng bộ kho, chứ không chỉ trả lời câu hỏi. Merchant AI Studio giúp người bán tự tạo trợ lý mới trong vài phút.</p></div>
+  </div>
+  <details class="tech"><summary>So sánh với các nhóm giải pháp trên thị trường <span class="label">Sản phẩm</span></summary><div class="body">
+    <div class="tbl"><table>
+      <thead><tr><th>Tiêu chí</th><th>Merchant AI Studio (đề xuất)</th><th>Phần mềm bán hàng có AI<br><span class="muted">KiotViet, Sapo, MISA</span></th><th>Chatbot bán hàng<br><span class="muted">Pancake/Botcake</span></th><th>OA + mini app<br><span class="muted">Zalo</span></th><th>Sàn, live<br><span class="muted">TikTok Shop, Shopee</span></th></tr></thead>
+      <tbody>
+        <tr><td>Kênh người mua của riêng hệ sinh thái</td><td class="c yes">●</td><td class="c no">○</td><td class="c no">○</td><td class="c yes">●</td><td class="c yes">●</td></tr>
+        <tr><td>Quản lý kho, đơn, sổ sách, thuế</td><td class="c yes">●</td><td class="c yes">●</td><td class="c part">◐</td><td class="c no">○</td><td class="c part">◐</td></tr>
+        <tr><td>Trợ lý tạo đơn trong chat, livestream</td><td class="c yes">●</td><td class="c part">◐</td><td class="c yes">●</td><td class="c part">◐</td><td class="c part">◐</td></tr>
+        <tr><td>Thanh toán của chính hệ sinh thái</td><td class="c yes">●</td><td class="c part">◐</td><td class="c no">○</td><td class="c yes">●</td><td class="c yes">●</td></tr>
+        <tr><td>Phục vụ khách quốc tế tại cửa hàng</td><td class="c yes">●</td><td class="c part">◐</td><td class="c no">○</td><td class="c no">○</td><td class="c no">○</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">● có · ◐ một phần · ○ chưa thấy. Đánh giá sơ bộ dựa trên thông tin công khai đến 10/2026, cần cập nhật định kỳ.</p>
+  </div></details>
+</section>
+
+<!-- 7 -->
+<section id="gia-tri">
+  <div class="sec-head"><span class="label">8 · Giá trị cho từng bên</span><h2>Mỗi bên nhận được gì</h2></div>
+  <div class="grid3">
+    <div class="card"><div class="who"><span class="dot"></span>Người bán</div><p>Có đội trợ lý trong vài phút, không sót đơn khi live, không mất khách ban đêm, phục vụ được khách quốc tế, có thêm kênh bán trên Tammi; đơn và tiền tự vào sổ.</p></div>
+    <div class="card"><div class="who"><span class="dot u"></span>Người dùng Tammi</div><p>Mua sắm từ cửa hàng đã xác thực ngay trong app chat, được tư vấn cả ban đêm, đặt món theo nhóm dễ dàng, có trợ lý khi đi nước ngoài.</p></div>
+    <div class="card"><div class="who"><span class="dot t"></span>Khách quốc tế</div><p>Quét QR là hỏi được bằng tiếng của mình, hiểu rõ sản phẩm, chạm thẻ hoặc điện thoại để trả.</p></div>
+    <div class="card"><div class="who"><span class="dot n"></span>Tendoo</div><p>Điểm khác biệt mà đối thủ khó sao chép: kênh Tammi và thanh toán. Người bán gắn bó lâu hơn; có thêm gói dịch vụ AI.</p></div>
+    <div class="card"><div class="who"><span class="dot n"></span>Tammi</div><p>Có lớp thương mại với Tammi Shop, livestream, đặt món; tính năng OA được các cửa hàng dùng rộng rãi. Người dùng có thêm lý do mở app mỗi ngày.</p></div>
+    <div class="card"><div class="who"><span class="dot n"></span>VDF</div><p>Merchant AI Studio được triển khai ở quy mô lớn; thêm lưu lượng thanh toán online, tại quầy, thẻ quốc tế và xuyên biên giới.</p></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="kien-truc">
+  <div class="sec-head"><span class="label">9 · Kiến trúc &amp; tích hợp</span><h2>Một nền tảng trợ lý, nhiều kênh, một dòng dữ liệu</h2></div>
+  <div class="prose"><p>Tendoo là nguồn dữ liệu gốc về hàng hoá và đơn. Merchant AI Studio đọc dữ liệu từ Tendoo, làm việc trên các kênh của Tammi và web, và gọi thanh toán VDF khi có giao dịch. Trợ lý không tự trừ tiền: mọi giao dịch do người dùng tự xác thực.</p></div>
+  <details class="tech"><summary>Điểm tích hợp và nguyên tắc kỹ thuật <span class="label">Kỹ thuật</span></summary><div class="body">
+    <div class="tbl"><table>
+      <thead><tr><th>Tích hợp</th><th>Hướng</th><th>Nội dung</th><th>Phục vụ</th></tr></thead>
+      <tbody>
+        <tr><td>Tendoo → Studio</td><td>Đọc</td><td>Hàng hoá, giá, tồn kho, giờ mở cửa, chính sách, lịch sử khách</td><td>Tri thức của mọi trợ lý</td></tr>
+        <tr><td>Studio → Tendoo</td><td>Ghi</td><td>Đơn nháp, đơn đã chốt, ghi chú (dị ứng, size, gói quà), trạng thái thanh toán</td><td>Lên đơn tự động, màn hình đơn, sổ sách</td></tr>
+        <tr><td>Tammi ↔ Studio</td><td>Hai chiều</td><td>Sản phẩm và đơn trên Tammi Shop, tin nhắn OA cửa hàng và Tammi OA, comment live, sự kiện nhóm chat, hồ sơ người dùng khi được đồng ý</td><td>Trợ lý ① ② ④</td></tr>
+        <tr><td>Studio ↔ Thanh toán VDF</td><td>Hai chiều</td><td>Yêu cầu thanh toán trong chat; chạm thẻ tại quầy; chia tiền nhóm; thanh toán gộp nhiều shop</td><td>Mọi luồng có tiền</td></tr>
+        <tr><td>Thanh toán VDF → Tendoo</td><td>Ghi</td><td>Tiền về, phí, đối soát</td><td>Sổ sách, thuế</td></tr>
+        <tr><td>Tammi, Viettel Telecom → ④</td><td>Đọc, ghi</td><td>Sự kiện chuyển vùng, gói roaming và eSIM</td><td>Travel Mode</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><b>Một trợ lý, nhiều kênh:</b> cùng một trợ lý chạy trên OA cửa hàng, livestream của Tammi Shop và web QR.</li>
+      <li><b>Tendoo là nguồn sự thật:</b> trợ lý không giữ bản sao lệch dữ liệu.</li>
+      <li><b>Quyền hạn rõ ràng:</b> trợ lý tư vấn, tạo đơn nháp, tạo yêu cầu thanh toán; không tự trừ tiền.</li>
+      <li><b>Người thật làm chốt chặn:</b> khiếu nại, hoàn tiền, câu hỏi ngoài phạm vi luôn chuyển cho người bán.</li>
+      <li><b>Dữ liệu lưu tại Việt Nam,</b> vận hành trên hạ tầng Viettel.</li>
+    </ul>
+  </div></details>
+</section>
+
+<!-- 9 -->
+<section id="quan-tri">
+  <div class="sec-head"><span class="label">10 · Quản trị AI &amp; tuân thủ</span><h2>Trợ lý minh bạch, đúng dữ liệu, người bán giữ quyền kiểm soát</h2></div>
+  <div class="grid2">
+    <div class="card"><h3>Minh bạch</h3><p>Luôn hiện nhãn "Trợ lý AI" và nút "Gặp người thật", theo Luật Trí tuệ nhân tạo 134/2025.</p></div>
+    <div class="card"><h3>Đúng dữ liệu</h3><p>Chỉ trả lời theo dữ liệu của cửa hàng; không biết thì nói không biết. Thông tin nhạy cảm như dị ứng, chống chỉ định luôn kèm lời nhắc xác nhận với nhân viên.</p></div>
+    <div class="card"><h3>Dữ liệu cá nhân</h3><p>Chỉ dùng địa chỉ và lịch sử khi người dùng đồng ý (NĐ 13/2023). Khách quốc tế dùng web không cần đăng ký. Dữ liệu các cửa hàng tách biệt.</p></div>
+    <div class="card"><h3>Người bán làm chủ</h3><p>Duyệt bản dịch và câu trả lời mẫu trước khi bật, dạy lại câu chưa tốt, tắt bật bất cứ lúc nào. Khi livestream, người bán thật làm chủ phiên; AI chỉ hỗ trợ.</p></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="buoc-tiep">
+  <div class="sec-head"><span class="label">11 · Đo lường &amp; bước tiếp theo</span><h2>Đo được, và bắt đầu từ một buổi làm việc chung</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Nhóm</th><th>Chỉ số đề xuất</th></tr></thead>
+    <tbody>
+      <tr><td>Người bán</td><td>Số cửa hàng bật ít nhất một trợ lý; thời gian tạo trợ lý (mục tiêu dưới 10 phút); tỉ lệ còn dùng sau 30 ngày</td></tr>
+      <tr><td>Hiệu quả trợ lý</td><td>Tỉ lệ câu hỏi trợ lý tự xử lý; thời gian phản hồi; tỉ lệ chuyển người thật; điểm hài lòng</td></tr>
+      <tr><td>Livestream</td><td>Số đơn nháp tạo tự động; tỉ lệ đơn nháp được khách chốt</td></tr>
+      <tr><td>Ngoài giờ</td><td>Số đơn chốt khi không có người trực (21h–8h)</td></tr>
+      <tr><td>Khách quốc tế</td><td>Lượt quét QR; tỉ lệ đặt hàng sau khi quét; giá trị thanh toán thẻ quốc tế</td></tr>
+      <tr><td>Thanh toán</td><td>Tổng giá trị giao dịch qua VDF; tỉ lệ trả trước so với COD</td></tr>
+      <tr><td>Tammi</td><td>Người dùng Tammi OA mỗi tuần; số phiên đặt món nhóm; tần suất mở app</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout pending"><span class="label">Lộ trình triển khai</span><p class="muted">Đang hoàn thiện. Sẽ thống nhất cùng Tendoo và Tammi sau buổi làm việc chung.</p></div>
+  <div class="callout"><span class="label">Đề nghị bước tiếp theo</span>
+    <ol class="steps">
+      <li>Buổi làm việc ba bên để thống nhất phạm vi giải pháp và đầu mối.</li>
+      <li>Chia sẻ tài liệu API và dữ liệu mẫu của Tendoo và Tammi để thiết kế tích hợp.</li>
+      <li>Chọn nhóm cửa hàng thí điểm, gồm cửa hàng bán livestream và cửa hàng có nhiều khách quốc tế.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- PHỤ LỤC -->
+<section id="phu-luc">
+  <div class="sec-head"><span class="label">Phụ lục</span><h2>Nguồn và thuật ngữ</h2></div>
+  <details class="tech"><summary>A. Nguồn số liệu <span class="label">Tham khảo</span></summary><div class="body">
+    <ul class="sources">
+      <li>Tammi vượt 5 triệu người dùng: <a href="https://vnexpress.net/ung-dung-tammi-nam-trong-top-tai-nhieu-tai-viet-nam-5110618.html" target="_blank" rel="noopener">VnExpress 19/08/2026</a>, <a href="https://vov1.vov.vn/khoa-hoc-cong-nghe/tin-khoa-hoc-cong-nghe/ung-dung-viettel-tammi-vuot-moc-5-trieu-nguoi-dung-134170.vov" target="_blank" rel="noopener">VOV 20/08/2026</a></li>
+      <li>Tendoo, bản AI mới: <a href="https://daibieunhandan.vn/tendoo-ra-mat-phien-ban-ai-moi-ho-tro-ho-kinh-doanh-chuan-hoa-so-sach-va-du-lieu-ke-khai-thue-10412092.html" target="_blank" rel="noopener">Đại biểu Nhân dân 02/04/2026</a>; hơn 200.000 hộ kinh doanh: <a href="https://daibieunhandan.vn/tendoo-tro-luc-dua-ho-kinh-doanh-vuot-60-ngay-cao-diem-chuyen-doi-thue-10403465.html" target="_blank" rel="noopener">Đại biểu Nhân dân 12/01/2026</a></li>
+      <li>Livestream chiếm khoảng 20% doanh thu TMĐT: AccessTrade, dẫn theo <a href="https://vnbusiness.vn/ban-hang-online-chien-truong-khoc-liet-tay-mo-kho-tru.html" target="_blank" rel="noopener">VnBusiness</a></li>
+      <li>21,2 triệu lượt khách quốc tế năm 2025: <a href="https://en.baochinhphu.vn/foreign-arrivals-soar-to-record-high-in-2025-111260106100233228.htm" target="_blank" rel="noopener">Báo Chính phủ</a>; 17,7 triệu lượt 9 tháng 2026: <a href="https://vietnamnews.vn/society/1801167/viet-nam-welcomes-17-7-million-foreign-visitors-in-nine-months-71-yearly-target-met.html" target="_blank" rel="noopener">Viet Nam News</a></li>
+      <li>6,7 triệu lượt người Việt ra nước ngoài năm 2025: <a href="https://nhandan.vn/khach-viet-ngay-cang-chuong-xuat-ngoai-va-sanh-du-lich-post936688.html" target="_blank" rel="noopener">Nhân Dân 15/01/2026</a></li>
+      <li>Khoảng 6% điểm chấp nhận thanh toán nhận VietQR Global: NHNN và Cục Du lịch, hội thảo 25/9/2026</li>
+    </ul>
+  </div></details>
+  <details class="tech"><summary>B. Thuật ngữ <span class="label">Tham khảo</span></summary><div class="body">
+    <ul>
+      <li><b>Tammi Shop:</b> gian hàng của cửa hàng trên Tammi (tương tự TikTok Shop), đề xuất Tammi xây: sản phẩm, giỏ hàng, đơn, đánh giá, livestream bán hàng.</li>
+      <li><b>OA cửa hàng:</b> tài khoản chính thức của từng shop trên Tammi (Tammi đã có tính năng OA). Khách nhắn tin tới đây; nhân viên hoặc trợ lý AI của cửa hàng trả lời.</li>
+      <li><b>Tammi OA:</b> trợ lý chính thức của Tammi, do Tammi chủ trì, VDF làm nền tảng hỗ trợ. Nối người dùng với các cửa hàng: đặt món nhóm, tìm hàng, Travel Mode.</li>
+      <li><b>Tammi Live:</b> livestream bán hàng gắn với Tammi Shop.</li>
+      <li><b>Đơn nháp:</b> đơn trợ lý tạo sẵn từ comment hoặc tin nhắn, chờ khách xác nhận.</li>
+      <li><b>Thanh toán chạm:</b> khách chạm thẻ hoặc điện thoại vào điện thoại của cửa hàng để thanh toán.</li>
+      <li><b>Merchant AI Studio:</b> giải pháp của VDF để người bán tạo và vận hành trợ lý AI, kết hợp thanh toán đa nguồn tiền.</li>
+      <li><b>Travel Mode:</b> chế độ của Tammi OA khi người dùng ở nước ngoài.</li>
+    </ul>
+  </div></details>
+</section>
+
+<footer>
+  <span>Merchant AI Studio · Đề xuất hợp tác VDF × Tendoo × Tammi</span>
+  <span>Tài liệu thảo luận · v0.1 · 15/10/2026</span>
+  <span>Số liệu thị trường từ nguồn công khai; số liệu người dùng do các đơn vị tự công bố.</span>
+</footer>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  // Giao diện sáng/tối
+  var themeBtns = {system:document.getElementById('th-system'), light:document.getElementById('th-light'), dark:document.getElementById('th-dark')};
+  function setTheme(t){
+    if(t === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', t);
+    Object.keys(themeBtns).forEach(function(k){ themeBtns[k].setAttribute('aria-pressed', String(k === t)); });
+    try{ localStorage.setItem('ms-theme', t); }catch(e){}
+  }
+  Object.keys(themeBtns).forEach(function(k){ themeBtns[k].addEventListener('click', function(){ setTheme(k); }); });
+  try{ var saved = localStorage.getItem('ms-theme'); if(saved && themeBtns[saved]) setTheme(saved); }catch(e){}
+
+  // Chế độ đọc: Tóm tắt (đóng chi tiết) / Đầy đủ (mở chi tiết)
+  var brief = document.getElementById('mode-brief'), full = document.getElementById('mode-full');
+  function setMode(open){
+    document.querySelectorAll('details.tech').forEach(function(d){ d.open = open; });
+    brief.setAttribute('aria-pressed', String(!open)); full.setAttribute('aria-pressed', String(open));
+  }
+  brief.addEventListener('click', function(){ setMode(false); });
+  full.addEventListener('click', function(){ setMode(true); });
+
+  // Đánh dấu mục đang đọc
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var map = {}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ links.forEach(function(a){ a.classList.remove('on'); }); var a = map[e.target.id]; if(a) a.classList.add('on'); }
+      });
+    }, {rootMargin:'-20% 0px -70% 0px'});
+    Object.keys(map).forEach(function(id){ var el = document.getElementById(id); if(el) io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

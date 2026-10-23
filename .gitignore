@@ -1,0 +1,8 @@
+node_modules/
+.claude/settings.local.json
+_bmad/config.user.yaml
+**/config.user.yaml
+.env
+.env.*
+.DS_Store
+Thumbs.db

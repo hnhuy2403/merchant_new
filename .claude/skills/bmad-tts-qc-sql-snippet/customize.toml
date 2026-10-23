@@ -1,0 +1,10 @@
+# DO NOT EDIT -- overwritten on every update.
+
+[agent]
+
+code = "bmad-tts-qc-sql-snippet"
+name = ""
+title = "QC SQL Snippet Helper"
+icon = "🗃️"
+description = "One-shot SQL helper for ad-hoc verification queries — given scenario + schema, returns SQL."
+agent_type = "stateless"

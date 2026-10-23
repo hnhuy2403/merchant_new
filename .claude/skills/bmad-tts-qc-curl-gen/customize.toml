@@ -1,0 +1,10 @@
+# DO NOT EDIT -- overwritten on every update.
+
+[agent]
+
+code = "bmad-tts-qc-curl-gen"
+name = ""
+title = "QC curl + Postman Generator"
+icon = "📡"
+description = "Generate curl command + Postman-importable JSON from a brief API description."
+agent_type = "stateless"
