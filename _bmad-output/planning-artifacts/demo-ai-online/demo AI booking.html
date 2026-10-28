@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Du Lịch Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: danh sách kịch bản bên trái · sân khấu điện thoại ở giữa · thanh dẫn chuyện bên dưới
+   Hành trình theo slide 12 của outline: Minji (khách Hàn) từ lúc hạ cánh Đà Nẵng */
+:root{
+  --acc:#0B7A85; --acc-soft:#E3F3F4;
+  --ink:#14191B; --muted:#5F6B70; --line:#E2E8EA; --bg:#FFFFFF; --surface:#F4F7F8;
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  /* Màn hình điện thoại luôn sáng như app thật */
+  --p-bg:#FFFFFF; --p-soft:#F1F4F5; --p-ink:#14191B; --p-muted:#66727A; --p-line:#E3E8EA;
+  --ai:#0B7A85; --ai-soft:#E3F3F4; --tendoo:#E1062C; --viettel:#EE0033; --ok:#138A4E; --device:#121719;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --acc:#4FC3CC; --acc-soft:#123236; --ink:#EEF3F4; --muted:#9EAEB3; --line:#2A3538; --bg:#0F1415; --surface:#172022; --device:#33403F; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --acc:#4FC3CC; --acc-soft:#123236; --ink:#EEF3F4; --muted:#9EAEB3; --line:#2A3538; --bg:#0F1415; --surface:#172022; --device:#33403F; color-scheme:dark; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:15px; line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.label{font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+
+.app{max-width:1360px; margin:0 auto; display:grid; grid-template-columns:270px minmax(0,1fr); gap:32px; padding-block:24px}
+.side{position:sticky; top:16px; align-self:start; display:flex; flex-direction:column; gap:18px}
+.brand{display:flex; flex-direction:column; gap:2px}
+.brand b{font-size:1.15rem; font-weight:800}
+.brand b em{font-style:normal; color:var(--acc)}
+.note{font-size:.78rem; color:var(--muted); line-height:1.45}
+.grp{display:flex; flex-direction:column; gap:6px}
+.sc{all:unset; cursor:pointer; display:flex; flex-direction:column; gap:3px; padding:10px 12px; border-radius:10px; border:1px solid transparent}
+.sc:hover{background:var(--surface)}
+.sc[aria-current="true"]{background:var(--surface); border-color:var(--line)}
+.sc[aria-current="true"] .sct{color:var(--acc)}
+.sc:focus-visible{outline:2px solid var(--acc)}
+.sct{font-weight:700; font-size:.92rem; line-height:1.3}
+.scp{font-size:.78rem; color:var(--muted); line-height:1.35}
+
+main{min-width:0; display:flex; flex-direction:column; gap:20px}
+.head{display:flex; flex-direction:column; gap:6px}
+.head h1{margin:0; font-size:1.6rem; font-weight:800; line-height:1.2; text-wrap:balance}
+.head p{margin:0; color:var(--muted); max-width:72ch}
+
+.stage{display:flex; justify-content:center; align-items:flex-start; gap:40px; flex-wrap:wrap; padding:8px 0}
+.dev{display:flex; flex-direction:column; align-items:center; gap:10px}
+.dev>.label{text-align:center}
+.phone{width:300px; height:610px; border-radius:42px; background:var(--device); padding:11px; box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.scr{position:relative; width:100%; height:100%; border-radius:32px; overflow:hidden; background:var(--p-bg); color:var(--p-ink);
+  display:flex; flex-direction:column; font-size:13px; line-height:1.45}
+.sb{display:flex; justify-content:space-between; align-items:center; padding:10px 22px 4px; font-size:11px; font-weight:600}
+.sb .cam{width:12px; height:12px; border-radius:50%; background:#111}
+.scr.lock{background:linear-gradient(170deg,#0E3B4A,#1B6F7A 55%,#E8A15A); color:#fff}
+.mu{color:var(--p-muted); font-size:12px}
+.h{font-size:16px; font-weight:800; line-height:1.3}
+.big{font-size:26px; font-weight:800; letter-spacing:-.01em}
+.body{flex:1; overflow:hidden; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+.foot{padding:10px 16px 16px; display:flex; flex-direction:column; gap:8px}
+.pc{border:1px solid var(--p-line); border-radius:14px; padding:11px 12px; display:flex; flex-direction:column; gap:5px; background:var(--p-bg)}
+.pc.soft{background:var(--p-soft); border-color:transparent}
+.r{display:flex; justify-content:space-between; gap:10px}
+.r.tot{font-weight:800; border-top:1px dashed var(--p-line); padding-top:6px}
+.pb{display:block; text-align:center; padding:10px 14px; border-radius:24px; background:var(--ai); color:#fff; font-weight:700; cursor:default}
+.pb.red{background:var(--tendoo)}
+.pb.ghost{background:transparent; color:var(--ai); border:1px solid var(--ai)}
+.pb.gred{background:transparent; color:var(--tendoo); border:1px solid var(--tendoo)}
+.pb.sm{display:inline-block; padding:6px 14px; font-size:12px}
+[data-next]{cursor:pointer; animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(11,122,133,.45)}50%{box-shadow:0 0 0 7px rgba(11,122,133,0)}}
+@media (prefers-reduced-motion:reduce){[data-next]{animation:none; outline:2px dashed var(--ai); outline-offset:2px}}
+.chip{display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; background:#E6F4EC; color:var(--ok)}
+.chip.w{background:#FFF3E0; color:#B45309}
+.chip.a{background:var(--ai-soft); color:var(--ai)}
+.chip.t{background:#FDECEF; color:var(--tendoo)}
+.inp{border:1px solid var(--p-line); border-radius:10px; padding:8px 10px; font-size:13px}
+.lab{font-size:11px; color:var(--p-muted); margin-bottom:-4px}
+.opt{display:flex; gap:8px; align-items:center; border:1px solid var(--p-line); border-radius:12px; padding:9px 10px}
+.opt.on{border-color:var(--ai); background:var(--ai-soft)}
+.rad{width:14px; height:14px; border-radius:50%; border:2px solid var(--p-muted); flex:none}
+.on .rad{border:4px solid var(--ai)}
+
+/* Màn hình khóa và tin nhắn roaming */
+.lk-time{text-align:center; font-size:54px; font-weight:300; margin-top:30px; letter-spacing:-.02em}
+.lk-date{text-align:center; font-size:13px; opacity:.9}
+.notif{margin:auto 12px 30px; background:rgba(255,255,255,.92); color:var(--p-ink); border-radius:16px; padding:10px 12px; display:flex; gap:10px}
+.notif em{font-style:normal; flex:none; width:30px; height:30px; border-radius:8px; background:var(--viettel); color:#fff; display:grid; place-items:center; font-weight:800; font-size:11px}
+.smsh{display:flex; align-items:center; gap:10px; padding:6px 16px 10px; border-bottom:1px solid var(--p-line)}
+.smsh em{font-style:normal; width:32px; height:32px; border-radius:50%; background:var(--viettel); color:#fff; display:grid; place-items:center; font-weight:800; font-size:11px}
+.sms{align-self:flex-start; max-width:88%; background:var(--p-soft); border-radius:16px 16px 16px 4px; padding:10px 12px; font-size:12.5px}
+.sms .lnk{color:#1A5FD0; text-decoration:underline; font-weight:600; display:inline-block; margin-top:4px; padding:2px 4px; border-radius:6px}
+
+/* Web app AI */
+.url{margin:2px 12px 0; background:var(--p-soft); border-radius:10px; padding:5px 10px; font-size:11px; color:var(--p-muted); text-align:center}
+.aih{display:flex; align-items:center; gap:8px; padding:8px 14px; border-bottom:1px solid var(--p-line)}
+.aih .lg{width:28px; height:28px; border-radius:9px; background:var(--ai); color:#fff; display:grid; place-items:center; font-weight:800; font-size:12px}
+.aih b{flex:1; font-size:14px}
+.chat{flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:8px; scrollbar-width:none}
+.chat::-webkit-scrollbar{display:none}
+.bb{max-width:86%; padding:8px 11px; border-radius:16px; font-size:12.5px}
+.bb.ai{align-self:flex-start; background:var(--p-soft); border-bottom-left-radius:4px}
+.bb.me{align-self:flex-end; background:var(--ai); color:#fff; border-bottom-right-radius:4px}
+.vi{display:block; font-size:10.5px; opacity:.72; font-style:italic; margin-top:3px; line-height:1.35}
+.place{border:1px solid var(--p-line); border-radius:12px; padding:9px 10px; display:flex; gap:9px; background:var(--p-bg); align-self:stretch}
+.place .th{flex:none; width:42px; height:42px; border-radius:9px; display:grid; place-items:center; font-size:20px}
+.place b{display:block; font-size:12.5px}
+.place .mu{font-size:11px}
+.place.pick{border-color:var(--ai); background:var(--ai-soft)}
+.sug{display:flex; gap:6px; flex-wrap:wrap}
+.sug span{font-size:11px; border:1px solid var(--p-line); border-radius:14px; padding:3px 9px; background:var(--p-bg)}
+.cbar{display:flex; gap:8px; align-items:center; padding:8px 12px 14px; border-top:1px solid var(--p-line)}
+.cbar .inp{flex:1; color:var(--p-muted); border-radius:18px}
+.cbar i{font-style:normal; width:30px; height:30px; border-radius:50%; background:var(--ai); color:#fff; display:grid; place-items:center}
+.ov{position:absolute; inset:0; background:rgba(0,0,0,.42); display:flex; align-items:flex-end}
+.sheet{background:#fff; color:var(--p-ink); width:100%; border-radius:20px 20px 0 0; padding:16px 16px 20px; display:flex; flex-direction:column; gap:9px}
+.cardn{display:flex; gap:8px; align-items:center; border:1px solid var(--p-line); border-radius:10px; padding:8px 10px; font-family:var(--mono); font-size:12px}
+.vw{font-family:Arial,sans-serif; font-weight:900; font-style:italic; color:#1434CB; letter-spacing:-.02em}
+.ok-ic{width:52px; height:52px; border-radius:50%; background:#E6F4EC; color:var(--ok); display:grid; place-items:center; font-size:26px; font-weight:900; margin:0 auto}
+.center{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:0 18px}
+
+/* App Tendoo của merchant */
+.tdh{background:var(--tendoo); color:#fff; padding:6px 16px 14px}
+.tdh small{opacity:.85}
+.tdh b{display:block; font-size:16px}
+.toast{position:absolute; left:12px; right:12px; top:34px; background:#fff; color:var(--p-ink); border-radius:14px; padding:10px 12px; box-shadow:0 8px 24px rgba(0,0,0,.2); display:flex; gap:10px; align-items:center; font-size:12px; z-index:2}
+.toast em{font-style:normal; flex:none; width:30px; height:30px; border-radius:8px; background:var(--tendoo); color:#fff; display:grid; place-items:center; font-weight:800}
+.bk{display:flex; justify-content:space-between; gap:8px; padding:8px 0; border-bottom:1px solid var(--p-line)}
+.bk:last-child{border-bottom:0}
+.trip{display:flex; gap:10px; align-items:flex-start}
+.trip .dt{flex:none; width:42px; text-align:center; background:var(--ai-soft); color:var(--ai); border-radius:10px; padding:4px 0; font-weight:800; font-size:12px; line-height:1.2}
+
+.nar{border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:flex; flex-direction:column; gap:10px; background:var(--surface)}
+.nar-top{display:flex; align-items:center; gap:12px}
+.bar{flex:1; height:4px; border-radius:2px; background:var(--line); overflow:hidden}
+.bar i{display:block; height:100%; background:var(--acc); transition:width .3s}
+#say{margin:0; font-size:1.02rem; min-height:3.1em; max-width:90ch}
+.ctl{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.cb{border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:20px; padding:7px 14px; cursor:pointer}
+.cb.pri{background:var(--acc); border-color:var(--acc); color:#fff; font-weight:700}
+.cb[aria-pressed="true"]{border-color:var(--acc); color:var(--acc)}
+.cb:disabled{opacity:.4; cursor:default}
+.hint{font-size:.8rem; color:var(--muted)}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static}
+  .grp{flex-direction:row; flex-wrap:wrap}
+  .sc{flex:1 1 200px}
+}
+@media (max-width:360px){ .phone{width:100%; max-width:300px} }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="label">Demo giải pháp chi tiết 2</span><b><em>AI tư vấn du lịch</em> và booking online</b></div>
+    <p class="note">Khách gặp AI qua kênh Viettel: tin nhắn chào mừng khi roaming vào Việt Nam. AI là web app, bấm link là dùng, không cần cài app. Tên sản phẩm, tên quán, khách sạn, giá và số tiền đều là giả định.</p>
+    <div class="grp" id="g"><span class="label">Kịch bản</span></div>
+  </aside>
+  <main>
+    <div class="head">
+      <h1 id="title"></h1>
+      <p id="persona"></p>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="nar" aria-live="polite">
+      <div class="nar-top"><span class="label" id="stepNo"></span><div class="bar"><i id="barFill"></i></div></div>
+      <p id="say"></p>
+      <div class="ctl">
+        <button class="cb" id="prev" type="button">← Trước</button>
+        <button class="cb pri" id="next" type="button">Tiếp →</button>
+        <button class="cb" id="auto" type="button" aria-pressed="false">Tự chạy</button>
+        <button class="cb" id="restart" type="button">Làm lại</button>
+        <span class="hint">Bấm vào chỗ đang nhấp nháy trên điện thoại, hoặc phím ← →</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+/* ---------- Tiện ích dựng giao diện ---------- */
+const btn = (t,cls='',next=true)=>`<span class="pb ${cls}"${next?' data-next':''}>${t}</span>`;
+const row = (a,b,cls='')=>`<div class="r ${cls}"><span>${a}</span><span>${b}</span></div>`;
+const card = (h,cls='')=>`<div class="pc ${cls}">${h}</div>`;
+const vi = t=>`<span class="vi">${t}</span>`;
+const ai = (ko,v)=>`<div class="bb ai">${ko}${vi(v)}</div>`;
+const me = (ko,v)=>`<div class="bb me">${ko}${vi(v)}</div>`;
+const vw = (s=13)=>`<span class="vw" style="font-size:${s}px">VISA</span>`;
+
+/* Khung web app AI: thanh địa chỉ trình duyệt + đầu trang + khung chat */
+const web = (msgs, foot='')=>`<div class="url">🔒 trình duyệt · không cần cài app</div>
+  <div class="aih"><span class="lg">AI</span><b>여행 AI · Đà Nẵng</b><span class="chip a">KO</span></div>
+  <div class="chat">${msgs}</div>${foot||`<div class="cbar"><span class="inp">메시지 입력…</span><i>↑</i></div>`}`;
+
+/* Hội thoại tích lũy qua các bước */
+const C = {
+  hi: ai('안녕하세요! 다낭에 오신 걸 환영해요 🌴 오늘 무엇을 하고 싶으세요?','Xin chào! Chào mừng bạn đến Đà Nẵng. Hôm nay bạn muốn làm gì?')
+     +`<div class="sug"><span>🍤 맛집 찾기</span><span>🏛 관광지</span><span>🏨 숙소 예약</span></div>`,
+  q1: me('오늘 저녁 미케 비치 근처에서 해산물 먹고 싶어요. 내일은 어디 갈까요?','Tối nay tôi muốn ăn hải sản gần biển Mỹ Khê. Mai nên đi đâu?'),
+  a1: ai('미케 비치 근처 해산물 식당 3곳이에요. 모두 걸어서 갈 수 있어요.','Đây là 3 quán hải sản gần biển Mỹ Khê, đều đi bộ được.'),
+  places: (pick)=>[
+    ['🦐','#FFF1E6','Quán Hải Sản Cô Ba','17:00–23:00 · 1인 25~40만동 · 도보 5분','Mở 17:00–23:00 · 250–400 nghìn/người · đi bộ 5 phút'],
+    ['🦀','#E8F1FF','Hải Sản Năm Tư','16:00–22:30 · 1인 30~50만동 · 도보 8분','Mở 16:00–22:30 · 300–500 nghìn/người · đi bộ 8 phút'],
+    ['🐚','#EAF7EE','Quán Ốc Mỹ Khê','15:00–23:00 · 1인 15~30만동 · 도보 6분','Mở 15:00–23:00 · 150–300 nghìn/người · đi bộ 6 phút']
+  ].map((p,i)=>`<div class="place${pick===i?' pick':''}"${pick===-1&&i===0?' data-next':''}><span class="th" style="background:${p[1]}">${p[0]}</span><div><b>${p[2]}</b><span class="mu">${p[3]}</span>${vi(p[4])}</div></div>`).join(''),
+  plan: ai('내일 추천 일정: 오전에 오행산(마블 마운틴) → 가는 길에 있는 작은 카페 ☕','Lịch trình gợi ý cho ngày mai: sáng đi Ngũ Hành Sơn, ghé một quán cà phê nhỏ trên đường đi.'),
+  q2: me('호이안에서 1박 하고 싶어요. 올드타운 근처 작은 호텔로요.','Tôi muốn ở Hội An 1 đêm, khách sạn nhỏ gần phố cổ.'),
+  a2: ai('올드타운에서 걸어갈 수 있는 작은 호텔이에요. 10/27 체크인 기준이에요.','Đây là các khách sạn nhỏ đi bộ được ra phố cổ, tính cho ngày nhận phòng 27/10.'),
+  hotels: (pick)=>[
+    ['🏮','#FFF4DC','Lantern Garden Hội An','1박 120만동 · 올드타운 도보 4분','1,2 triệu/đêm · đi bộ 4 phút ra phố cổ'],
+    ['🌿','#EAF7EE','Nhà Cổ Homestay','1박 80만동 · 올드타운 도보 6분','800 nghìn/đêm · đi bộ 6 phút ra phố cổ'],
+    ['🛶','#E8F1FF','Hoài River Boutique','1박 150만동 · 강변 · 도보 3분','1,5 triệu/đêm · ven sông · đi bộ 3 phút']
+  ].map((p,i)=>`<div class="place${pick===i?' pick':''}"${pick===-1&&i===0?' data-next':''}><span class="th" style="background:${p[1]}">${p[0]}</span><div><b>${p[2]}</b><span class="mu">${p[3]}</span>${vi(p[4])}</div></div>`).join('')
+};
+
+/* App Tendoo của merchant: danh sách lượt đặt */
+const td = (shop, list, toast='')=>`${toast}<div class="tdh"><small>Tendoo · ${shop}</small><b>Đặt chỗ</b></div>
+  <div class="body">${list}</div>`;
+const tToast = (t,s)=>`<div class="toast"><em>T</em><div><b>${t}</b><div class="mu">${s}</div></div></div>`;
+const shopIdle = (shop, items)=>card('<span class="label">Hôm nay</span>'+(items||'<span class="mu">Chưa có lượt đặt mới</span>'),'soft');
+
+/* Màn hình thanh toán trong web app */
+const pay = (title, lines, total, cta)=>`<div class="ov"><div class="sheet">
+  <div class="h">${title}</div>${lines}${row('<b>결제 금액</b>','<b>'+total+'</b>','tot')}
+  <span class="lab">해외 카드 · Thẻ quốc tế</span><div class="cardn">${vw()}<span>4000 •••• •••• 4821</span></div>
+  ${btn(cta)}</div></div>`;
+
+/* ---------- Kịch bản ---------- */
+const SC = [];
+
+/* 1. Hạ cánh, nhận tin nhắn roaming, mở AI */
+SC.push({ title:'Hạ cánh: gặp AI qua tin nhắn chào mừng của Viettel',
+  menu:'① Hạ cánh và mở AI', time:'17:20', sub:'Tin nhắn roaming có link, web app mở ngay, không cần cài, không cần đăng nhập',
+  persona:'Minji, 28 tuổi, nhân viên văn phòng ở Seoul, đi Đà Nẵng 5 ngày. Minji đã đặt khách sạn ở Đà Nẵng, chưa biết ăn gì, chơi gì, và muốn ghé Hội An 1 đêm.',
+  la:'Điện thoại của Minji',
+  steps:[
+    {say:'Máy bay hạ cánh xuống Đà Nẵng. Minji bật điện thoại, máy bắt sóng roaming của Viettel và nhận tin nhắn chào mừng.',
+     lock:true,
+     a:()=>`<div class="lk-time">17:20</div><div class="lk-date">Thứ Hai, 26 tháng 10</div>
+       <div class="notif" data-next><em>VT</em><div><b>Viettel</b><div style="font-size:12px">베트남에 오신 것을 환영합니다! 여행 AI에게 맛집과 관광지를 물어보세요.</div></div></div>`},
+    {say:'Trong tin nhắn có link mở AI tư vấn du lịch. Tin viết bằng tiếng Hàn, theo ngôn ngữ trên máy của Minji.',
+     a:()=>`<div class="smsh"><em>VT</em><div><b>Viettel</b><div class="mu">Tin nhắn</div></div></div>
+       <div class="body"><div class="sms">[Viettel] 베트남에 오신 것을 환영합니다! 🇻🇳<br>여행 AI에게 맛집, 관광지, 호텔을 물어보고 바로 예약하세요. 앱 설치가 필요 없어요.<br><span class="lnk" data-next>▶ 여행 AI 열기</span>${vi('Chào mừng đến Việt Nam! Hỏi AI du lịch về quán ngon, điểm tham quan, khách sạn và đặt ngay. Không cần cài app. ▶ Mở AI du lịch')}</div></div>`},
+    {say:'Minji bấm link khi đang chờ hành lý. Web app mở ngay trên trình duyệt: không phải cài app, không phải đăng nhập. AI chào bằng tiếng Hàn.',
+     a:()=>web(C.hi)},
+  ]});
+
+/* 2. Hỏi tư vấn */
+SC.push({ title:'Hỏi tư vấn: AI trả lời bằng thứ tiếng khách hỏi',
+  menu:'② Hỏi tư vấn', time:'17:24', sub:'Gợi ý quán vừa và nhỏ gần biển, lịch trình ngày mai',
+  persona:'Minji hỏi bằng tiếng Hàn. AI trả lời bằng tiếng Hàn, gợi ý các quán vừa và nhỏ gần chỗ Minji ở, kèm giờ mở cửa và giá tham khảo. Dòng chữ nghiêng nhỏ là bản dịch tiếng Việt cho người xem demo.',
+  la:'Điện thoại của Minji',
+  steps:[
+    {say:'Minji gõ câu hỏi bằng tiếng Hàn: tối nay muốn ăn hải sản gần biển Mỹ Khê, mai nên đi đâu.',
+     a:()=>web(C.hi+C.q1, `<div class="cbar"><span class="inp" style="color:var(--p-ink)">오늘 저녁 미케 비치 근처에서…</span><i data-next>↑</i></div>`)},
+    {say:'AI trả lời bằng tiếng Hàn: 3 quán hải sản vừa và nhỏ gần biển, đi bộ được, có giờ mở cửa và giá tham khảo.',
+     a:()=>web(C.q1+C.a1+C.places(-2)+`<div style="align-self:center">${btn('계속 · Tiếp','ghost sm')}</div>`)},
+    {say:'AI gợi ý luôn lịch trình ngày mai: sáng đi Ngũ Hành Sơn, ghé một quán cà phê nhỏ trên đường đi. Các điểm nhỏ này thường không có trên các nền tảng lớn.',
+     a:()=>web(C.a1+C.places(-2)+C.plan+`<div class="sug"><span data-next>🍤 Cô Ba 예약하기</span><span>☕ 카페 더 보기</span></div>`)},
+  ]});
+
+/* 3. Đặt bàn, đặt cọc, quán xác nhận qua Tendoo */
+SC.push({ title:'Đặt bàn và đặt cọc, quán xác nhận qua Tendoo',
+  menu:'③ Đặt bàn', time:'17:27', sub:'Đến lúc chốt mới điền thông tin, đặt cọc bằng thẻ quốc tế',
+  persona:'Minji chọn Quán Hải Sản Cô Ba. Hỏi tư vấn không cần đăng nhập; đến lúc chốt đặt bàn, Minji mới điền thông tin và đặt cọc bằng thẻ quốc tế. Quán nhận và xác nhận lượt đặt ngay trong app Tendoo.',
+  la:'Điện thoại của Minji', lb:'Quán Hải Sản Cô Ba · Tendoo',
+  steps:[
+    {say:'Minji chọn quán, giờ và số người: 19:00 tối nay, 2 người.',
+     a:()=>web(C.places(0)+ai('Quán Hải Sản Cô Ba 예약할까요?','Đặt bàn ở Quán Hải Sản Cô Ba nhé?'),
+       `<div class="foot"><span class="lab">날짜 · Ngày</span><div class="inp">오늘 · 10/26</div>
+        <div style="display:flex;gap:8px"><div style="flex:1"><span class="lab">시간 · Giờ</span><div class="inp">19:00</div></div><div style="flex:1"><span class="lab">인원 · Số người</span><div class="inp">2명</div></div></div>
+        ${btn('다음 · Tiếp tục')}</div>`),
+     b:()=>td('Quán Hải Sản Cô Ba', shopIdle())},
+    {say:'Đến lúc chốt, Minji mới điền thông tin: tên, số điện thoại, email. Trước đó Minji hỏi tư vấn mà không cần đăng nhập.',
+     a:()=>`<div class="url">🔒 trình duyệt · không cần cài app</div><div class="aih"><span class="lg">AI</span><b>예약 정보 · Thông tin đặt bàn</b></div>
+       <div class="body">${card(row('<b>Quán Hải Sản Cô Ba</b>','')+row('오늘 19:00','2명'),'soft')}
+       <span class="lab">이름 · Tên</span><div class="inp">Kim Minji</div>
+       <span class="lab">전화번호 · Số điện thoại</span><div class="inp">+82 10 •••• 5678</div>
+       <span class="lab">이메일 · Email</span><div class="inp">minji.kim@•••.com</div>
+       <span class="mu">예약할 때만 정보를 입력해요.${vi('Chỉ điền thông tin khi đặt chỗ.')}</span></div>
+       <div class="foot">${btn('다음 · Tiếp tục')}</div>`,
+     b:()=>td('Quán Hải Sản Cô Ba', shopIdle())},
+    {say:'Minji chọn đặt cọc (có thể trả trước toàn bộ) và trả bằng thẻ quốc tế.',
+     a:()=>`<div class="url">🔒 trình duyệt · không cần cài app</div><div class="aih"><span class="lg">AI</span><b>결제 · Thanh toán</b></div>
+       <div class="body"><div class="opt on"><span class="rad"></span><div><b>예약금 결제</b>${vi('Đặt cọc')}</div></div>
+       <div class="opt"><span class="rad"></span><div><b>전액 선결제</b>${vi('Trả trước toàn bộ')}</div></div></div>
+       ${pay('예약금 · Tiền cọc', row('Cô Ba · 19:00 · 2명',''), '200,000 VND','예약금 결제 · Đặt cọc')}`,
+     b:()=>td('Quán Hải Sản Cô Ba', shopIdle())},
+    {say:'Cọc xong, lượt đặt bàn gửi sang quán. Chủ quán thấy lượt đặt mới ngay trong app Tendoo: tên khách, giờ, số người, tiền cọc.',
+     a:()=>web(ai('예약 요청을 보냈어요. 식당 확인을 기다리고 있어요 ⏳','Đã gửi yêu cầu đặt bàn, đang chờ quán xác nhận.')
+       +card(row('<b>Quán Hải Sản Cô Ba</b>','<span class="chip w">확인 대기</span>')+row('오늘 19:00 · 2명','예약금 200,000 VND'),'soft')),
+     b:()=>td('Quán Hải Sản Cô Ba', card(`<span class="label">Lượt đặt mới</span>${row('<b>Kim Minji</b>','<span class="chip t">Mới</span>')}
+       ${row('Hôm nay 19:00','2 người')}${row('Đã cọc','<b>200.000đ</b>')}<span class="mu">Khách nói tiếng Hàn · đặt qua AI du lịch</span>
+       <div style="display:flex;gap:8px;margin-top:4px"><span class="pb gred" style="flex:1">Từ chối</span><span class="pb red" style="flex:1" data-next>Xác nhận</span></div>`)+shopIdle(),
+       tToast('Lượt đặt bàn mới','Kim Minji · 19:00 · 2 người'))},
+    {say:'Quán bấm Xác nhận trên Tendoo. Minji nhận thông báo bằng tiếng Hàn: bàn đã được giữ.',
+     a:()=>web(card(row('<b>Quán Hải Sản Cô Ba</b>','<span class="chip">✓ 확정</span>')+row('오늘 19:00 · 2명','예약금 200,000 VND'),'soft')
+       +ai('예약이 확정되었어요! 오늘 19:00에 뵙겠습니다 🦐','Đặt bàn đã được xác nhận! Hẹn gặp bạn lúc 19:00 hôm nay.')
+       +`<div class="sug"><span data-next>🏨 호이안 숙소 찾기</span><span>🗺 길 안내</span></div>`),
+     b:()=>td('Quán Hải Sản Cô Ba', card('<span class="label">Hôm nay</span>'+`<div class="bk"><div><b>Kim Minji</b><div class="mu">19:00 · 2 người · đã cọc 200.000đ</div></div><span class="chip">✓ Đã xác nhận</span></div>`,'soft'))},
+  ]});
+
+/* 4. Đặt phòng Hội An, trả trước, khách sạn xác nhận qua Tendoo */
+SC.push({ title:'Đặt phòng ở Hội An, trả trước bằng thẻ quốc tế',
+  menu:'④ Đặt phòng', time:'17:31', sub:'Khách sạn nhỏ gần phố cổ, trả trước, khách sạn xác nhận qua Tendoo',
+  persona:'Minji muốn ghé Hội An 1 đêm. AI gợi ý các khách sạn vừa và nhỏ đi bộ được ra phố cổ. Minji chọn, trả trước bằng thẻ quốc tế; khách sạn xác nhận trong app Tendoo.',
+  la:'Điện thoại của Minji', lb:'Lantern Garden Hội An · Tendoo',
+  steps:[
+    {say:'Minji hỏi tiếp, vẫn bằng tiếng Hàn: muốn ở Hội An 1 đêm, khách sạn nhỏ gần phố cổ.',
+     a:()=>web(C.q2+C.a2+C.hotels(-1)),
+     b:()=>td('Lantern Garden Hội An', shopIdle())},
+    {say:'Minji chọn Lantern Garden: nhận phòng 27/10, trả phòng 28/10, 1 phòng cho 2 người. Thông tin liên hệ đã điền lúc đặt bàn được dùng lại.',
+     a:()=>`<div class="url">🔒 trình duyệt · không cần cài app</div><div class="aih"><span class="lg">AI</span><b>숙소 예약 · Đặt phòng</b></div>
+       <div class="body">${card('<b>Lantern Garden Hội An</b><span class="mu">올드타운 도보 4분 · Đi bộ 4 phút ra phố cổ</span>','soft')}
+       <div style="display:flex;gap:8px"><div style="flex:1"><span class="lab">체크인 · Nhận</span><div class="inp">10/27</div></div><div style="flex:1"><span class="lab">체크아웃 · Trả</span><div class="inp">10/28</div></div></div>
+       <span class="lab">객실 · Phòng</span><div class="inp">1 객실 · 2명</div>
+       <span class="lab">예약자 · Người đặt</span><div class="inp">Kim Minji · +82 10 •••• 5678</div></div>
+       <div class="foot">${btn('다음 · Tiếp tục')}</div>`,
+     b:()=>td('Lantern Garden Hội An', shopIdle())},
+    {say:'Minji trả trước tiền phòng bằng thẻ quốc tế.',
+     a:()=>`<div class="url">🔒 trình duyệt · không cần cài app</div><div class="aih"><span class="lg">AI</span><b>결제 · Thanh toán</b></div><div class="body"></div>
+       ${pay('선결제 · Trả trước', row('Lantern Garden · 1박','1,200,000 VND'), '1,200,000 VND','결제하기 · Thanh toán')}`,
+     b:()=>td('Lantern Garden Hội An', shopIdle())},
+    {say:'Khách sạn nhận lượt đặt phòng đã trả trước ngay trong app Tendoo và bấm Xác nhận.',
+     a:()=>web(ai('결제가 완료되었어요. 호텔 확인을 기다리고 있어요 ⏳','Đã thanh toán, đang chờ khách sạn xác nhận.')
+       +card(row('<b>Lantern Garden Hội An</b>','<span class="chip w">확인 대기</span>')+row('10/27 – 10/28 · 2명','선결제 완료'),'soft')),
+     b:()=>td('Lantern Garden Hội An', card(`<span class="label">Lượt đặt phòng mới</span>${row('<b>Kim Minji</b>','<span class="chip t">Mới</span>')}
+       ${row('27/10 – 28/10','1 phòng · 2 người')}${row('Đã trả trước','<b>1.200.000đ</b>')}<span class="mu">Khách nói tiếng Hàn · đặt qua AI du lịch</span>
+       <div style="display:flex;gap:8px;margin-top:4px"><span class="pb gred" style="flex:1">Từ chối</span><span class="pb red" style="flex:1" data-next>Xác nhận</span></div>`)+shopIdle(),
+       tToast('Lượt đặt phòng mới','Kim Minji · 27/10 · 1 đêm'))},
+    {say:'Khách sạn đã xác nhận. Minji có phòng ở Hội An cho ngày mai.',
+     a:()=>web(card(row('<b>Lantern Garden Hội An</b>','<span class="chip">✓ 확정</span>')+row('10/27 – 10/28 · 2명','선결제 완료'),'soft')
+       +ai('호텔 예약이 확정되었어요! 내일 호이안에서 즐거운 시간 보내세요 🏮','Đặt phòng đã được xác nhận! Chúc bạn vui ở Hội An ngày mai.')
+       +`<div class="sug"><span data-next>🧳 내 여행 보기</span></div>`),
+     b:()=>td('Lantern Garden Hội An', card('<span class="label">Ngày 27/10</span>'+`<div class="bk"><div><b>Kim Minji</b><div class="mu">1 đêm · 2 người · đã trả trước</div></div><span class="chip">✓ Đã xác nhận</span></div>`,'soft'))},
+  ]});
+
+/* 5. Kết quả */
+SC.push({ title:'Kết quả: ra khỏi sân bay đã có chỗ ăn và chỗ ở',
+  menu:'⑤ Kết quả', time:'17:35', sub:'Chuyến đi của Minji và lượt khách mới của merchant',
+  persona:'Từ lúc hạ cánh đến lúc ra khỏi sân bay, Minji đã đặt xong chỗ ăn tối và chỗ ở Hội An, tại các merchant vừa và nhỏ. Quán và khách sạn có thêm khách nhờ AI giới thiệu.',
+  la:'Điện thoại của Minji', lb:'Merchant · Tendoo',
+  steps:[
+    {say:'Minji không phải cài app, không phải tự tìm. Từ lúc hạ cánh đến lúc ra khỏi sân bay, Minji đã đặt xong chỗ ăn và chỗ ở tại các merchant vừa và nhỏ.',
+     a:()=>`<div class="url">🔒 trình duyệt · không cần cài app</div><div class="aih"><span class="lg">AI</span><b>내 여행 · Chuyến đi của tôi</b></div>
+       <div class="body">
+       <div class="trip"><span class="dt">10/26<br>19:00</span>${card(row('<b>Quán Hải Sản Cô Ba</b>','<span class="chip">✓</span>')+'<span class="mu">2명 · 예약금 결제 · Đã đặt cọc</span>')}</div>
+       <div class="trip"><span class="dt">10/27<br>오전</span>${card('<b>오행산 → 작은 카페</b><span class="mu">AI 추천 일정 · Lịch trình AI gợi ý</span>','soft')}</div>
+       <div class="trip"><span class="dt">10/27<br>14:00</span>${card(row('<b>Lantern Garden Hội An</b>','<span class="chip">✓</span>')+'<span class="mu">1박 · 선결제 · Đã trả trước</span>')}</div>
+       <div style="flex:1"></div><span class="mu" style="text-align:center">앱 설치 없이 · 17:20 → 17:35${vi('Không cài app · 15 phút từ lúc hạ cánh')}</span></div>`,
+     b:()=>`<div class="tdh"><small>Tendoo</small><b>Khách mới từ AI du lịch</b></div><div class="body">
+       ${card(row('<b>Quán Hải Sản Cô Ba</b>','<span class="chip">✓</span>')+'<span class="mu">1 lượt đặt bàn · 2 khách Hàn · đã cọc</span>')}
+       ${card(row('<b>Lantern Garden Hội An</b>','<span class="chip">✓</span>')+'<span class="mu">1 lượt đặt phòng · 1 đêm · đã trả trước</span>')}
+       ${card('<span class="mu">Merchant vừa và nhỏ có thêm khách nhờ được AI giới thiệu, nhận và xác nhận lượt đặt ngay trong Tendoo.</span>','soft')}</div>`},
+  ]});
+
+/* ---------- Bộ chạy kịch bản ---------- */
+const $ = id=>document.getElementById(id);
+let si=0, st=0, timer=null;
+
+function phone(label, inner, lock){
+  return `<div class="dev"><span class="label">${label}</span><div class="phone"><div class="scr${lock?' lock':''}">
+    <div class="sb"><span>${lock?'Viettel':SC[si].time}</span><span class="cam"></span><span>▴ ▮</span></div>${inner}</div></div></div>`;
+}
+function render(){
+  const s=SC[si], p=s.steps[st];
+  $('title').textContent=s.title; $('persona').textContent=s.persona;
+  let h=phone(s.la, p.a(), p.lock);
+  if(p.b) h+=phone(s.lb, p.b(), false);
+  $('stage').innerHTML=h;
+  document.querySelectorAll('.chat').forEach(c=>{ c.scrollTop=c.scrollHeight; });
+  $('say').textContent=p.say;
+  $('stepNo').textContent=`Bước ${st+1}/${s.steps.length}`;
+  $('barFill').style.width=((st+1)/s.steps.length*100)+'%';
+  $('prev').disabled = si===0 && st===0;
+  $('next').disabled = si===SC.length-1 && st===s.steps.length-1;
+  document.querySelectorAll('.sc').forEach((b,i)=>b.setAttribute('aria-current', i===si));
+}
+function go(d){
+  const s=SC[si];
+  if(d>0){ if(st<s.steps.length-1) st++; else if(si<SC.length-1){si++; st=0;} else {stopAuto(); return;} }
+  else { if(st>0) st--; else if(si>0){si--; st=SC[si].steps.length-1;} }
+  render();
+}
+function stopAuto(){ clearInterval(timer); timer=null; $('auto').setAttribute('aria-pressed','false'); }
+
+const g=$('g');
+SC.forEach((s,i)=>{ const b=document.createElement('button'); b.className='sc'; b.type='button';
+  b.innerHTML=`<span class="sct">${s.menu}</span><span class="scp">${s.sub}</span>`;
+  b.onclick=()=>{si=i; st=0; render();}; g.appendChild(b); });
+
+$('next').onclick=()=>go(1); $('prev').onclick=()=>go(-1);
+$('restart').onclick=()=>{st=0; render();};
+$('auto').onclick=()=>{ if(timer){stopAuto(); return;} $('auto').setAttribute('aria-pressed','true'); timer=setInterval(()=>go(1),4500); };
+$('stage').addEventListener('click',e=>{ if(e.target.closest('[data-next]')) go(1); });
+$('stage').addEventListener('keydown',e=>{ if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-next]')){e.preventDefault(); go(1);} });
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') go(1); else if(e.key==='ArrowLeft') go(-1); });
+render();
+})();
+</script>
+</body>
+</html>

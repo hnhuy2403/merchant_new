@@ -1,7 +1,27 @@
-# Thanh toán cho khách quốc tế tại merchant VTT – Outline trình bày giải pháp
+# Merchant thế hệ mới – Outline trình bày giải pháp
 
-Cập nhật: 2026-10-23 · Huyhn8 · v0.7
+Cập nhật: 2026-10-26 · Huyhn8 · v0.8
 
+> **Thay đổi ở v0.8 (theo feedback của sếp, 25–26/10):**
+> - Đổi giải pháp thành **"Merchant thế hệ mới"**, gồm 2 kênh độc lập:
+>     - **Offline:** Visa Accept tích hợp trong app Tendoo (chạm thẻ và link thanh toán). VDF chia phí giao dịch với VTT.
+>     - **Online:** AI tư vấn du lịch cho khách quốc tế và khách Việt dùng thẻ quốc tế. Doanh thu từ affiliate (merchant trả) và một phần phí giao dịch booking online (đặt phòng khách sạn, đặt bàn nhà hàng).
+> - Bỏ Merchant AI Studio, trợ lý AI tại quầy, trợ lý livestream và trợ lý tin nhắn.
+> - **Merchant mục tiêu:** merchant vừa và nhỏ. Chỉ riêng booking online có thêm các chuỗi nhà hàng, khách sạn lớn. VTT phát triển merchant cho cả hai kênh, gồm cả các chuỗi lớn.
+> - **Cấu trúc mới, 15 slide:** Bìa 1 · Bối cảnh 2–7 (merchant vừa và nhỏ; khách quốc tế; ma trận nhóm merchant × cách khách trả tiền; các giải pháp hiện có; khách tìm và đặt chỗ; vấn đề và cơ hội của VDF) · Giải pháp 8–12 (tổng thể; Visa Accept; demo Visa Accept; AI tư vấn du lịch và booking online; demo kênh online) · Phân vai 13, Nguyên tắc 14, Lộ trình 15.
+> - **Bối cảnh (slide 2–6):**
+>     - Gộp slide thị trường, xu hướng khách quốc tế với 2 slide khảo sát thành slide 2–3. Slide 2 có biểu đồ tròn phân tệp hộ kinh doanh (không đánh dấu tệp mục tiêu), khoảng 500 nghìn hộ quanh điểm du lịch, ý bỏ thuế khoán và hóa đơn điện tử. Slide 3 thêm nguồn khách theo thị trường 9 tháng 2026; khảo sát 10 khách chỉ nêu insight. Bỏ "30% GDP", livestream 20% và ý AI phổ biến.
+>     - Slide 4: ma trận 3 nhóm merchant × các cách khách quốc tế đang trả tiền.
+>     - Slide 5: gộp 3 giải pháp hiện có thành một bảng (cách hoạt động, ví dụ, hạn chế), bỏ hình minh họa từng bước. Thêm hạn chế phí Tap to Phone/SoftPOS thông thường của ngân hàng (2,5–3,9% với thẻ khách quốc tế, theo biểu phí VPBank, Techcombank); ghi rõ đây không phải phí Visa Accept.
+>     - Slide 6 mới: bối cảnh cho kênh online (khách hỏi AI, đặt chỗ online, nền tảng lớn chỉ giới thiệu merchant của mình).
+> - **Slide 7 – Vấn đề và cơ hội của VDF:** gộp slide Vấn đề và Cơ hội thành bảng 2 cột (tại cửa hàng, trước khi khách đến) × 3 dòng. Bỏ "Vấn đề nội tại của Tendoo và Tammi" và các ý gắn với giải pháp cũ. Dải dưới bảng đổi thành "Lợi thế khi VDF hợp tác với VTT".
+> - **Giải pháp (slide 8–12):** slide 8 trình bày 2 kênh, khớp 3 tiêu chí ở slide 7 (đến được hộ nhỏ, gắn với bán hàng, chi phí thấp nhờ phí IRF của Visa). Slide 9 viết theo mục 2 tài liệu Visa. Mỗi giải pháp chi tiết có một slide demo ngay sau (`demo-visa-accept/index.html`, `demo-ai-online/index.html`). Slide 11 có kênh khách gặp AI (kênh Viettel, web app); bỏ Visa Intelligent Commerce. Slide 12 là hành trình của Minji ở Đà Nẵng.
+> - **Slide 13–15:** phân vai theo 2 kênh; VDF làm mọi việc với Visa (gồm cả nâng gói) và xử lý dòng tiền của cả hai kênh. Slide 14 để trống, bộ phận kinh doanh bổ sung. Lộ trình 3 phase (Q4/2026 – Q4/2027), kênh offline pilot Q1/2027, kênh online pilot Q2/2027; KPI tách theo kênh, là đề xuất chờ xác nhận.
+> - **Tách ghi chú:** ghi chú cho người trình chuyển sang `ghi-chu-nguoi-trinh-merchant-ai-studio.md`.
+> - **Rà soát nhất quán (26/10):** đổi tên bài theo giải pháp mới; slide 2 không nhắc Visa Accept; thêm dòng kết luận cho slide 11, 13; viết lại Thông tin chung; phụ lục bỏ nội dung của giải pháp cũ (mô hình doanh thu cũ, bài học app chat và thanh toán, so sánh Merchant AI Studio, rủi ro về Tammi và trợ lý); cập nhật bảng Thông tin còn thiếu theo số slide mới. Doanh thu của VDF theo từng kênh bổ sung sau.
+>
+> Bản v0.7 lưu tại `outline-to-trinh-merchant-ai-studio-v0.7.md`.
+>
 > **Thay đổi ở v0.7 (theo góp ý trên slide, 23/10):**
 > - Bỏ toàn bộ thời lượng (số phút) khỏi outline và slide.
 > - Bỏ các ghi chú "Cần bổ sung", "cần nguồn xác nhận" khỏi slide. Các mục còn thiếu chỉ theo dõi ở bảng "Thông tin còn thiếu" cuối outline.
@@ -32,294 +52,309 @@ Cập nhật: 2026-10-23 · Huyhn8 · v0.7
 
 ## Thông tin chung
 
-Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ tầng thanh toán cho khách quốc tế tại các merchant của VTT, dựa trên Visa Accept.
+Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ mới": giúp merchant vừa và nhỏ của VTT bán được cho khách quốc tế qua hai kênh độc lập, thanh toán tại cửa hàng (offline) và AI tư vấn du lịch (online).
 
 - **Hình thức:** slide, họp trực tiếp
-- **Quy mô:** 19 slide chính và phụ lục
-- **Đơn vị:** VDF, phối hợp với VTT (Tendoo, Tammi)
+- **Quy mô:** 15 slide chính và phụ lục
+- **Đơn vị:** VDF, phối hợp với VTT (Tendoo, đội kênh bán, kênh viễn thông Viettel)
 - **Bối cảnh:** VDF đã có dự án cung cấp nền tảng thanh toán cho Tammi, nhưng bài toán merchant chưa từng được trình bày với Tổng giám đốc. Tài liệu đề xuất v0.1 mới lưu hành nội bộ, chưa làm việc chính thức với Tendoo và Tammi. Visa đã trình bày Visa Accept cho Viettel (10/2026).
-- **Thông điệp chính:** VDF đưa Visa Accept vào app Tendoo để merchant nhận thẻ của khách quốc tế ngay trên điện thoại: khách chạm thẻ, hoặc trả qua link nếu không chạm được. Gần như không mất phí, tiền về gần như tức thì. Kèm theo là trợ lý AI đa ngôn ngữ giúp khách hỏi được, hiểu được rồi mới mua. VTT phát triển merchant. Sau đó nâng merchant lên gói nhận thẻ đầy đủ và mở rộng sang khách Việt trên Tammi.
+- **Thông điệp chính:**
+    - **Offline:** VDF đưa Visa Accept vào app Tendoo để merchant vừa và nhỏ nhận thẻ của khách quốc tế ngay trên điện thoại: khách chạm thẻ, hoặc trả qua link nếu không chạm được. Không cần máy POS, chi phí thấp, tiền về gần như tức thì. Merchant lớn lên theo lộ trình nâng gói của Visa.
+    - **Online:** AI tư vấn du lịch giới thiệu merchant vừa và nhỏ đến khách quốc tế và khách Việt dùng thẻ quốc tế, cho khách đặt phòng, đặt bàn ngay. Khách gặp AI qua kênh Viettel.
+    - VDF cung cấp giải pháp, làm việc với Visa và xử lý dòng tiền; VTT phát triển merchant và đưa khách đến AI.
 
 | Phần | Slide |
 | --- | --- |
 | Mở đầu | 1 |
 | 1. Bối cảnh | 2–7 |
-| 2. Vấn đề | 8–10 |
-| 3. Cơ hội của VDF | 11 |
-| 4. Giải pháp | 12–16 |
-| 5. Mô hình hợp tác và lộ trình triển khai | 17–19 |
+| 2. Giải pháp | 8–12 |
+| 3. Mô hình hợp tác và lộ trình triển khai | 13–15 |
 
-**Mạch lập luận:** khách quốc tế tăng nhanh nhưng cửa hàng nhỏ chưa có cách nhận tiền phù hợp → các giải pháp đang có đều còn hạn chế → khảo sát merchant và khách xác nhận các hạn chế đó; Tendoo, Tammi cũng chưa giải quyết được → VDF có cơ hội lấp khoảng trống → giải pháp → VTT và VDF cùng triển khai.
+**Mạch lập luận:** khách quốc tế tăng nhanh nhưng cửa hàng nhỏ chưa có cách nhận tiền phù hợp → các giải pháp đang có đều còn hạn chế → khách đã hỏi AI và đặt chỗ online, nhưng merchant nhỏ chưa có mặt ở các kênh đó → merchant vừa và nhỏ mất khách ở cả hai đầu: không được khách tìm thấy, và không nhận được tiền khi khách đã ở quầy; đó cũng là hai khoảng trống VDF có cơ hội lấp → giải pháp → VTT và VDF cùng triển khai.
 
 ## Mở đầu
 
 ### Slide 1 – Trang bìa
 
-- Tên bài (đề xuất): *Giải pháp thanh toán cho khách quốc tế tại merchant Tendoo – Tammi*. Đơn vị trình bày (VDF), ngày trình bày.
+- Tên bài (đề xuất): *Merchant thế hệ mới – Thanh toán tại cửa hàng và AI tư vấn du lịch cho merchant VTT*. Đơn vị trình bày (VDF), ngày trình bày.
 
 ## Phần 1 – Bối cảnh
 
-### Slide 2 – Thị trường merchant trong nước
+### Slide 2 – Merchant vừa và nhỏ: tệp lớn, đang số hóa, chưa nhận được thẻ của khách quốc tế
 
-- Khoảng **5 triệu hộ kinh doanh**, đóng góp gần 30% GDP.
-- Từ 01/01/2026 hộ kinh doanh bỏ thuế khoán, chuyển sang tự kê khai (NQ 198/2025/QH15). Đến 14/5/2026, hơn 308.000 hộ kinh doanh đã đăng ký hóa đơn điện tử từ máy tính tiền, tăng 35% so với cuối 2025 (Bộ Tài chính). Nhu cầu số hóa bán hàng và thanh toán tăng mạnh.
-- Livestream chiếm khoảng 20% doanh thu thương mại điện tử (AccessTrade, đầu 2026).
-- AI đã thành tính năng phổ biến: các phần mềm bán hàng đều có AI nhập liệu và chatbot. Lợi thế chuyển sang **trợ lý biết hành động**, gắn với kênh bán và dòng tiền thật.
-- Kết luận của slide: merchant cần công cụ mang thêm khách và doanh thu, không chỉ công cụ quản lý.
+- Tiêu đề: *Merchant vừa và nhỏ: tệp lớn, đang số hóa, nhưng phần lớn chưa nhận được thẻ của khách quốc tế.*
+- **Bố cục:** bên trái là biểu đồ tròn số hộ kinh doanh; bên phải là 2 khối số liệu ngắn (Thị trường, Khảo sát merchant). Mỗi số một dòng.
+- **Biểu đồ tròn: 5 triệu hộ kinh doanh** (ghi ở giữa hoặc trên biểu đồ). Biểu đồ chỉ để phân tệp, không tô đậm lát nào làm tệp mục tiêu:
 
-### Slide 3 – Xu hướng khách quốc tế đến Việt Nam
-
-- 9 tháng 2026: **17,7 triệu lượt khách quốc tế, tăng 14,5%**, đạt gần 71% mục tiêu 25 triệu lượt cả năm. Cùng kỳ, du lịch quốc tế toàn cầu (6 tháng đầu năm) chỉ tăng 0,4%.
-- Năm 2025: 21,2 triệu lượt khách quốc tế, tổng thu du lịch khoảng 1 triệu tỷ đồng.
-- **Khách quốc tế chi tiêu cao, khoảng một phần ba chi cho ăn uống và mua sắm:**
-    - Mỗi lượt khách chi khoảng **700–1.150 USD**.
-    - **Ăn uống chiếm 21,9%, mua sắm chiếm 12,4%**, cộng lại khoảng 34% tổng chi (Tổng cục Thống kê). Đây là chi tiêu tại quán ăn, quán cà phê, cửa hàng nhỏ.
-    - Ước tính sơ bộ: khoảng **5–8 tỷ USD mỗi năm** khách quốc tế chi cho ăn uống và mua sắm.
-- **Phần lớn khách quốc tế quen trả bằng thẻ:** ở Hàn Quốc, Mỹ, Úc, Anh, thẻ chiếm khoảng 2/3 chi tiêu tại cửa hàng. Riêng khách Trung Quốc chủ yếu dùng Alipay, WeChat Pay (Worldpay Global Payments Report 2025, 2026).
-- **Vì sao tập trung phân khúc này:**
-    - Tệp khách lớn, tăng nhanh, chi tiêu cao, nhưng chưa được phục vụ tốt ở cửa hàng nhỏ.
-    - Phục vụ được nhóm khách này là tạo ra doanh thu mới cho cửa hàng (bán được cho khách trước đây bỏ đi), chứ không chỉ chuyển giao dịch từ tiền mặt sang thẻ.
-- *Ghi chú cho người trình, không đưa lên slide:*
-    - *1.150 USD là điều tra chi tiêu của Tổng cục Thống kê năm 2019 (bản mới nhất có cơ cấu theo khoản). 718 USD là tổng thu từ khách quốc tế 2025 (15,22 tỷ USD) chia cho 21,2 triệu lượt. Hai số khác nhau do khác cách tính.*
-    - *Cách tính 5–8 tỷ USD: 21,2 triệu lượt × 718–1.150 USD × 34%.*
-    - *Số liệu chi tiết về cách trả tiền tại cửa hàng ở nước của khách: Hàn Quốc (2024) thẻ 68% (tín dụng 54%, ghi nợ 14%), ví 20%, tiền mặt 7%; Mỹ (2025) thẻ 71%; Úc, Anh thẻ khoảng 67–70%; Nhật Bản (2025) tiền mặt còn khoảng 38%; Trung Quốc (2025) Alipay, WeChat Pay chiếm 87%.*
-    - *Đây là thói quen ở nước của khách, không phải số đo tại Việt Nam. Chưa có số liệu công khai về cách khách quốc tế trả tiền tại Việt Nam theo quốc tịch; nên xin từ Visa hoặc NAPAS. Số của Úc, Anh, Nhật Bản lấy qua nguồn thứ cấp, cần đối chiếu báo cáo gốc Worldpay.*
-
-### Slide 4 – Khách quốc tế đang trả tiền thế nào tại Việt Nam
-
-- **Ba cách khách đang trả tiền:**
-    - **Tiền mặt, đổi ngoại tệ:** bất tiện, rủi ro, khách thường mang ít.
-    - **Thẻ quốc tế qua máy POS:** chủ yếu ở khách sạn, trung tâm thương mại, chuỗi lớn. Cửa hàng nhỏ ít có máy và ngại phí.
-    - **Quét QR quốc tế** (khách quét mã bằng ví hoặc app ngân hàng nước mình): đang mở rộng nhưng chỉ dùng được với các nước đã kết nối và mới phủ ít điểm.
-- Kết luận của slide: **khách có tiền và muốn trả, nhưng cửa hàng nhỏ chưa có cách nhận phù hợp.** Thị trường đã xuất hiện một số giải pháp mới (slide 5–7).
-- Slide chỉ gồm 3 cách trả tiền (mỗi cách kèm hạn chế) và kết luận.
-- *Ghi chú cho người trình, không đưa lên slide:*
-    - *Chỉ khoảng 6% trong hơn 2,5 triệu điểm chấp nhận thanh toán nhận QR quốc tế (NHNN, 25/9/2026).*
-    - *Nhu cầu là có thật: giao dịch VietQR Global của khách Thái Lan, Lào, Campuchia 8 tháng 2026 tăng khoảng 8 lần so với 2025. Giao dịch của khách Trung Quốc tăng khoảng 3 lần (NAPAS).*
-    - *Cửa hàng đặc sản, quán ăn ở địa phương còn vướng rào cản thiết bị và chi phí (VCCI).*
-
-### Slide 5 – Giải pháp hiện có 1: QR thanh toán quốc tế
-
-- **Cách hoạt động:** khách quét mã QR của cửa hàng bằng ví hoặc app ngân hàng nước mình; cửa hàng nhận tiền VND.
-- **Ví dụ:**
-    - NAPAS – VietQR Global: đã kết nối 6 nước (Thái Lan, Lào, Campuchia, Trung Quốc, Hàn Quốc, Singapore), đang mở rộng sang Nhật Bản, Ấn Độ, Malaysia.
-    - VNPAY-QR: khách quét bằng WeChat Pay, Alipay, UnionPay, Toss Pay…; đã có tại Thế Giới Di Động, Điện Máy Xanh, TopZone (từ 9/2026).
-- **Hình minh họa:** hai ảnh đặt cạnh nhau:
-    - Khách Hàn Quốc quét VietQR bằng app nước mình, trả thành công.
-    - Khách Mỹ hoặc châu Âu đứng trước cùng mã QR nhưng không có app nào quét được, phải chuyển sang tiền mặt.
-- **Hạn chế:**
-    - Chỉ dùng được với khách từ các nước đã kết nối. Khách châu Âu, Mỹ, Úc, Nhật Bản, Ấn Độ… chưa dùng được.
-    - Mới khoảng 6% điểm chấp nhận thanh toán nhận QR quốc tế.
-    - VNPAY đi qua chuỗi lớn trước, hộ kinh doanh nhỏ chưa được phủ.
-
-### Slide 6 – Giải pháp hiện có 2: khách tải app Việt Nam, liên kết thẻ
-
-- **Cách hoạt động:** khách quốc tế tải app thanh toán của Việt Nam, đăng ký, liên kết thẻ quốc tế rồi quét QR nội địa của cửa hàng.
-- **Ví dụ:** VNPAY hợp tác Mastercard.
-- **Hình minh họa:** dãy 4 màn hình đánh số: tải app, đăng ký, liên kết thẻ, rồi mới quét QR. Nhấn mạnh **3 bước** khách phải làm trước lần trả tiền đầu tiên, trong khi đang đứng ở quầy.
-- **Hạn chế:**
-    - Khách phải tải thêm app, đăng ký và liên kết thẻ chỉ để dùng trong một chuyến đi ngắn.
-    - Rào cản lớn nhất nằm ở lần dùng đầu tiên: khách đang đứng ở quầy thường không chịu làm cả quy trình.
-
-### Slide 7 – Giải pháp hiện có 3: Tap to Phone
-
-- **Cách hoạt động:** điện thoại Android của cửa hàng thành máy nhận thẻ; khách chạm thẻ hoặc ví trên điện thoại vào.
-- **Ví dụ:**
-    - VPBank (TapLink), Sacombank, VIB (BizPay): dùng Visa Accept trong app ngân hàng.
-    - VNPAY SoftPOS: app nhận thẻ riêng, đạt chuẩn PCI CPoC.
-    - VCB Tap to Phone: tính năng nhận thẻ của Vietcombank.
-- **Hình minh họa:** dãy ảnh một lần bán hàng: chủ tiệm mở app ngân hàng, nhập số tiền, khách chạm thẻ, trả thành công. Ảnh cuối: chủ tiệm phải mở sổ hoặc phần mềm bán hàng khác để ghi lại đơn.
-- **Hạn chế:**
-    - Là app riêng hoặc tính năng trong app ngân hàng, tách khỏi việc bán hàng. Chủ tiệm phải ghi sổ lại bằng tay.
-    - Ngân hàng chờ khách hàng tự bật tính năng, không có đội phát triển merchant đến tận cửa hàng.
-- **Kết luận chung cho slide 5–7:**
-    - **Thị trường không thiếu phương thức thanh toán, mà thiếu một giải pháp đến được hộ kinh doanh nhỏ, gắn với việc bán hàng và chi phí thấp.**
-    - Visa Accept đã có ở ba ngân hàng, nên công nghệ không phải là khác biệt. Khác biệt nằm ở tệp merchant, kênh phát triển và việc gắn với bán hàng (phụ lục "Vì sao chọn giải pháp này").
-- *Lưu ý khi trình bày slide 7: không chê công nghệ chạm thẻ, vì giải pháp của VDF cũng dùng Tap to Phone. Chỉ nói hạn chế về cách đưa đến merchant và việc tách khỏi bán hàng.*
-
-**Ghi chú chung cho slide 5–7:**
-- *Hình minh họa nên là ảnh chụp màn hình app thật hoặc ảnh dựng lại theo luồng thật, tập trung vào điểm vướng của khách hoặc chủ tiệm.*
-- *Cần nghiên cứu thêm: kết quả triển khai Visa Accept của VPBank, Sacombank, VIB; nguồn xác nhận hợp tác VNPAY – Mastercard.*
-- *Bảng đối thủ chi tiết (thêm MoMo, KiotViet, Sapo, MISA) ở phụ lục.*
-
-## Phần 2 – Vấn đề
-
-### Slide 8 – Merchant nói gì: khảo sát 132 merchant ở khu du lịch (7/2026)
-
-- **Khách quốc tế là nguồn doanh thu chính:** 78% merchant có trên một nửa khách là khách quốc tế.
-- **Insight 1 – Phải chắp vá nhiều cách nhận tiền:** 78% merchant dùng song song tiền mặt, QR và POS; 100% vẫn phải giữ tiền mặt để dự phòng. Có merchant mở cả tài khoản ngân hàng Malaysia để nhận tiền của khách Malaysia. Merchant đã mệt vì phải dùng nhiều công cụ ("nhiều phương tiện quá", "phải thêm hình thức mới").
-- **Insight 2 – Phí là rào cản lớn nhất:** 48,5% merchant coi phí POS là rắc rối lớn nhất (3–5% mỗi giao dịch); nhiều nơi phải cộng thêm khoảng 30.000đ mỗi giao dịch vào tiền của khách. 50,8% lo chi phí triển khai giải pháp mới.
-- **Insight 3 – Mất doanh thu tại quầy:** 14,4% từng gặp khách không có tiền mặt VND hoặc tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài. Khi không nhận được đúng cách khách muốn trả, giao dịch thường hỏng.
-- **Insight 4 – Cần chứng từ, không chỉ nhận được tiền:** 26,5% merchant tự nhắc đến đối soát, hóa đơn hoặc khiếu nại.
-- **Merchant sẵn sàng đổi:** 58% chắc chắn hoặc có thể sẽ dùng giải pháp thanh toán mới; chỉ 22% có xu hướng từ chối.
-- Kết luận của slide: các hạn chế ở slide 5–7 là có thật. Merchant cần **một giải pháp gộp vào công cụ đang dùng, chi phí thấp, có chứng từ**, không cần thêm một công cụ nữa.
-
-### Slide 9 – Khách quốc tế nói gì: khảo sát khách quốc tế (16/10/2026)
-
-- **Phải mang tiền mặt:** 5/10 khách phải mang tiền mặt cho chi tiêu hằng ngày; 3/10 gặp phụ phí thẻ hoặc yêu cầu chi tối thiểu; 2/10 gặp cửa hàng chỉ nhận QR ngân hàng hoặc ví Việt Nam.
-- **Không trả được thì phải xoay xở, có khi bỏ đi:** 8/10 khách từng phải xử lý khi không trả được bằng cách mình muốn: nhờ người khác trả hộ (3/10), đi rút hoặc đổi tiền (2/10), **sang cửa hàng khác (2/10)**.
-- **Cần ở đâu nhất:** quán ăn, quán cà phê và điểm tham quan (cùng 7/10).
-- **Sẵn sàng dùng:** 7/10 khách chấm khả năng sử dụng giải pháp mới ở mức 4–5/5.
-- Kết luận của slide: **merchant mất khách khi không nhận được cách khách muốn trả.** Đây cũng chính là doanh thu mà giải pháp mang lại cho merchant.
-- *Ghi chú trên slide: khảo sát thăm dò, cỡ mẫu 10 khách. Dùng làm tín hiệu bổ sung cho khảo sát merchant, chưa đại diện cho toàn bộ khách quốc tế.*
-- *Lưu ý cho người trình: kịch bản khảo sát khách là thu phí 5% của khách (6/10 sẵn sàng trả), khác với Visa Accept (gần như không thu phí). Không đưa con số phí 5% lên slide để tránh nhầm lẫn.*
-
-### Slide 10 – Vấn đề nội tại của Tendoo và Tammi
-
-- **Tendoo: có công cụ, chưa có khách**
-    - Hơn 200.000 lượt hộ kinh doanh được hỗ trợ chuyển đổi thuế, nhưng phần lớn merchant không hoạt động. Công cụ quản lý chưa tạo thêm khách và thêm doanh thu, nên người bán chưa có lý do gắn bó.
-    - **AI của Tendoo đang hướng vào trong:** trợ lý thuế, tạo hàng từ ảnh, lên đơn bằng giọng nói giúp chủ tiệm nhập liệu, chưa giúp bán cho khách. KiotViet, Sapo, MISA cũng có các tính năng này, nên không tạo khác biệt.
-    - **Dữ liệu hàng hóa, giá, tồn kho nằm yên trong Tendoo:** chưa đến được khách, chưa có bằng ngôn ngữ của khách, chưa lên kênh bán nào. Khách quốc tế vào cửa hàng không hỏi được, không hiểu được sản phẩm.
-    - Merchant không nhận được thẻ quốc tế. Thanh toán đi qua QR ngân hàng, chưa gắn với đơn và sổ sách trên Tendoo.
-    - Khi bán online, merchant phụ thuộc nền tảng ngoài (phí cao, thuật toán khó đoán), quá tải khi livestream và thiếu người trực tin nhắn ban đêm.
-- **Tammi: có người dùng, chưa có thương mại**
-    - Hơn 5 triệu người dùng đã xác thực, chat hằng ngày, nhưng chưa có cửa hàng, livestream hay công cụ cho người bán.
-    - AI hiện có (gợi ý dịch vụ, chatbot Tammi AI) chỉ phục vụ dịch vụ Viettel, chưa nối tới cửa hàng nào.
-- **Hệ quả của việc hai bên tách rời:** người bán và người mua gặp nhau qua nền tảng ngoài với phí cao, dữ liệu và dòng tiền nằm ngoài hệ sinh thái. Minh họa: sơ đồ "Trước" trong tài liệu đề xuất (mục 2).
-- *Ghi chú cho người trình: hai khảo sát chỉ hỏi về thanh toán, chưa có số liệu về rào cản ngôn ngữ tại cửa hàng. Trình bày ý này như một giả thuyết (nói miệng, không gắn nhãn trên slide), sẽ kiểm chứng trong pilot bằng lượt quét QR và tỉ lệ đặt hàng sau khi quét (slide 19). Nếu kịp, hỏi bổ sung 1–2 câu về giao tiếp cho merchant và khách quốc tế.*
-- *Cần bổ sung: số merchant Tendoo chính xác (tổng, active); MAU Tammi; số đơn và GMV hiện tại trên Tendoo.*
-- *Lưu ý: số công bố công khai của Tammi là 5 triệu+ (8/2026); số nội bộ khoảng 10 triệu, nếu dùng thì ghi rõ nguồn và thời điểm. "200.000" là số lượt hộ kinh doanh được hỗ trợ chuyển đổi thuế (Đại biểu Nhân dân, 12/01/2026), không phải số merchant đang dùng Tendoo.*
-
-## Phần 3 – Cơ hội của VDF
-
-### Slide 11 – Cơ hội của VDF
-
-**1. Thanh toán: merchant muốn nhận, ai có phí thấp sẽ thắng**
-- 58% merchant sẵn sàng dùng giải pháp mới; 7/10 khách quốc tế sẵn sàng dùng.
-- Kỳ vọng phí 1–2% thì 81,5% merchant sẵn sàng dùng; trên 3% thì chỉ 24,3%.
-- **Cơ hội cho VDF:** cách nhận thẻ phí dưới 1–2%, nằm trong công cụ merchant đang dùng.
-- *Lưu ý: slide này chưa nhắc Visa Accept; Visa Accept xuất hiện lần đầu ở phần Giải pháp (slide 12, 13).*
-
-**2. AI: trợ lý tư vấn và chốt đơn là xu hướng, nhưng chưa ai gắn với kho, sổ sách và thanh toán**
-- **Xu hướng:** AI đang chuyển từ trả lời câu hỏi sang trợ lý biết hành động: tư vấn, chốt đơn, gửi yêu cầu thanh toán. Livestream chiếm khoảng 20% doanh thu thương mại điện tử; người bán quá tải khi live và thiếu người trực tin nhắn ban đêm.
-- **Khoảng trống:** AI của các phần mềm bán hàng, kể cả Tendoo, đang hướng vào trong (nhập liệu, thuế). Chatbot bán hàng không có kho và sổ sách. Chưa ai phục vụ khách quốc tế tại quầy.
-- **Lợi thế của VDF:** dữ liệu hàng hóa có sẵn trên Tendoo giúp trợ lý tạo được trong vài phút. Trợ lý là cửa vào của giao dịch: mỗi cuộc trò chuyện, dù trên livestream, trong tin nhắn hay tại quầy, đều kết thúc bằng một lần trả tiền qua VDF.
-
-**3. Dài hạn: có sẵn kênh đến merchant và người mua**
-- Tệp hộ kinh doanh Tendoo và đội kênh bán thực địa của VTT, không phải chờ merchant tự tìm đến.
-- Mở rộng sang khách Việt trên Tammi (hơn 5 triệu người dùng, chưa có thương mại).
-
-- *Ghi chú cho người trình, không đưa lên slide:*
-    - *Trong nhóm "chưa chắc chắn", 42,5% chuyển sang sẵn sàng khi được báo một mức phí cụ thể và thấp. Kỳ vọng phí trên 3% thì chỉ 24,3% sẵn sàng.*
-    - *Việc khách quốc tế bỏ đi vì không hỏi được nhân viên là giả thuyết, chưa có số liệu khảo sát; pilot đo bằng lượt quét QR và tỉ lệ đặt hàng sau khi quét.*
-    - *Tệp hộ kinh doanh Tendoo: hơn 200.000 lượt được hỗ trợ chuyển đổi thuế, không phải số merchant đang dùng.*
-    - *Với VTT, quan hệ nâng từ "cung cấp thanh toán cho Tammi" lên "đồng kiến tạo lớp thương mại".*
-
-## Phần 4 – Giải pháp
-
-### Slide 12 – Giải pháp tổng thể
-
-- Tiêu đề: *Hai giải pháp: thanh toán quốc tế và Merchant AI Studio tư vấn, chốt đơn.*
-- Định nghĩa trong một câu: *VDF đưa Visa Accept vào app Tendoo để merchant nhận thẻ của khách quốc tế ngay trên điện thoại, kèm trợ lý AI tư vấn và chốt đơn: tại cửa hàng bằng ngôn ngữ của khách, online trên livestream và tin nhắn.*
-- **Làm nổi bật 2 giải pháp** (hai thẻ lớn đặt cạnh nhau, đánh số 1 và 2):
-    1. **Thanh toán quốc tế:** Visa Accept trong app Tendoo, merchant nhận thẻ ngay trên điện thoại (chạm thẻ hoặc trả qua link), gần như không mất phí, tiền về gần như tức thì. Lộ trình: Visa Accept → gói nhận thẻ đầy đủ → thanh toán nội địa đa nguồn tiền. Kết quả: **nhận được tiền**, tự ghi sổ trên Tendoo.
-    2. **Merchant AI Studio: tư vấn, chốt đơn:** trợ lý AI tạo từ dữ liệu cửa hàng có sẵn trên Tendoo, tư vấn khách bằng ngôn ngữ của họ và chốt đơn, tại quầy, trên livestream và tin nhắn. Kết quả: **bán được hàng**, tăng tỉ lệ khách mua và giá trị đơn.
-- Không đưa lớp "Kênh khách hàng" lên slide. *Ghi chú cho người trình: kênh triển khai theo thứ tự du khách quốc tế tại cửa hàng (làm ngay), khách online qua website và mạng xã hội Tendoo đang kết nối (tiếp theo), người dùng Tammi khi Tammi có Shop và Live (sau).*
-- **Vì sao cần cả thanh toán lẫn AI:** hành trình mua tại quầy gồm *khách vào → hỏi → hiểu → quyết định mua → trả tiền → ghi sổ*.
-    - Trợ lý AI giải bước hỏi, hiểu, quyết định. Khách bỏ đi trước khi đến quầy thì nhận được thẻ cũng không có giao dịch.
-    - Visa Accept giải bước trả tiền.
-    - Tendoo giải bước ghi sổ.
-    - Minh họa: một dải hành trình 6 bước, tô màu bước do từng phần giải quyết.
-- Mục tiêu cốt lõi: **tăng dòng tiền cho merchant Tendoo.** Mọi giao dịch đi qua thanh toán VDF và tự ghi sổ trên Tendoo.
-
-### Slide 13 – Giải pháp chi tiết 1: nhận thẻ của khách quốc tế ngay trên điện thoại
-
-- **Visa Accept, tích hợp sẵn trong app Tendoo:** merchant dùng thẻ Visa đang có để nhận tiền, không cần mở tài khoản doanh nghiệp, không cần máy POS.
-- **Hai cách nhận tiền:**
-    - **Chạm thẻ (Tap to Phone):** khách chạm thẻ Visa, Mastercard hoặc điện thoại có ví vào điện thoại Android của cửa hàng.
-    - **Trả qua link:** khi khách không chạm được hoặc cửa hàng không dùng Android, merchant gửi link thanh toán cho khách (tin nhắn, email) để khách trả bằng thẻ. Tại quầy không đặt sẵn mã trả qua link.
-- **Bốn lợi ích cho merchant**, trả lời đúng các insight ở slide 8:
-    - **Không cần thiết bị, chỉ cần điện thoại** (insight 1, 2).
-    - **Gần như không mất phí** (insight 2). Thấp hơn cả mức 1–2% mà 81,5% merchant sẵn sàng chấp nhận (slide 11), nên dễ thuyết phục hộ kinh doanh bắt đầu nhận thẻ qua VDF.
-    - **Tiền về gần như tức thì.**
-    - **Giao dịch tự ghi sổ trên Tendoo, có chứng từ để đối soát và xử lý khiếu nại** (insight 4).
-- **Lộ trình lớn lên:** khi doanh số vượt hạn mức, merchant được nâng lên gói nhận thẻ đầy đủ.
-- Minh họa: 2–3 màn hình mẫu (chạm thẻ, trả qua link) đặt trong giao diện Tendoo.
-
-### Slide 14 – Giải pháp chi tiết 2: trợ lý AI tư vấn khách quốc tế tại cửa hàng
-
-- **Merchant AI Studio trong app Tendoo:** chủ tiệm chọn mẫu trợ lý, AI tự đọc hàng hóa, giá, tồn kho, chính sách cửa hàng từ Tendoo, chủ tiệm duyệt rồi bật.
-- **Luồng tại cửa hàng:**
-    - Khách quét QR đặt ở bàn, kệ, quầy để mở trang web của trợ lý. Không cần cài app, không cần đăng ký.
-    - Khách hỏi bằng tiếng của mình (Trung, Hàn, Anh…). Trợ lý trả lời về sản phẩm, giá, cách dùng theo dữ liệu cửa hàng; giá có quy đổi sang tiền nước khách.
-    - Khách đặt hàng trên web. Đơn hiện bằng tiếng Việt trên Tendoo, kèm ghi chú đã dịch (dị ứng, size, gói quà).
-    - Khách trả tiền tại quầy bằng cách chạm thẻ (slide 13). Khi khách không chạm được, merchant gửi link thanh toán cho khách. Mã QR tại cửa hàng chỉ để mở trợ lý, không dùng để trả tiền.
-- **Bốn lợi ích cho merchant**, trả lời đúng các vấn đề ở slide 10:
-    - **Bán được cho khách không nói cùng ngôn ngữ**, nhân viên không cần biết ngoại ngữ.
-    - **Dữ liệu sẵn có trên Tendoo thành người tư vấn bán hàng**, không phải nhập lại.
-    - **Thiết lập khoảng 10 phút, làm một lần, 4 bước.** Trả lời nỗi lo "chủ quán ko rành công nghệ" mà merchant tự nêu trong khảo sát (câu trả lời tự do).
-    - **Đơn và tiền tự vào sổ Tendoo**, có hóa đơn song ngữ cho khách.
-- **Chốt an toàn:** chỉ trả lời theo dữ liệu cửa hàng, không biết thì nói không biết; luôn có nhãn "Trợ lý AI" và nút "Gặp người thật"; trợ lý không tự trừ tiền.
-- Áp dụng cho mọi ngành hàng: ăn uống, thời trang, quà lưu niệm, mỹ phẩm và nhà thuốc, spa, tạp hóa (ví dụ chi tiết ở phụ lục).
-- Minh họa: 3–4 màn hình theo luồng anh Kim Min-jun (đề xuất, mục 6.3): web tiếng Hàn, hỏi đáp, đơn tiếng Việt trên Tendoo, chạm thẻ.
-
-### Slide 15 – Giải pháp chi tiết 3: trợ lý bán hàng online, tư vấn và chốt đơn
-
-- **Bài toán:** khi bán online, merchant quá tải khi livestream, thiếu người trực tin nhắn ban đêm, phụ thuộc nền tảng ngoài (slide 10).
-- **Hai trợ lý, cùng một Merchant AI Studio với trợ lý tại cửa hàng:**
-
-| Trợ lý | Bài toán | Trợ lý làm gì | Kết quả cho merchant |
-| --- | --- | --- | --- |
-| **Livestream** | Vừa giới thiệu, vừa trả lời hàng trăm câu hỏi, vừa ghi đơn: sót đơn, khách bỏ đi | Trả lời comment theo dữ liệu cửa hàng; nhận ra comment muốn mua để tạo đơn nháp; khách chốt là đơn lên tự động | Không sót đơn khi live; báo cáo phiên live, nhắc khách chưa trả |
-| **Bán hàng qua tin nhắn** | Không đủ người trực, nhất là buổi tối và ban đêm | Tư vấn theo tồn kho thật, chốt đơn, gửi yêu cầu thanh toán; nhân viên vào ca thì trợ lý lùi lại | Không mất khách ngoài giờ; bản tin buổi sáng, chỉ xử lý các hội thoại được gắn cờ |
-
-- **Kênh triển khai theo hai bước:**
-    - **Trước:** các kênh Tendoo đang kết nối (website bán hàng, mạng xã hội). Không phải chờ Tammi.
-    - **Sau:** Tammi Shop, Tammi Live và OA cửa hàng, khi Tammi sẵn sàng. Đây là kênh người mua riêng của hệ sinh thái, không mất phí cho nền tảng ngoài.
-- Thanh toán đa nguồn tiền của VDF ngay trong cuộc trò chuyện: Viettel Money, tài khoản ngân hàng, thẻ nội địa và quốc tế.
-- Đơn, kho, sổ sách tự đồng bộ về Tendoo.
-- Minh họa: 2 màn hình theo đề xuất (mục 6.1 và 6.2): comment livestream có trợ lý trả lời và tạo đơn nháp; tin nhắn lúc 23 giờ được chốt đơn.
-- *Ghi chú cho người trình: cần kiểm tra với Tendoo khả năng của từng kênh đang kết nối (đọc comment livestream, trả lời tin nhắn tự động, gửi link thanh toán), vì mỗi mạng xã hội có giới hạn API riêng. Trợ lý Tammi OA (đặt món nhóm, tìm hàng nhiều shop) là tính năng cho người dùng Tammi, để ở phụ lục.*
-
-### Slide 16 – Demo
-
-- Slide nhúng nguyên file demo `merchant-ai-studio/04_demo/index.html` (không có tiêu đề, demo phủ kín slide). Người trình bấm vào demo để thao tác; phím mũi tên khi đó điều khiển demo.
-- Hai cảnh:
-    - **Tại cửa hàng:** khách Hàn Quốc vào cửa hàng ở Hội An, quét QR hỏi trợ lý bằng tiếng Hàn, đặt hàng, chạm thẻ vào điện thoại của chủ tiệm, đơn tự ghi sổ trên Tendoo. Thêm tình huống khách không chạm được: chủ tiệm gửi link, khách trả bằng thẻ.
-    - **Online:** 23 giờ, khách nhắn tin cho cửa hàng, trợ lý tư vấn và chốt đơn; hoặc trợ lý trả lời comment và tạo đơn nháp khi livestream. Dùng lại demo có sẵn của tài liệu đề xuất.
-
-## Phần 5 – Mô hình hợp tác và lộ trình triển khai
-
-### Slide 17 – Phân vai VTT và VDF
-
-| Bên | Vai trò |
+| Lát | Số hộ |
 | --- | --- |
-| **VDF** | Cung cấp **giải pháp và hạ tầng thanh toán merchant quốc tế**: triển khai Visa Accept trong Tendoo, vận hành, đối soát, kiểm soát rủi ro; nâng merchant lên gói nhận thẻ đầy đủ; Merchant AI Studio và các mẫu trợ lý; làm việc với Visa |
-| **VTT** (Tendoo, Tammi) | **Phát triển merchant**: tích hợp giải pháp vào app Tendoo, cung cấp dữ liệu hàng hóa và đơn, tuyển và hỗ trợ cửa hàng qua đội kênh bán; Tammi xây lớp thương mại cho người dùng Việt ở các phase sau |
+| Có địa điểm kinh doanh cố định | 2,03 triệu |
+| Đăng ký thuế, không có địa điểm cố định | 1,21 triệu |
+| Chưa đăng ký thuế | khoảng 1,76 triệu |
+
+- Chú thích nhỏ dưới biểu đồ: *5 triệu hộ: Báo Chính phủ (2025). 3,24 triệu hộ và cá nhân kinh doanh đăng ký thuế, trong đó 2,03 triệu có địa điểm cố định: Tổng cục Thuế (8/2024).*
+- **Thị trường:**
+    - Khoảng **500 nghìn** hộ kinh doanh quanh hơn 4.000 điểm du lịch *(ước tính VDF)*
+    - Từ 01/01/2026 bỏ thuế khoán; hơn **308 nghìn** hộ đã dùng hóa đơn điện tử từ máy tính tiền (Bộ Tài chính, 5/2026)
+    - Cả nước chỉ có **737 nghìn** máy POS, tính cả doanh nghiệp (NHNN, cuối 2024)
+    - Chỉ khoảng **6%** điểm chấp nhận thanh toán nhận QR quốc tế (NHNN, 9/2026)
+    - Chỉ **42%** doanh nghiệp nhỏ nhận thẻ; nhóm nhận thẻ có **79%** tăng doanh thu, so với 46% ở nhóm không nhận thẻ (Visa, 2023)
+- **Khảo sát 132 merchant phục vụ khách quốc tế tại Hà Nội và TP.HCM (7/2026):**
+    - **78%** có trên một nửa khách là khách quốc tế
+    - **48,5%** coi phí POS (3–5%) là rắc rối lớn nhất
+    - **58%** sẵn sàng dùng giải pháp thanh toán mới
+- Kết luận của slide (1 dòng): **Tệp lớn, đang số hóa, nhưng phần lớn chưa nhận được thẻ. Đây là khoảng trống cần một cách nhận thẻ phù hợp với hộ kinh doanh nhỏ.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 2.*
+
+### Slide 3 – Khách quốc tế: tăng nhanh, chi nhiều, quen trả không tiền mặt
+
+- Tiêu đề: *Khách quốc tế tăng nhanh, chi tiêu nhiều, quen trả không tiền mặt, nhưng khó trả tiền ở cửa hàng nhỏ.*
+- **Bố cục:** 3 khối.
+- **Khối 1 – Quy mô** (mỗi số một dòng):
+    - **17,7 triệu** lượt trong 9 tháng 2026, tăng 14,5%
+    - Mỗi lượt khách chi khoảng **700–1.150 USD**
+    - Khoảng **5–8 tỷ USD/năm** chi cho ăn uống và mua sắm
+- **Khối 2 – Khách đến từ đâu** (biểu đồ cột ngang 6 thị trường lớn nhất, 9 tháng 2026; màu cột theo cách trả tiền phổ biến ở nước của khách; thị trường chưa có số liệu tô màu trung tính, ô trống trong bảng là chưa có số liệu):
+
+| Thị trường | Lượt khách | Tỉ trọng | So với cùng kỳ | Cách trả tiền phổ biến ở nước của khách |
+| --- | --- | --- | --- | --- |
+| Trung Quốc | 3,9 triệu | 22% | +1,5% | Ví (Alipay, WeChat Pay) |
+| Hàn Quốc | 3,0 triệu | 17% | −5,5% | Thẻ |
+| Nga | 1,1 triệu | 6% | +160,6% | Thẻ nội địa Mir |
+| Đài Loan | 964 nghìn | 5% | +4,1% | |
+| Mỹ | 764 nghìn | 4% | | Thẻ |
+| Nhật Bản | 674 nghìn | 4% | | Tiền mặt còn nhiều, thẻ |
+
+- Dòng dưới biểu đồ: *Tăng nhanh nhất: châu Âu +55%, châu Mỹ +20%, châu Úc +21%, Ấn Độ +33%.*
+- **Khối 3 – Khảo sát khách quốc tế (16/10/2026):** chỉ nêu insight, không nêu số.
+    - Khách vẫn phải mang tiền mặt cho chi tiêu hằng ngày.
+    - Khi cửa hàng không nhận thẻ, khách phải xoay xở: nhờ người khác trả hộ, đi rút hoặc đổi tiền; có khách sang cửa hàng khác.
+    - Khó trả tiền nhất ở quán ăn, quán cà phê và điểm tham quan.
+    - Khách sẵn sàng dùng cách trả tiền mới nếu tiện.
+- Chú thích nhỏ dưới khối 3: *khảo sát thăm dò.*
+- Kết luận của slide (1 dòng): **Khách có tiền và muốn trả không tiền mặt. Cửa hàng không nhận được thẻ thì mất khách.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 3.*
+
+### Slide 4 – Khách quốc tế đang trả tiền thế nào, theo từng nhóm merchant
+
+- Tiêu đề: *Merchant càng nhỏ, khách quốc tế càng ít cách trả tiền.*
+- **Bố cục:** ma trận, hàng là phương thức khách đang trả, cột là 3 nhóm merchant. Mỗi ô chỉ có một ký hiệu (● phổ biến, ◐ có nhưng hạn chế, ○ gần như không có), kèm tối đa 3–4 chữ khi cần.
+
+| Khách trả bằng | **Vừa và nhỏ, cá nhân**<br>*quán ăn, cà phê, quầy lưu niệm, sạp chợ, homestay* | **Trung bình**<br>*nhà hàng, cửa hàng có mặt bằng, spa, khách sạn nhỏ* | **Lớn (chuỗi)**<br>*khách sạn chuỗi, trung tâm thương mại, chuỗi bán lẻ, chuỗi nhà hàng* |
+| --- | --- | --- | --- |
+| **Tiền mặt, đổi ngoại tệ** | ● gần như duy nhất | ● | ◐ |
+| **Thẻ quốc tế qua máy POS** | ○ không có máy, ngại phí | ◐ có máy, thường cộng phụ phí | ● |
+| **QR quốc tế** (khách quét bằng ví, app nước mình) | ○ | ○ | ◐ chỉ ở chuỗi lớn |
+| **App Việt Nam liên kết thẻ**, quét QR nội địa | ◐ cửa hàng có QR, khách ít khi dùng | ◐ | ◐ |
+| **Tap to Phone** | ○ | ◐ chủ yếu qua app ngân hàng | ◐ chủ yếu qua app ngân hàng |
+
+- Kết luận của slide (1 dòng): **Nhóm lớn đã nhận được thẻ. Nhóm vừa và nhỏ, đông nhất, vẫn chủ yếu nhận tiền mặt.** Ba giải pháp mới đang có trên thị trường (slide 5) chưa lấp được khoảng trống này.
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 4.*
+
+### Slide 5 – Các giải pháp hiện có và hạn chế
+
+- Tiêu đề: *Ba giải pháp đang có trên thị trường đều chưa đến được merchant vừa và nhỏ.*
+- **Bố cục:** 3 cột, mỗi cột một giải pháp. Mỗi cột gồm: tên giải pháp, một câu giải thích cách hoạt động, ví dụ (chữ nhỏ), 1–2 hạn chế. Không dùng hình minh họa theo từng bước.
+
+| | **1. QR thanh toán quốc tế** | **2. App Việt Nam liên kết thẻ** | **3. Tap to Phone của ngân hàng** |
+| --- | --- | --- | --- |
+| **Cách hoạt động** | Khách quét QR của cửa hàng bằng ví hoặc app ngân hàng nước mình; cửa hàng nhận tiền VND | Khách tải app thanh toán Việt Nam, đăng ký, liên kết thẻ quốc tế rồi quét QR nội địa | Điện thoại Android của cửa hàng thành máy nhận thẻ; khách chạm thẻ hoặc ví trên điện thoại |
+| **Ví dụ** | NAPAS VietQR Global, VNPAY-QR | VNPAY hợp tác Mastercard | VPBank, Sacombank, VIB (Visa Accept); VNPAY SoftPOS; VCB Tap to Phone |
+| **Hạn chế** | • Chỉ dùng được với khách từ 6 nước đã kết nối; khách châu Âu, Mỹ, Úc, Nhật Bản, Ấn Độ chưa dùng được<br>• Mới khoảng 6% điểm chấp nhận thanh toán nhận QR quốc tế, chủ yếu ở chuỗi lớn | • Khách phải tải app, đăng ký, liên kết thẻ ngay tại quầy, chỉ để dùng trong một chuyến đi ngắn<br>• Rào cản ở lần dùng đầu tiên, khách thường không chịu làm | • Tap to Phone/SoftPOS thông thường của ngân hàng thu phí cao với thẻ của khách quốc tế: **2,5–3,9%** mỗi giao dịch, cộng phí duy trì đến 50.000đ/tháng (biểu phí VPBank, Techcombank; không phải phí Visa Accept)<br>• Tách khỏi việc bán hàng, chủ tiệm phải ghi sổ lại bằng tay |
+
+- Kết luận của slide (1 dòng): **Thị trường không thiếu phương thức thanh toán, mà thiếu một giải pháp đến được hộ kinh doanh nhỏ, gắn với việc bán hàng và chi phí thấp.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 5.*
+
+### Slide 6 – Khách tìm và đặt chỗ thế nào
+
+- Tiêu đề: *Khách đã hỏi AI và đặt chỗ online, nhưng merchant vừa và nhỏ chưa có mặt ở các kênh đó.*
+- **Bố cục:** 3 khối, mỗi số một dòng.
+- **Khối 1 – Khách đã chuyển sang hỏi AI khi lên kế hoạch:**
+    - **56%** khách Mỹ đã dùng AI cho ít nhất một chuyến đi trong 12 tháng qua, tăng từ 33% ở nửa đầu 2025 (Phocuswright, 3/2026)
+    - AI tạo sinh (ChatGPT, Gemini) chiếm **33%** việc tìm hiểu chuyến đi, gần bằng công cụ tìm kiếm (35%) (Phocuswright, 3/2026)
+    - **64–69%** khách thế hệ Millennials và Gen Z dùng AI tạo sinh để lên kế hoạch du lịch (Booking.com, 32.800 người ở 34 nước, 2026)
+    - **81%** khách Việt dự định dùng AI cho chuyến đi tiếp theo, cao nhất châu Á (trung bình 63%) (Agoda, 3/2026)
+- **Khối 2 – Đặt chỗ đã lên mạng, và merchant đang trả phí để có khách:**
+    - Du lịch trực tuyến Việt Nam khoảng **4 tỷ USD** năm 2025, tăng 16% (Google, Temasek, Bain, e-Conomy SEA 2025)
+    - OTA chiếm khoảng **59%** lượt đặt phòng khách sạn năm 2025
+    - Khách sạn trả OTA quốc tế **15–25%** hoa hồng mỗi lượt đặt phòng
+    - Khách Việt có **50,2 triệu** thẻ quốc tế (NHNN, quý I/2025)
+- **Khối 3 – Nền tảng lớn đã đưa AI vào, nhưng chỉ giới thiệu merchant có trên nền tảng của mình:**
+    - Từ 10/2025, Booking.com và Expedia đã có app ngay trong ChatGPT: khách hỏi AI rồi xem và đặt khách sạn tại chỗ. Tripadvisor, TheFork (đặt bàn nhà hàng) công bố sẽ tham gia.
+    - Booking.com đã có trợ lý AI lên lịch trình trong app từ 6/2023.
+    - Các trợ lý này chỉ gợi ý khách sạn, nhà hàng, hoạt động đã có trên nền tảng. Quán ăn, quán cà phê, quầy lưu niệm vừa và nhỏ ít khi có mặt, nên không được AI giới thiệu.
+- Kết luận của slide (1 dòng): **Khách đã hỏi AI trước khi đi và đặt chỗ online. Merchant vừa và nhỏ chưa có mặt ở các kênh này, nên chưa được AI giới thiệu đến khách.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 6.*
+
+### Slide 7 – Vấn đề và cơ hội của VDF
+
+- Tiêu đề: *Merchant vừa và nhỏ đang mất khách ở cả hai đầu. Đó cũng là hai khoảng trống VDF có thể lấp.*
+- **Bố cục:** 2 cột theo đúng thứ tự 2 kênh ở slide 8 (cột trái: Offline, cột phải: Online). Mỗi cột có 3 dòng: vấn đề, quy mô và dấu hiệu sẵn sàng, cơ hội cho VDF. Dẫn số từ slide 2–6; số mới duy nhất là mức phí kỳ vọng (81,5%, 24,3%) từ khảo sát merchant. Chưa nhắc Visa Accept. Dưới 2 cột là một dải ngang "Lợi thế khi VDF hợp tác với VTT".
+
+| | **1. Tại cửa hàng** | **2. Trước khi khách đến** |
+| --- | --- | --- |
+| **Vấn đề** | **Không nhận được tiền của khách.** Nhóm vừa và nhỏ vẫn chủ yếu nhận tiền mặt; chỉ khoảng **6%** điểm chấp nhận thanh toán nhận QR quốc tế (slide 2, 4). Khách phải mang tiền mặt, đi rút hoặc đổi tiền, có khách sang cửa hàng khác (slide 3) | **Không được khách tìm thấy.** Khách đã hỏi AI và đặt chỗ online, nhưng AI của các nền tảng lớn chỉ giới thiệu merchant có trên nền tảng của mình; merchant vừa và nhỏ chưa có mặt (slide 6) |
+| **Quy mô và dấu hiệu sẵn sàng** | Khoảng **500 nghìn** hộ quanh điểm du lịch; khách quốc tế chi khoảng **5–8 tỷ USD/năm** cho ăn uống, mua sắm (slide 2, 3). **58%** merchant sẵn sàng dùng giải pháp mới; kỳ vọng phí 1–2% thì **81,5%** sẵn sàng, trên 3% thì chỉ **24,3%** | **56%** khách Mỹ đã dùng AI cho chuyến đi; **81%** khách Việt dự định dùng. Du lịch trực tuyến khoảng **4 tỷ USD**; khách Việt có **50,2 triệu** thẻ quốc tế (slide 6) |
+| **Cơ hội cho VDF** | Một cách nhận thẻ đến được hộ kinh doanh nhỏ, gắn với việc bán hàng và chi phí thấp | Một kênh AI tư vấn giới thiệu được cả merchant vừa và nhỏ đến khách, và cho khách đặt chỗ ngay |
+
+- **Lợi thế khi VDF hợp tác với VTT** (dải ngang dưới bảng): có sẵn kênh đến merchant qua tệp hộ kinh doanh Tendoo và đội kênh bán thực địa của VTT, không phải chờ merchant tự tìm đến.
+- Kết luận của slide (1 dòng): **Hai vấn đề, hai cơ hội độc lập, cần hai cách giải quyết riêng. Cùng VTT, VDF có kênh đến merchant để lấp cả hai.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 7.*
+
+## Phần 2 – Giải pháp
+
+### Slide 8 – Giải pháp tổng thể
+
+- Tiêu đề: *Merchant thế hệ mới: thanh toán tại cửa hàng và AI tư vấn du lịch online.*
+- Định nghĩa trong một câu: *VDF giúp merchant vừa và nhỏ bán được cho khách quốc tế qua hai kênh: tại cửa hàng, merchant nhận thẻ ngay trên điện thoại bằng Visa Accept tích hợp trong app Tendoo; online, AI tư vấn cho khách điểm du lịch, điểm ăn chơi, mua sắm và khách sạn.*
+- **Hai kênh, hai thẻ lớn đặt cạnh nhau** (đánh số 1 và 2, không vẽ mũi tên nối giữa hai thẻ):
+
+| | **1. Offline: thanh toán tại cửa hàng** | **2. Online: AI tư vấn du lịch** |
+| --- | --- | --- |
+| **Merchant** | Merchant vừa và nhỏ | Merchant vừa và nhỏ (điểm ăn chơi, mua sắm)<br>Riêng booking online: thêm các chuỗi nhà hàng, khách sạn lớn |
+| **Khách hàng** | Khách quốc tế mua tại cửa hàng | Khách quốc tế và khách Việt dùng thẻ thanh toán quốc tế |
+| **Giải pháp** | Visa Accept tích hợp trong app Tendoo, merchant nhận thẻ ngay trên điện thoại:<br>• **Chạm thẻ (Tap to Phone):** cách nhận tiền chính tại quầy<br>• **Link thanh toán:** khi khách không chạm được | AI tư vấn điểm du lịch và các điểm ăn chơi, mua sắm vừa và nhỏ<br>Booking online qua tư vấn của AI: đặt phòng khách sạn, đặt bàn nhà hàng |
+| **Kết quả cho merchant** | **Nhận được tiền** của khách quốc tế:<br>• Không cần máy POS<br>• Nhận tiền ngay trong app bán hàng Tendoo<br>• Chi phí thấp: phí IRF của Visa miễn phí với giao dịch dưới 200.000đ, 200đ mỗi giao dịch trên 200.000đ | **Có thêm khách** nhờ được AI giới thiệu |
+| **Doanh thu của VDF** | Chia phí giao dịch với VTT | Tiền affiliate do merchant trả<br>Một phần phí giao dịch booking online |
+
+- Hai kênh vận hành độc lập.
+- > **Cần review (không đưa lên slide):** phần booking online cho các chuỗi nhà hàng, khách sạn lớn (dòng Merchant, cột Online) chưa có vấn đề và cơ hội tương ứng ở slide 7, vì slide 7 chỉ nói merchant vừa và nhỏ.
+- **Đưa giải pháp đến merchant** (dải ngang dưới hai thẻ): VTT phát triển merchant cho cả hai kênh: merchant vừa và nhỏ qua tệp hộ kinh doanh Tendoo và đội kênh bán thực địa; các chuỗi nhà hàng, khách sạn lớn cho booking online.
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 8.*
+
+### Slide 9 – Giải pháp chi tiết 1 (Offline): Visa Accept
+
+- Tiêu đề: *Visa Accept: chủ thẻ Visa thành người bán, nhận thẻ ngay trên điện thoại.*
+- **Bố cục:** 4 khối theo mục 2 tài liệu Visa (*VDS – Acquiring discussion*, 10/2026, trang 12–22): (1) Visa Accept là gì, (2) Bán hàng thế nào, (3) Hạn mức và phí, (4) Lộ trình nâng gói. Minh họa: các màn hình mẫu của Visa (bán hàng bằng chạm thẻ, bằng link thanh toán), đặt trong giao diện Tendoo. Chú thích nhỏ cuối slide: *Nguồn: Visa, 10/2026.*
+- **Khối 1 – Visa Accept là gì:**
+    - Biến người dùng thẻ Visa ghi nợ, trả trước thành người bán: ai cũng nhận được thẻ.
+    - Đăng ký nhanh. Trong giải pháp của VDF, Visa Accept tích hợp trong app Tendoo.
+    - Nhận thẻ bằng điện thoại có NFC, không cần máy POS.
+    - Tiền về gần như tức thì.
+- **Khối 2 – Bán hàng thế nào:**
+    - **Chạm thẻ (Tap to Phone):** khách chạm thẻ hoặc ví vào điện thoại của cửa hàng.
+    - **Link thanh toán:** khi khách không chạm được, merchant gửi link để khách trả bằng thẻ; giao dịch qua link được bảo vệ bằng 3-D Secure.
+    - Merchant theo dõi doanh số, lịch sử và chi tiết từng giao dịch; có chức năng hoàn tiền và báo cáo đối soát.
+- **Khối 3 – Hạn mức và phí:**
+
+| Hạn mức mỗi tháng | Số giao dịch mỗi tháng | Mỗi giao dịch |
+| --- | --- | --- |
+| 100 triệu đồng (4.000 USD) | 2.000 | 8 triệu đồng (300 USD) |
+
+| Phí mạng lưới | Giao dịch dưới 200.000đ | Giao dịch từ 200.000đ |
+| --- | --- | --- |
+| IRF | Miễn phí | 200đ |
+| Phí acquirer | Miễn phí | 0,002 USD |
+
+- **Khối 4 – Lộ trình nâng gói của Visa** (vẽ 3 bậc):
+    - **Visa Accept:** MDR gần như bằng 0, trong hạn mức ở khối 3.
+    - **Gói SMB:** MDR dưới 1%; khoảng 180 triệu đồng (7.000 USD) mỗi tháng, không giới hạn số giao dịch và giá trị mỗi giao dịch.
+    - **Nhận thẻ đầy đủ:** biểu phí chuẩn, không giới hạn, dùng nhiều loại thiết bị.
+- Kết luận của slide (1 dòng): **Merchant vừa và nhỏ bắt đầu nhận thẻ với chi phí gần như bằng 0, rồi lớn lên theo lộ trình của Visa.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 9.*
+
+### Slide 10 – Demo giải pháp Visa Accept
+
+- Slide nhúng nguyên file demo `demo-visa-accept/index.html` (không có tiêu đề, demo phủ kín slide). Người trình bấm vào demo để thao tác; phím mũi tên khi đó điều khiển demo.
+- Màn hình đi theo luồng Visa Accept trong mục 2 tài liệu Visa (trang 14–18, 20, 22), đặt trong app Tendoo. Cửa hàng mẫu: Lan's House, bán trà và quà lưu niệm ở Hội An.
+- Năm kịch bản:
+    1. **Đăng ký:** mở Visa Accept trong Tendoo, chọn thẻ Visa nhận tiền, đặt tên người bán (hiện trên sao kê của khách), đồng ý điều khoản và hạn mức.
+    2. **Chạm thẻ:** tạo đơn từ hàng có sẵn trong Tendoo, du khách Pháp chạm thẻ Visa, thanh toán thành công, giao dịch vào bảng điều khiển và sổ bán hàng.
+    3. **Link thanh toán:** du khách Hàn Quốc không chạm được thẻ; chủ tiệm gửi link qua tin nhắn; khách mở trang yêu cầu thanh toán, nhập thẻ, xác thực 3-D Secure; điện thoại chủ tiệm báo đã nhận tiền.
+    4. **Theo dõi và hoàn tiền:** lịch sử giao dịch, chi tiết giao dịch, hoàn tiền về thẻ của khách, báo cáo doanh số và đối soát.
+    5. **Nâng gói:** chạm hạn mức tháng, được mời lên gói SMB hoặc ở lại Visa Accept; lộ trình 3 bậc của Visa.
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 10.*
+
+### Slide 11 – Giải pháp chi tiết 2 (Online): AI tư vấn du lịch và booking online
+
+- Tiêu đề: *Online: AI tư vấn du lịch giới thiệu merchant vừa và nhỏ đến khách, và cho khách đặt chỗ ngay.*
+- **Bố cục:** trên cùng là khách hàng và kênh khách gặp AI; bên trái là 2 việc AI làm cho khách (tư vấn, booking online); bên phải là merchant tham gia và kết quả cho merchant; dải dưới cùng là phần của VDF và VTT.
+- **Khách hàng:** khách quốc tế và khách Việt dùng thẻ thanh toán quốc tế.
+- **Khách gặp AI qua kênh Viettel:** link mở AI trong tin nhắn chào mừng khi khách roaming vào Việt Nam, trên SIM/eSIM du lịch Viettel và tại quầy bán SIM ở sân bay. AI là web app, khách bấm link là dùng ngay, không cần cài app.
+    - Sau pilot: mở thêm cổng du lịch của tỉnh và Tammi.
+- **AI làm 2 việc cho khách:**
+    - **Tư vấn:** gợi ý điểm du lịch và các điểm ăn chơi, mua sắm vừa và nhỏ.
+    - **Booking online:** từ tư vấn của AI, khách đặt phòng khách sạn, đặt bàn nhà hàng.
+- **Merchant tham gia:**
+
+| | **Tư vấn** | **Booking online** |
+| --- | --- | --- |
+| **Merchant** | Merchant vừa và nhỏ: điểm ăn chơi, mua sắm | Khách sạn, nhà hàng vừa và nhỏ; thêm các chuỗi nhà hàng, khách sạn lớn |
+| **Kết quả cho merchant** | Có thêm khách nhờ được AI giới thiệu | Có thêm lượt đặt phòng, đặt bàn qua AI |
+| **Doanh thu của VDF** | Tiền affiliate do merchant trả | Một phần phí giao dịch booking online |
+
+- **Dải dưới cùng:**
+    - **Đưa đến merchant:** VTT phát triển merchant: merchant vừa và nhỏ qua tệp hộ kinh doanh Tendoo và đội kênh bán thực địa; các chuỗi nhà hàng, khách sạn lớn cho booking online.
+    - Chính sách affiliate và booking online thống nhất sau khi triển khai.
+- Kết luận của slide (1 dòng): **AI đưa khách đến merchant vừa và nhỏ và cho khách đặt chỗ ngay; merchant có thêm khách, VDF có doanh thu từ affiliate và phí booking.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 11.*
+
+### Slide 12 – Demo giải pháp AI tư vấn du lịch và booking online
+
+- Slide nhúng file demo của kênh online tại `demo-ai-online/index.html`, làm sau demo Visa Accept. Demo chạy theo hành trình của một khách, gồm 5 kịch bản: hạ cánh và mở AI (dòng 1–2 trong bảng dưới), hỏi tư vấn, đặt bàn, đặt phòng, kết quả.
+- **Nhân vật:** Minji, 28 tuổi, nhân viên văn phòng ở Seoul, đi Đà Nẵng 5 ngày. Minji đã đặt khách sạn ở Đà Nẵng, chưa biết ăn gì, chơi gì, và muốn ghé Hội An 1 đêm.
+- **Hành trình:**
+
+| # | Khoảnh khắc | Minji làm gì | AI làm gì |
+| --- | --- | --- | --- |
+| 1 | **Hạ cánh** ở sân bay Đà Nẵng | Bật điện thoại, nhận tin nhắn chào mừng roaming của Viettel, trong tin có link "Hỏi AI về Đà Nẵng" | |
+| 2 | **Mở AI** khi đang chờ hành lý | Bấm link, web app mở ngay, không cần cài app, không cần đăng nhập | Chào Minji, hỏi Minji muốn đi đâu, thích ăn gì |
+| 3 | **Hỏi tư vấn** | Hỏi bằng tiếng Hàn: "Tối nay tôi muốn ăn hải sản gần biển Mỹ Khê, mai đi đâu?" | Trả lời bằng tiếng Hàn. Gợi ý 3 quán hải sản vừa và nhỏ gần biển, kèm giờ mở cửa và giá tham khảo; gợi ý lịch trình ngày mai: Ngũ Hành Sơn và một quán cà phê nhỏ trên đường đi |
+| 4 | **Đặt bàn** | Chọn 1 quán, đặt bàn 19h cho 2 người, điền thông tin liên hệ và đặt cọc bằng thẻ quốc tế | Gửi lượt đặt cho quán; quán xác nhận qua app Tendoo; AI báo lại Minji |
+| 5 | **Đặt phòng** | "Tôi muốn ở Hội An 1 đêm, khách sạn nhỏ gần phố cổ." Chọn khách sạn, điền thông tin và trả trước bằng thẻ quốc tế | Gợi ý vài khách sạn vừa và nhỏ; xác nhận đặt phòng cho Minji |
+| 6 | **Kết quả** | Ra khỏi sân bay đã có chỗ ăn tối và chỗ ở Hội An | Quán và khách sạn có thêm khách nhờ AI giới thiệu |
+
+- **Quy tắc thể hiện trong demo:**
+    - AI trả lời bằng thứ tiếng khách dùng để hỏi.
+    - Hỏi tư vấn không cần đăng nhập; chỉ khi chốt đặt chỗ, thanh toán khách mới điền thông tin.
+    - Khách có thể trả trước bằng thẻ quốc tế; đặt bàn có thể trả trước hoặc đặt cọc.
+    - Merchant xác nhận lượt đặt qua app Tendoo.
+- **Câu chốt khi demo:** *Minji không phải cài app, không phải tự tìm. Từ lúc hạ cánh đến lúc ra khỏi sân bay, Minji đã đặt xong chỗ ăn và chỗ ở tại các merchant vừa và nhỏ.*
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 12.*
+
+## Phần 3 – Mô hình hợp tác và lộ trình triển khai
+
+### Slide 13 – Phân vai VTT và VDF
+
+- Tiêu đề: *VDF cung cấp giải pháp, VTT phát triển merchant và đưa khách đến AI.*
+- **Bố cục:** bảng 2 cột theo 2 kênh ở slide 8 (Offline, Online), 2 dòng (VDF, VTT). Dưới bảng là dòng đối tác bên ngoài.
+
+| Bên | **1. Offline: Visa Accept** | **2. Online: AI tư vấn du lịch và booking online** |
+| --- | --- | --- |
+| **VDF** | Cung cấp Visa Accept trong app Tendoo; **làm việc với Visa**, gồm cả nâng merchant lên các gói cao hơn của Visa (SMB, nhận thẻ đầy đủ)<br>**Xử lý dòng tiền:** vận hành, đối soát, kiểm soát rủi ro | Xây dựng và vận hành AI tư vấn du lịch và booking online (web app)<br>**Xử lý dòng tiền** của booking online: khách trả trước, đặt cọc bằng thẻ quốc tế |
+| **VTT** | **Phát triển merchant** qua tệp hộ kinh doanh Tendoo và đội kênh bán thực địa<br>Tích hợp Visa Accept vào app Tendoo | **Phát triển merchant:** merchant vừa và nhỏ qua tệp hộ kinh doanh Tendoo và đội kênh bán thực địa; các chuỗi nhà hàng, khách sạn lớn cho booking online<br>**Đưa khách đến AI** qua kênh Viettel: tin nhắn chào mừng roaming, SIM/eSIM du lịch, quầy SIM sân bay |
 
 - **Đối tác bên ngoài:** Visa (sản phẩm Visa Accept, mạng lưới thẻ, công cụ chống gian lận).
+- Kết luận của slide (1 dòng): **VDF lo giải pháp, việc với Visa và dòng tiền; VTT lo merchant và đưa khách đến AI.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 13.*
 
-### Slide 18 – Nguyên tắc hợp tác kinh doanh VTT – VDF
+### Slide 14 – Nguyên tắc hợp tác kinh doanh VTT – VDF
 
-- **Mỗi bên hưởng phần doanh thu tương ứng với phần việc và rủi ro của mình:** VDF gắn với thanh toán và đối soát; VTT gắn với merchant, kênh bán và dữ liệu Tendoo.
-- **Tiền của merchant đi qua thanh toán VDF:** VDF là bên quyết toán và đối soát; VTT không giữ tiền của merchant.
-- **Chi phí theo phần việc:** mỗi bên chịu chi phí phần mình làm; chi phí phát triển merchant và đội kênh bán được thống nhất khi chốt hợp tác.
-- **Cùng có lợi khi merchant lớn lên:** giao dịch qua VDF tự ghi sổ trên Tendoo; merchant nâng gói thì cả hai cùng hưởng.
-- *Ghi chú cho người trình, không đưa lên slide:*
-    - *Không nêu tỉ lệ chia và số tiền cụ thể khi chưa thống nhất với VTT. Cơ chế phí Visa Accept (IRF, phí acquirer) cần xác nhận với Visa trước khi nêu.*
-    - *Mô hình doanh thu chi tiết ở phụ lục, dùng khi được hỏi.*
+- *Để trống. Bộ phận kinh doanh bổ sung sau.*
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 14.*
 
-### Slide 19 – Lộ trình triển khai
+### Slide 15 – Lộ trình triển khai
 
-- Tiêu đề: *Pilot khách quốc tế từ Q1/2027.*
+- Tiêu đề: *Pilot kênh offline từ Q1/2027, kênh online từ Q2/2027.*
 
 - Vẽ thành bảng timeline: hàng là các mảng việc, cột là các phase theo thời gian.
 
-| Mảng việc | Phase 0 – Chuẩn bị<br>*(Q4/2026)* | Phase 1 – Pilot khách quốc tế<br>*(Q1/2027)* | Phase 2 – Mở rộng<br>*(Q3/2027)* | Phase 3 – Hệ sinh thái<br>*(Q4/2027)* |
-| --- | --- | --- | --- | --- |
-| **Thanh toán** | Chốt hợp tác Visa Accept với Visa; thiết kế tích hợp vào Tendoo | **1a:** mở Visa Accept trong Tendoo (chạm thẻ, trả qua link) | Nâng merchant vượt hạn mức lên gói nhận thẻ đầy đủ; thanh toán đa nguồn tiền trong chat | QR cho khách dùng ví nước mình (Visa QR Connector hoặc VietQR Global); thanh toán cho người Việt ra nước ngoài |
-| **Trợ lý AI** | Chốt phạm vi Merchant AI Studio | **1b:** bật trợ lý tư vấn đa ngôn ngữ tại cửa hàng | Trợ lý livestream và tin nhắn trên kênh Tendoo đang kết nối (website, mạng xã hội); lên Tammi Shop, Live, OA cửa hàng khi Tammi sẵn sàng | Tammi OA đầy đủ |
-| **Merchant và kênh bán** | Làm việc với VTT, chốt phạm vi và đầu mối | Pilot tại một nhóm cửa hàng đông khách quốc tế (Hội An, Đà Nẵng, Phú Quốc) | Nhân rộng ra các điểm du lịch qua đội kênh bán VTT | Phủ toàn bộ tệp merchant Tendoo |
-| **Tammi** | Thống nhất với Tammi về miniapp pilot | **1c:** pilot trợ lý trên miniapp của Tammi cho một nhóm cửa hàng pilot (không cần Tammi Shop, Live) | Tích hợp AI vào OA, xây Shop và Live | Lớp thương mại đầy đủ cho người dùng Việt |
-| **Phụ thuộc** | Đồng thuận của VTT; Visa; Tammi (miniapp) | VDF, Visa, Tendoo; Tammi cho miniapp pilot (không cần Shop, Live) | Visa; lộ trình Tammi | Visa, NAPAS, giấy phép |
+| Mảng việc | Phase 0 – Chuẩn bị<br>*(Q4/2026)* | Phase 1 – Pilot<br>*(Q1–Q2/2027)* | Phase 2 – Mở rộng<br>*(Q3–Q4/2027)* |
+| --- | --- | --- | --- |
+| **1. Offline: Visa Accept** | Chốt hợp tác Visa Accept với Visa; thiết kế tích hợp vào Tendoo | **Q1/2027:** mở Visa Accept trong Tendoo (chạm thẻ, link thanh toán) cho nhóm cửa hàng pilot | Nhân rộng; merchant chạm hạn mức nâng lên gói SMB, nhận thẻ đầy đủ theo lộ trình của Visa |
+| **2. Online: AI tư vấn và booking** | Thiết kế AI tư vấn du lịch và booking online (web app); thống nhất với VTT về kênh tin nhắn roaming, SIM/eSIM du lịch, quầy SIM sân bay | **Q2/2027:** pilot AI tư vấn và booking online qua kênh Viettel | Nhân rộng; mở thêm cổng du lịch của tỉnh và Tammi |
+| **Merchant và kênh bán** | Làm việc với VTT, chốt phạm vi và đầu mối | VTT phát triển merchant pilot tại một nhóm điểm đông khách quốc tế (Hội An, Đà Nẵng, Phú Quốc): kênh offline từ Q1, kênh online từ Q2 | Nhân rộng ra các điểm du lịch qua đội kênh bán VTT, tiến tới phủ các merchant Tendoo phục vụ khách quốc tế |
+| **Phụ thuộc** | Đồng thuận của VTT; Visa | VDF, VTT (Tendoo, kênh bán, kênh tin nhắn roaming); Visa | Visa; cổng du lịch tỉnh; Tammi |
 
-- Trên slide chỉ giữ bảng lộ trình và dòng kết luận **KPI chính: GMV của cửa hàng qua Visa Accept** (bước 1a là mốc nền, bước 1b đo phần tăng thêm từ đơn có tương tác với trợ lý). Các ý dưới đây để trong ghi chú cho người trình.
-- **Pilot:** hộ kinh doanh vừa và nhỏ, mọi ngành hàng, ưu tiên quán ăn, quán cà phê và cửa hàng gần điểm tham quan (bối cảnh được 7/10 khách quốc tế chọn). Ưu tiên điểm có nhiều khách dùng thẻ (Hàn Quốc, châu Âu, Mỹ, Úc). Chỉ tiêu kênh bán theo **cửa hàng phát sinh giao dịch**, không theo số tài khoản mở.
-- **Pilot miniapp Tammi (bước 1c):** cùng nhóm cửa hàng pilot, trợ lý tư vấn và chốt đơn chạy trong miniapp của Tammi, không cần Tammi Shop hay Live. Mục đích là kiểm chứng người dùng Tammi có hỏi và mua qua trợ lý hay không, trước khi Tammi đầu tư vào Shop và Live.
-    - *Ghi chú cho người trình: phạm vi và điều kiện triển khai miniapp phải thống nhất với Tammi trước khi nêu thời điểm. Không nêu cam kết của Tammi trên slide khi chưa có văn bản.*
-- **KPI chính: GMV của cửa hàng qua Visa Accept.** GMV ở bước 1a là mốc nền, bước 1b đo phần tăng thêm từ các đơn có tương tác với trợ lý.
-- **Chỉ số sớm của trợ lý (bước 1b):** lượt quét QR; tỉ lệ đặt hàng sau khi quét; tỉ lệ câu hỏi trợ lý tự xử lý. Đây cũng là cách kiểm chứng giả thuyết khách quốc tế bỏ đi vì không hỏi được (slide 10).
-- **Chỉ số theo dõi:** tỉ lệ cửa hàng còn giao dịch sau 30 ngày; số merchant chạm hạn mức và nâng gói.
+- Hai kênh độc lập: kênh online triển khai sau kênh offline một quý, nhưng không có bước nào của kênh này phụ thuộc kênh kia.
+- Chính sách phí cho merchant (offline), chính sách affiliate và booking online thống nhất sau khi triển khai; không đặt vào phase nào trên slide.
+- Trên slide chỉ giữ bảng lộ trình và dòng kết luận **KPI chính** theo từng kênh:
+    - **Offline:** GMV của cửa hàng qua Visa Accept; số cửa hàng phát sinh giao dịch.
+    - **Online:** số lượt đặt phòng, đặt bàn qua AI; GMV booking online.
+- > **Cần review (không đưa lên slide):**
+    > - KPI hai kênh là đề xuất, chờ xác nhận.
+    > - Địa bàn pilot kênh online: đang ghi chung với kênh offline (Hội An, Đà Nẵng, Phú Quốc). Demo kênh online đặt ở Đà Nẵng, Hội An.
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 15.*
 
 ## Phụ lục
 
@@ -328,50 +363,40 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
 | Rủi ro | Hướng xử lý |
 | --- | --- |
 | Merchant vẫn không dùng thật | Chỉ tiêu kênh bán theo cửa hàng có giao dịch; pilot đo GMV và tỉ lệ còn giao dịch sau 30 ngày |
-| VPBank, Sacombank, VIB đã có Visa Accept | Tập trung hộ kinh doanh của Tendoo; khác biệt bằng kênh bán thực địa, thanh toán nằm trong Tendoo, trợ lý đa ngôn ngữ |
+| VPBank, Sacombank, VIB đã có Visa Accept | Tập trung hộ kinh doanh của Tendoo; khác biệt bằng kênh bán thực địa và thanh toán nằm ngay trong Tendoo |
 | Merchant chưa có thẻ Visa để nhận tiền | Đội kênh bán hướng dẫn mở thẻ tại ngân hàng; xem xét hợp tác ngân hàng phát hành để mở thẻ nhanh |
 | Chạm thẻ chỉ chạy trên Android | Cửa hàng dùng iPhone nhận tiền qua link |
-| Chưa nhận ví nước ngoài (Alipay, WeChat Pay) | Pilot ưu tiên điểm nhiều khách dùng thẻ; QR cho ví nước ngoài ở Phase 3 |
-| Hạn mức Visa Accept thấp với cửa hàng lớn | Nâng lên gói nhận thẻ đầy đủ khi chạm hạn mức |
+| Chưa nhận ví nước ngoài (Alipay, WeChat Pay) | Pilot ưu tiên điểm nhiều khách dùng thẻ; QR cho ví nước ngoài chưa nằm trong lộ trình hiện tại |
+| Hạn mức Visa Accept thấp với cửa hàng lớn | VDF nâng merchant lên gói SMB, nhận thẻ đầy đủ khi chạm hạn mức |
 | Doanh thu giai đoạn đầu thấp vì phí gần như bằng 0 | Đặt mục tiêu Phase 1 là có merchant hoạt động; theo dõi tỉ lệ nâng gói |
 | Gian lận thẻ | Kiểm soát tần suất và hạn mức của Visa Accept; xác thực 3-D Secure cho giao dịch qua link; cân nhắc công cụ chống gian lận của Visa khi lên gói đầy đủ |
-| Phụ thuộc lộ trình Tammi (tích hợp AI vào OA, Shop, Live) | Phase 1 chỉ cần miniapp pilot của Tammi, không cần Shop và Live; trợ lý online chạy trước trên kênh Tendoo đang kết nối; Tammi có thể chậm hoặc từ chối miniapp, khi đó pilot vẫn chạy trên kênh Tendoo |
-| Tammi chưa hình thành thói quen mua sắm | Kiểm chứng ở Phase 2 trước khi đầu tư lớn |
 | Phối hợp nhiều đơn vị | VDF làm đầu mối làm việc với VTT và Visa |
-| Pháp lý AI: Luật Trí tuệ nhân tạo 134/2025 | Luôn gắn nhãn "Trợ lý AI" và nút "Gặp người thật" |
-| Dữ liệu cá nhân: Nghị định 13/2023 | Chỉ dùng dữ liệu khi người dùng đồng ý; khách quốc tế dùng web không cần đăng ký; dữ liệu lưu tại Việt Nam |
-| AI tư vấn sai, giao dịch sai | Chỉ trả lời theo dữ liệu cửa hàng; trợ lý không tự trừ tiền; khiếu nại, hoàn tiền luôn chuyển người thật |
+| Pháp lý AI: Luật Trí tuệ nhân tạo 134/2025 | AI tư vấn luôn gắn nhãn "Trợ lý AI" và nút "Gặp người thật" |
+| Dữ liệu cá nhân: Nghị định 13/2023 | Chỉ dùng dữ liệu khi người dùng đồng ý; hỏi tư vấn không cần đăng nhập, khách chỉ điền thông tin khi chốt đặt chỗ, thanh toán; dữ liệu lưu tại Việt Nam |
+| AI tư vấn sai | AI chỉ gợi ý theo dữ liệu của merchant tham gia; lượt đặt do merchant xác nhận qua Tendoo; khiếu nại, hoàn tiền luôn chuyển người thật |
 
-- **Mô hình doanh thu (dùng khi được hỏi, không đưa vào phần chính):** ở giai đoạn Visa Accept, phí gần như bằng 0. Mục tiêu giai đoạn này là có merchant hoạt động thật. Doanh thu đến khi merchant lớn lên và khi mở rộng dịch vụ.
+- **Mô hình doanh thu:** bổ sung sau. Các dòng thu đã chốt (slide 8):
 
-| Dòng thu | Phase |
+| Kênh | Dòng thu của VDF |
 | --- | --- |
-| Phần phí VDF được nhận từ giao dịch Visa Accept *(cần xác nhận với Visa)* | 1 |
-| MDR khi merchant nâng lên gói SMB (dưới 1%) và gói nhận thẻ đầy đủ | 2 |
-| MDR thanh toán trong chat: Viettel Money, tài khoản ngân hàng, thẻ nội địa | 2 |
-| Thanh toán trên Tammi Shop và livestream | 2 |
-| Gói dịch vụ AI cho người bán *(cần thống nhất bên nào thu)* | 2 |
-| QR cho khách dùng ví nước mình (Visa QR Connector hoặc VietQR Global) | 3 |
-| Thanh toán xuyên biên giới cho người Việt ra nước ngoài | 3 |
+| Offline: Visa Accept | Chia phí giao dịch với VTT |
+| Online: AI tư vấn du lịch và booking online | Tiền affiliate do merchant trả; một phần phí giao dịch booking online |
 
-- **Vì sao chọn giải pháp này** (slide 16 ở v0.6, nay dùng khi được hỏi):
-    - **So sánh nhanh với 3 nhóm giải pháp ở slide 5–7:**
+    - Mức phí cho merchant, tỉ lệ chia phí với VTT, chính sách affiliate và booking online thống nhất sau khi triển khai.
 
-    | Tiêu chí | QR quốc tế | App Việt Nam + liên kết thẻ | Tap to Phone của ngân hàng | **VDF trong Tendoo** |
+- **Vì sao chọn giải pháp này – kênh offline** (dùng khi được hỏi):
+    - **So sánh nhanh với 3 nhóm giải pháp ở slide 5:**
+
+    | Tiêu chí | QR quốc tế | App Việt Nam + liên kết thẻ | Tap to Phone của ngân hàng | **VDF: Visa Accept trong Tendoo** |
     | --- | --- | --- | --- | --- |
     | Khách nước nào cũng trả được | Không (6 nước) | Có | Có | **Có** |
     | Khách không phải cài thêm app | Có | Không | Có | **Có** |
     | Phí với merchant gần như bằng 0 | Tùy đơn vị cung cấp | Tùy đơn vị cung cấp | Chỉ Visa Accept | **Có** |
     | Gắn với bán hàng, tự ghi sổ | Không | Không | Không | **Có** |
-    | Tư vấn khách bằng tiếng nước họ | Không | Không | Không | **Có** |
+    | Đến tận hộ kinh doanh qua đội kênh bán | Không | Không | Không | **Có** |
 
-    - Thông điệp: *ngân hàng đã có Visa Accept, nhưng chỉ là nút nhận tiền trong app ngân hàng; phần mềm bán hàng và chatbot đã có AI, nhưng chưa ai gắn trợ lý với kho, sổ sách và thanh toán. VDF đưa cả hai vào phần mềm bán hàng của hộ kinh doanh, đến tận cửa hàng qua đội kênh bán.*
-    - *Ghi chú cho người trình, không đưa lên slide:*
-        - *Điểm yếu cần nói thật nếu được hỏi:*
-            - *Thanh toán: chưa phục vụ khách chỉ dùng ví nước mình như Alipay, WeChat Pay (phần lớn khách Trung Quốc); chạm thẻ chỉ chạy trên Android; cửa hàng lớn cần lên gói nhận thẻ đầy đủ.*
-            - *AI: chưa có số liệu về rào cản ngôn ngữ, pilot sẽ đo; AI có thể trả lời sai, đã có chốt an toàn (chỉ trả lời theo dữ liệu cửa hàng, gặp người thật); kênh Tammi phụ thuộc lộ trình của Tammi, trong lúc chờ thì chạy trên kênh Tendoo đang kết nối.*
-        - *Bảng so sánh đầy đủ 11 tiêu chí ở dưới. Đánh giá sơ bộ theo thông tin đến 10/2026, cần kiểm tra lại trước khi trình bày.*
-        - *Nếu được hỏi về vế "phần mềm bán hàng và chatbot đã có AI" trong thông điệp: mở bảng "So sánh với phần mềm bán hàng và nền tảng thương mại" ở phụ lục. Bảng này cho thấy chỉ Merchant AI Studio có đủ trợ lý tạo đơn, kho và sổ sách, thanh toán trong cùng hệ sinh thái, và phục vụ khách quốc tế tại cửa hàng.*
+    - Thông điệp: *ngân hàng đã có Visa Accept, nhưng chỉ là nút nhận tiền trong app ngân hàng, chờ khách hàng tự bật. VDF đưa Visa Accept vào phần mềm bán hàng của hộ kinh doanh, đến tận cửa hàng qua đội kênh bán VTT.*
+    - *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Phụ lục – Vì sao chọn giải pháp này.*
 
 - **Bảng đối thủ chi tiết:**
 
@@ -387,7 +412,7 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
 
 - **Bảng so sánh đầy đủ:**
 
-| Tiêu chí | Máy POS ngân hàng | SoftPOS của ngân hàng, VNPAY | Visa Accept trong app ngân hàng (VPBank, Sacombank, VIB) | QR xuyên biên giới (VietQR Global, VNPAY-QR) | **VDF: Visa Accept trong Tendoo + trợ lý AI** |
+| Tiêu chí | Máy POS ngân hàng | SoftPOS của ngân hàng, VNPAY | Visa Accept trong app ngân hàng (VPBank, Sacombank, VIB) | QR xuyên biên giới (VietQR Global, VNPAY-QR) | **VDF: Visa Accept trong Tendoo** |
 | --- | --- | --- | --- | --- | --- |
 | Khách từ nước nào cũng trả được | Có (thẻ) | Có (thẻ, ví chạm) | Có (thẻ, ví chạm) | Chỉ 6 nước đã kết nối | **Có (thẻ Visa, Mastercard, ví chạm, link)** |
 | Khách không phải cài thêm app | Có | Có | Có | Có | **Có** |
@@ -398,35 +423,18 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
 | Thanh toán nằm ngay trong phần mềm bán hàng, tự ghi sổ | Không | Không | Không | Một phần | **Có (trong Tendoo)** |
 | Không phải thêm app, công cụ mới | Không (thêm máy) | Không (thêm app) | Không (dùng app ngân hàng) | Không (thêm mã QR, app nhận tiền) | **Có (dùng ngay Tendoo đang có)** |
 | Đối soát, chứng từ, hỗ trợ khiếu nại | Có hóa đơn POS | Lịch sử giao dịch | Lịch sử giao dịch, hoàn tiền | Lịch sử giao dịch | **Gắn với đơn hàng và hóa đơn điện tử trên Tendoo; hoàn tiền, báo cáo đối soát** |
-| Tư vấn khách bằng tiếng nước họ | Không | Không | Không | Không | **Có (trợ lý AI)** |
 | Kênh đưa giải pháp đến hộ kinh doanh | Nhân viên ngân hàng | Nhân viên ngân hàng, đại lý | Khách hàng tự bật trong app | Ngân hàng, trung gian | **Tệp hộ kinh doanh Tendoo, đội kênh bán VTT** |
 
 - **NAPAS – VietQR Global:** ví hoặc app ngân hàng nước ngoài kết nối với NAPAS, merchant nhận tiền VND qua mã VietQR. Có hai chiều: chiều vào (du khách trả tiền tại VN) và chiều ra (người Việt trả tiền ở nước ngoài). Đã kết nối 6 nước: Thái Lan, Lào, Campuchia, Trung Quốc, Hàn Quốc, Singapore; đang mở rộng sang Nhật Bản, Ấn Độ, Malaysia. Đối tác chính theo từng thị trường: UnionPay, Alipay, GLN, Liquid Group và các ngân hàng quyết toán.
-- **Bài học từ thế giới: app chat và thanh toán** *(lưu ý: số liệu chủ yếu do doanh nghiệp công bố, cần kiểm tra lại)*:
-    - **WeChat Pay (Trung Quốc):** đưa thanh toán vào app chat (2013), bùng nổ nhờ lì xì điện tử dịp Tết 2014. Người nhận phải liên kết tài khoản để rút tiền, biến thói quen chat thành thói quen thanh toán. Thị phần WeChat Pay tăng gấp đôi sau chiến dịch. Đến 2018, Alipay và WeChat Pay chiếm khoảng 92,7% thanh toán bên thứ ba.
-    - **KakaoPay (Hàn Quốc):** thanh toán gắn với KakaoTalk, đạt 5 triệu người dùng trong năm đầu, khoảng 24 triệu MAU cuối 2024, khoảng 650.000 merchant offline. Người dùng cả KakaoTalk Pay và app KakaoPay tạo doanh thu gấp 2,4 lần.
-    - **Alipay, WeChat Pay mở cho du khách (Trung Quốc 2023–2025):** cho liên kết thẻ quốc tế, miễn phí giao dịch dưới 200 tệ. Năm 2024, giao dịch của du khách trên Alipay tăng khoảng 10 lần, người dùng hoạt động tăng khoảng 6 lần. Dịp Quốc khánh 2025, chi tiêu của khách quốc tế qua Alipay tăng gần 40%, thanh toán chạm tăng 500%.
-    - **Bài học cho Viettel:** thanh toán gắn vào app dùng hằng ngày là con đường nhanh nhất để có người dùng (hướng cho Tammi với người dùng Việt). Khi trả tiền dễ hơn, du khách chi tiêu nhiều hơn ngay. Ở Việt Nam, cái thiếu là phía cửa hàng nhận tiền, và VDF lấp đúng chỗ này.
-- **So sánh với phần mềm bán hàng và nền tảng thương mại** (theo tài liệu đề xuất, mục 7):
-
-| Tiêu chí | **Merchant AI Studio** | Phần mềm bán hàng có AI (KiotViet, Sapo, MISA) | Chatbot bán hàng (Pancake/Botcake) | OA + mini app (Zalo) | Sàn, live (TikTok Shop, Shopee) |
-| --- | --- | --- | --- | --- | --- |
-| Kênh người mua của riêng hệ sinh thái | **Có** | Chưa thấy | Chưa thấy | Có | Có |
-| Quản lý kho, đơn, sổ sách, thuế | **Có** | Có | Một phần | Chưa thấy | Một phần |
-| Trợ lý tạo đơn trong chat, livestream | **Có** | Một phần | Có | Một phần | Một phần |
-| Thanh toán của chính hệ sinh thái | **Có** | Một phần | Chưa thấy | Có | Có |
-| Phục vụ khách quốc tế tại cửa hàng | **Có** | Một phần | Chưa thấy | Chưa thấy | Chưa thấy |
-
-    - *Đánh giá sơ bộ dựa trên thông tin công khai đến 10/2026, cần cập nhật trước khi trình bày.*
-- Trải nghiệm chi tiết theo persona: chị Lan (cửa hàng trà ở Hội An), Minh (người dùng Tammi), anh Kim Min-jun và chị Camille Laurent (du khách).
+- Trải nghiệm chi tiết theo demo: chị Lan (Lan's House, trà và quà lưu niệm ở Hội An) với kênh offline; Minji (khách Hàn Quốc ở Đà Nẵng) với kênh online.
 - Ví dụ theo ngành hàng: ăn uống, thời trang, quà lưu niệm, mỹ phẩm và nhà thuốc, spa, tạp hóa.
-- Kiến trúc và điểm tích hợp Tendoo – Studio – Tammi – thanh toán VDF – Visa.
-- Giá trị cho từng bên: người bán, khách quốc tế, người dùng Tammi, Tendoo, Tammi, VDF.
+- Kiến trúc và điểm tích hợp: kênh offline (Tendoo – Visa Accept – VDF – Visa); kênh online (web app AI – kênh Viettel – Tendoo để merchant xác nhận lượt đặt – VDF xử lý dòng tiền).
+- Giá trị cho từng bên: merchant, khách quốc tế, khách Việt dùng thẻ quốc tế, VTT, VDF.
 - Bộ KPI đầy đủ, giả định tài chính.
 - Nguồn số liệu:
     - Visa, "VDS – Acquiring discussion", 10/2026 (*Visa Confidential*): Visa Accept, hạn mức, phí, lộ trình nâng gói, triển khai tại VPBank, Sacombank, VIB; Visa QR Connector; Visa Acceptance Platform
     - "Nhu cầu giải pháp thanh toán phục vụ khách du lịch quốc tế tại merchant Việt Nam", khảo sát 132 merchant tại Hà Nội và TP.HCM, 7/2026 *(cần ghi rõ đơn vị thực hiện)*. Lưu ý khi trích dẫn:
-        - Mẫu nghiêng về merchant ở khu du lịch (78% có trên 50% khách quốc tế), không đại diện cho toàn bộ merchant Tendoo.
+        - Mẫu nghiêng về merchant phục vụ nhiều khách quốc tế (78% có trên 50% khách quốc tế; bán lẻ 36%, lưu niệm 30%, nhà hàng 23%), không đại diện cho toàn bộ merchant Tendoo.
         - Kịch bản khảo sát là giải pháp NFC Tag với phí 1–2%, không phải Visa Accept. "Sẵn sàng triển khai" mới là ý định, chưa phải hành vi thật.
         - Một số tỉ lệ trong báo cáo dùng mẫu số không thống nhất (127 và 132). Outline dùng tỉ lệ trên 132 merchant.
     - "Nhu cầu thanh toán của khách quốc tế đến Việt Nam", khảo sát 10 khách quốc tế, 16/10/2026 *(cần ghi rõ đơn vị thực hiện)*. Lưu ý khi trích dẫn:
@@ -435,9 +443,17 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
     - NQ 198/2025/QH15 (bỏ thuế khoán từ 01/01/2026)
     - [Hỗ trợ hộ kinh doanh chuyển đổi số và kê khai thuế – VnEconomy](https://vneconomy.vn/ho-tro-ho-kinh-doanh-chuyen-doi-so-va-ke-khai-thue.htm)
     - [Kết quả triển khai hóa đơn điện tử – Thời báo Tài chính](https://thoibaotaichinhvietnam.vn/infographics-ket-qua-trien-khai-hoa-don-dien-tu-197840-197840.html)
-    - [Tammi vượt 5 triệu người dùng – VnExpress 19/08/2026](https://vnexpress.net/ung-dung-tammi-nam-trong-top-tai-nhieu-tai-viet-nam-5110618.html)
+    - [5 triệu hộ kinh doanh – Báo Chính phủ](https://baochinhphu.vn/them-mot-trieu-doanh-nghiep-tiem-nang-lon-tu-5-trieu-ho-kinh-doanh-102250411152125423.htm)
+    - [3,24 triệu hộ, cá nhân kinh doanh; 2,03 triệu có địa điểm cố định, Tổng cục Thuế 8/2024 – Thanh Niên](https://thanhnien.vn/ca-nuoc-co-324-trieu-ho-ca-nhan-kinh-doanh-18524100317255683.htm)
+    - [737.159 máy POS cuối 2024, NHNN – VietNamNet](https://vietnamnet.vn/phat-trien-nhieu-phuong-thuc-thanh-toan-moi-tao-thuan-tien-cho-nguoi-dung-2482940.html)
+    - [Khảo sát 350 doanh nghiệp nhỏ: 42% nhận thẻ – Visa](https://www.visa.com.vn/en_VN/about-visa/newsroom/press-releases/sixtytwo-percent-of-women-led-smbs-surveyed-in-vietnam-experience-increased-revenue-after-accepting-digital-payments.html)
+    - [61 địa điểm quy hoạch khu du lịch quốc gia – VietnamPlus](https://www.vietnamplus.vn/61-dia-diem-tiem-nang-duoc-quy-hoach-phat-trien-thanh-khu-du-lich-quoc-gia-post959354.vnp)
+    - [153 di tích quốc gia đặc biệt – Cổng Chính phủ](https://xaydungchinhsach.chinhphu.vn/danh-sach-di-tich-quoc-gia-dac-biet-119260211160043009.htm); [hơn 4.000 di tích quốc gia, 41.000 di tích – Wikipedia](https://vi.wikipedia.org/wiki/Di_t%C3%ADch_Vi%E1%BB%87t_Nam)
+    - [Hội An: 236 cơ sở trên 2 tuyến phố, bằng 4% toàn thành phố – Tuổi Trẻ](https://tuoitre.vn/saigontimes/pho-co-hoi-an-buon-ban-bay-gio-10630819.htm); [Phường Hoàn Kiếm 4.310 hộ kinh doanh – Nhân Dân](https://nhandan.vn/dong-hanh-cung-doanh-nghiep-nho-ho-kinh-doanh-trong-chuyen-doi-so-post910634.html)
+    - [Chi tiêu 1.200–1.400 USD mỗi chuyến – VietnamPlus](https://en.vietnamplus.vn/vietnams-tourism-industry-shifts-focus-from-visitor-numbers-to-spending-post350579.vnp)
     - [21,2 triệu lượt khách quốc tế 2025 – Báo Chính phủ](https://en.baochinhphu.vn/foreign-arrivals-soar-to-record-high-in-2025-111260106100233228.htm)
     - [Khách quốc tế 9 tháng 2026 tăng 14,5% – Báo Văn hóa](https://baovanhoa.vn/du-lich/khach-quoc-te-den-viet-nam-9-thang-2026-tang-145-271196.html)
+    - [Nguồn khách 9 tháng 2026 theo thị trường – VietnamPlus](https://www.vietnamplus.vn/du-lich-viet-don-177-trieu-khach-sau-9-thang-thi-truong-nao-dang-tang-toc-post1139852.vnp); [Mekong ASEAN](https://mekongasean.vn/trung-quoc-han-quoc-dan-dau-nguon-khach-quoc-te-den-viet-nam-trong-9-thang-60416.html)
     - [Chi tiêu bình quân và cơ cấu chi tiêu khách quốc tế 2019, Niên giám thống kê 2022 – VietNamNet](https://vietnamnet.vn/di-du-lich-viet-nam-khach-nuoc-nao-chi-tien-manh-tay-nhat-2167403.html); [CafeBiz](https://cafebiz.vn/den-viet-nam-du-khach-nuoc-nao-manh-tay-chi-tien-nhat-chi-tien-nhieu-nhat-vao-khoan-gi-176230718085444009.chn)
     - [Thu 15,22 tỷ USD từ khách quốc tế 2025, khoảng 718 USD mỗi lượt – Dân trí](https://dantri.com.vn/kinh-doanh/chi-tieu-khach-tay-den-viet-nam-va-nguoi-viet-ra-nuoc-ngoai-nghich-ly-can-loi-giai-20260906232044127.htm)
     - [Cơ cấu thanh toán tại điểm bán Hàn Quốc 2024, Worldpay GPR 2025 – Payments CMI](https://paymentscmi.com/insights/south-korea-2025-payments-ecommerce-trends/)
@@ -445,8 +461,6 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
     - [Alipay, WeChat Pay chiếm 87% giá trị tại điểm bán ở Trung Quốc, Worldpay GPR 2026 – Rich Turrin](https://richturrin.substack.com/p/what-asia-knew-first-digital-wallets)
     - [Tiền mặt ở Nhật Bản khoảng 38% chi tiêu tại cửa hàng, Worldpay GPR 2026 – Dwayne Gefferie](https://dwaynegefferie.substack.com/p/three-things-the-worldpays-global)
     - [Thẻ ở Úc, Anh khoảng 67–70% – Payments CMI](https://paymentscmi.com/insights/top-global-payment-methods/)
-    - [6,7 triệu lượt người Việt ra nước ngoài 2025 – Nhân Dân](https://nhandan.vn/khach-viet-ngay-cang-chuong-xuat-ngoai-va-sanh-du-lich-post936688.html)
-    - [Livestream ~20% doanh thu TMĐT – VnBusiness, dẫn AccessTrade](https://vnbusiness.vn/ban-hang-online-chien-truong-khoc-liet-tay-mo-kho-tru.html)
     - Khoảng 6% điểm chấp nhận thanh toán nhận VietQR Global: NHNN và Cục Du lịch, hội thảo 25/9/2026
     - [VietQR Global tăng khoảng 8 lần, 8 tháng 2026 – Thị trường Tài chính Tiền tệ](https://thitruongtaichinhtiente.vn/thanh-toan-qr-xuyen-bien-gioi-mo-rong-du-dia-cho-du-lich-ban-le-85837.html)
     - [Thanh toán QR xuyên biên giới: từ kết nối được đến sử dụng hiệu quả – VNBA](https://vnba.org.vn/vi/thanh-toan-qr-xuyen-bien-gioi--tu--ket-noi-duoc--den--su-dung-hieu-qua-23681.htm)
@@ -459,59 +473,20 @@ Trình bày với Tổng giám đốc VDF về giải pháp VDF cung cấp hạ 
     - [Visa và VNPAY hợp tác về VNPAY SoftPOS – Visa](https://vn.review.visa.com/en_VN/about-visa/newsroom/press-releases/visa-and-vnpay-strengthen-partnership-to-advance-contactless-payments-with-vnpay-softpos.html)
     - [VNPAY SoftPOS đạt chuẩn PCI CPoC – VNBA](https://vnba.org.vn/vi/vnpay-dat-chuan-pci-cpoc-cho-cong-nghe-bien-dien-thoai-thanh-may-pos-8740.htm)
     - [Vietcombank ra mắt VCB Tap to Phone – Thị trường Tài chính Tiền tệ](https://thitruongtaichinhtiente.vn/vietcombank-ra-mat-giai-phap-thanh-toan-vcb-tap-to-phone-ung-dung-cong-nghe-softpos-46358.html)
+    - Biểu phí Tap to Phone/SoftPOS công khai: VPBank (hiệu lực 01/08/2026), Techcombank (khách đăng ký mới từ 01/03/2025) *(cần bổ sung link)*
     - VNPAY hợp tác Mastercard cho du khách liên kết thẻ trong app VNPAY: *cần bổ sung nguồn*
     - [MoMo và Alipay+ cho người Việt đi nước ngoài – MoMo](https://www.momo.vn/tin-tuc/khuyen-mai/vi-vu-quoc-te-cung-momo-alipay-quet-ma-thanh-toan-8778)
-    - [WeChat red envelope – Wikipedia](https://en.wikipedia.org/wiki/WeChat_red_envelope)
-    - [Thị phần Alipay, WeChat Pay 2018 – EqualOcean](https://equalocean.com/news/201902061410-spring-festival-gala-might-be-vent-new-third-party-payment)
-    - [KakaoPay 5 triệu người dùng năm đầu – VentureBeat](https://venturebeat.com/commerce/kakao-pay-passes-5m-users-in-its-first-12-months)
-    - [Understanding Kakao Pay – Antom](https://knowledge.antom.com/understanding-kakao-pay-the-south-korean-payment-and-lifestyle-app)
-    - [Alipay và du lịch inbound Trung Quốc – Jing Daily](https://jingdaily.com/posts/china-inbound-international-tourism-alipay)
-    - [Alipay, WeChat Pay mở cho du khách 2023 – China Daily HK](https://www.chinadailyhk.com/hk/article/344048)
-
-## Ghi chú giải pháp Visa Accept (cho người trình, không đưa lên slide)
-
-Mục này giúp người trình dùng từ cho chuẩn và trả lời khi được hỏi sâu.
-
-- **Bản chất:** Visa Accept biến chủ thẻ Visa (ghi nợ, trả trước) thành người bán. Merchant dùng thẻ Visa đang có để nhận tiền. **VDF không phát hành thẻ.** SDK Visa Accept được tích hợp vào app Tendoo.
-- **Cách nói chuẩn:**
-    - Dùng "nhận thẻ ngay trên điện thoại", "chạm thẻ", "trả qua link".
-    - Không nói "VDF phát hành thẻ cho merchant".
-    - Không nói "nhận mọi loại thẻ". Hiện tại là thẻ Visa và Mastercard khi chạm; với link thì xác nhận lại loại thẻ được nhận.
-    - Không nói "chạy trên mọi điện thoại". Chạm thẻ chỉ chạy trên Android có NFC; iPhone dùng trả qua link.
-- **Hai cách nhận tiền:**
-    - Chạm thẻ (Tap to Phone, Android): nhận thẻ Visa, Mastercard và ví trên điện thoại.
-    - Trả qua link (Pay by Link): khách quét mã QR trên điện thoại cửa hàng hoặc nhận link qua SMS, email, rồi nhập thẻ; có xác thực 3-D Secure.
-- **Hạn mức (theo Visa):** khoảng 100 triệu đồng (4.000 USD) và 2.000 giao dịch mỗi tháng; khoảng 8 triệu đồng (300 USD) mỗi giao dịch.
-- **Phí (theo Visa):**
-    - MDR với merchant gần như bằng 0.
-    - Phí mạng lưới đến 31/01/2027: IRF và phí acquirer mỗi loại 10bps, tối đa 250đ mỗi giao dịch.
-    - Từ 01/02/2027: giao dịch dưới 200.000đ miễn phí; từ 200.000đ trở lên, IRF 200đ và phí acquirer 0,002 USD.
-- **Tiền về:** gần như tức thì, vào thẻ Visa của merchant.
-- **Lộ trình nâng gói của Visa:**
-    - Merchant chạm hạn mức Visa Accept thì không giao dịch tiếp được trong tháng đó.
-    - Merchant được mời nâng lên gói SMB: MDR dưới 1%, khoảng 180 triệu đồng (7.000 USD) mỗi tháng, không giới hạn số giao dịch và giá trị mỗi giao dịch.
-    - Sau đó lên gói nhận thẻ đầy đủ theo biểu phí chuẩn, dùng nhiều loại thiết bị.
-- **Kiểm soát rủi ro:** theo dõi tần suất giao dịch, giới hạn hạn mức, 3-D Secure cho giao dịch qua link, chức năng hoàn tiền, báo cáo doanh số và đối soát.
-- **Đã triển khai tại Việt Nam:** VPBank (TapLink), Sacombank, VIB (BizPay).
-- **Sản phẩm Visa khác có thể dùng ở phase sau:**
-    - Visa QR Connector: Viettel Money làm cầu nối QR, du khách quét mã bằng ví có thẻ Visa.
-    - Visa Acceptance Platform: Pay by Link, Tap to Phone, quản lý token, công cụ chống gian lận Decision Manager.
-
-## Câu hỏi Tổng giám đốc có thể hỏi xoáy
-
-1. **"VPBank, Sacombank, VIB đã có Visa Accept rồi. VDF làm sau thì khác gì?"** Ở ngân hàng, Visa Accept chỉ là một nút trong app, chờ khách hàng tự bật. VDF đưa Visa Accept vào phần mềm bán hàng Tendoo, đến tệp hộ kinh doanh Tendoo qua đội kênh bán thực địa, kèm trợ lý tư vấn đa ngôn ngữ (slide 7; phụ lục "Vì sao chọn giải pháp này").
-2. **"Phí gần như bằng 0 thì VDF kiếm tiền ở đâu?"** Phase 1 là giai đoạn có merchant hoạt động thật. Doanh thu đến khi merchant vượt hạn mức và nâng lên gói SMB (MDR dưới 1%), từ thanh toán nội địa và dịch vụ AI ở các phase sau (phụ lục, mô hình doanh thu). Khảo sát cho thấy merchant chấp nhận mức phí 1–2% (81,5% sẵn sàng dùng), nên MDR dưới 1% ở gói SMB là mức merchant chấp nhận được. Cần số theo kịch bản.
-3. **"Hạn mức 8 triệu mỗi giao dịch, 100 triệu mỗi tháng có đủ không?"** Đủ cho phần lớn hộ kinh doanh nhỏ phục vụ du khách. Cửa hàng vượt hạn mức được nâng lên gói SMB, và đó cũng là lúc VDF bắt đầu thu MDR.
-4. **"NAPAS đã có QR xuyên biên giới, sao VDF lại làm Visa Accept?"** QR chỉ dùng được với khách từ 6 nước đã kết nối. Thẻ Visa và Mastercard thì khách từ nước nào cũng có. QR được xem xét ở Phase 3 (slide 5, 19).
-5. **"Khách Trung Quốc chủ yếu dùng Alipay, WeChat Pay. Có phục vụ được không?"** Phase 1 chưa phục vụ khách chỉ dùng ví nước mình. Pilot ưu tiên điểm có nhiều khách dùng thẻ.
-6. **"Merchant dùng iPhone thì sao?"** Vẫn nhận được tiền qua link; chạm thẻ cần điện thoại Android.
-7. **"Đội kênh bán của VTT chính là kênh đã tạo ra merchant ảo. Lần này khác gì?"** Chỉ tiêu theo cửa hàng phát sinh giao dịch, không theo số tài khoản mở.
-8. **"Sao không để Tammi làm app thanh toán cho du khách như Alipay?"** Tammi hiện chỉ phục vụ người dùng Việt. Du khách đã có thẻ và app nước họ, nên phía còn thiếu là cửa hàng nhận tiền. Bài học từ WeChat Pay, KakaoPay được áp dụng cho Tammi với người dùng Việt ở Phase 2 (phụ lục).
-9. **"Làm sao biết GMV tăng là nhờ AI chứ không phải nhờ nhận được thẻ?"** Bước 1a là mốc nền, bước 1b đo phần tăng thêm và tách riêng GMV từ đơn có tương tác với trợ lý (slide 19).
-10. **"Nếu Tammi chậm xây Shop, Live thì sao?"** Phase 1 vẫn chạy được: pilot miniapp chỉ cần Tammi cho phép trợ lý hoạt động trong miniapp, không cần Shop và Live. Trợ lý livestream và tin nhắn chạy trước trên website bán hàng và mạng xã hội mà Tendoo đang kết nối (slide 15).
-11. **"Khảo sát khách chỉ có 10 người, có tin được không?"** Đây là khảo sát thăm dò, chỉ dùng làm tín hiệu bổ sung. Bằng chứng chính là khảo sát 132 merchant. Pilot sẽ đo giao dịch thật thay cho ý định khảo sát.
-12. **"Vì sao VDF làm Merchant AI Studio, mà không để Tendoo hay Viettel AI làm?"** Trợ lý là cửa vào của giao dịch: mỗi cuộc trò chuyện kết thúc bằng một đơn và một lần trả tiền. VDF giữ lớp này thì mọi luồng có tiền đều đi qua thanh toán VDF. Tendoo cung cấp dữ liệu và tích hợp vào app (slide 11, 17).
-13. **"Có số liệu nào cho thấy khách bỏ đi vì không hỏi được không?"** Chưa có; hai khảo sát hiện tại chỉ hỏi về thanh toán. Đây là giả thuyết, pilot đo bằng lượt quét QR và tỉ lệ đặt hàng sau khi quét. Bước 1a (chỉ thanh toán) là mốc so sánh (slide 19).
+    - Slide 6 (kênh online):
+        - [56% khách Mỹ dùng AI cho chuyến đi, The AI Surge – Phocuswright 3/2026](https://www.phocuswright.com/Travel-Research/Research-Updates/2026/The-fastest-shift-in-travel-behavior-just-became-the-default); [Travel Weekly](https://travelweekly.com.au/research-show-majority-of-us-travellers-now-use-ai-for-trips/)
+        - [Gen Z 69%, Millennials 64% dùng AI tạo sinh lên kế hoạch, Booking.com 2026 – Statista](https://www.statista.com/chart/amp/36471/gen-z-consults-gen-ai-for-travel-advice/)
+        - [81% khách Việt dự định dùng AI, Agoda 2026 Travel Outlook – PR Newswire qua Utusan](https://www.utusan.com.my/pr-newswire-en/2026/03/81-of-vietnamese-travelers-want-to-use-ai-to-plan-their-next-trip-agoda-report-finds/); [VNA](https://vietnamnews.vn/life-style/1766348/vietnamese-tourists-keen-on-ai-for-smarter-travel-experiences.html)
+        - [99% khách Việt quan tâm AI, 11% hoàn toàn tin – BBW, dẫn Booking.com](https://bbw.vn/99-nguoi-viet-muon-dung-tri-tue-nhan-tao-trong-du-lich-nhung-chi-11-that-su-tin-tuong-53999.html)
+        - [Du lịch trực tuyến Việt Nam khoảng 4 tỷ USD 2025, e-Conomy SEA 2025 – VnEconomy](https://vneconomy.vn/google-nen-kinh-te-so-viet-nam-du-kien-dat-39-ty-usd-vao-nam-2025.htm)
+        - [OTA 58,85% lượt đặt phòng 2025, hoa hồng 15–25% – Tạp chí Kinh tế – Tài chính 12/5/2026](https://nghiencuu.tapchikinhtetaichinh.vn/chien-luoc-phan-phoi-kenh-dat-phong-cua-cac-chuoi-khach-san-viet-nam-nghien-cuu-truong-hop-muong-thanh-va-vinpearl-155966.html); [hoa hồng Booking.com tối thiểu 15% – Vietnam Booking](https://www.vietnambooking.com/khach-san/tin-tuc-khach-san/cac-trang-web-ban-phong-khach-san.html)
+        - [50,2 triệu thẻ quốc tế, Vụ Thanh toán NHNN quý I/2025 – VietnamFinance](https://vietnamfinance.vn/nguoi-viet-thuc-hien-hon-447-ty-giao-dich-online-trong-quy-i-d127299.html)
+        - [81 triệu lượt khách nội địa 6 tháng 2026 – Thương hiệu và Công luận](https://thuonghieucongluan.com.vn/du-lich-viet-nam-but-toc-trong-nua-dau-nam-2026-a324972.html)
+        - [Booking.com, Expedia ra app trong ChatGPT 10/2025 – Skift](https://skift.com/2025/10/06/expedia-booking-chatgpt-apps-openai/); [PhocusWire](https://www.phocuswire.com/openai-chatgpt-apps-expedia-booking-tripadvisor)
+        - [PasGo hơn 3.000 nhà hàng – App Store](https://apps.apple.com/vn/app/pasgo-%C4%91%E1%BA%B7t-b%C3%A0n-nh%C3%A0-h%C3%A0ng-%C6%B0u-%C4%91%C3%A3i/id896053668?l=vi); [phí đặt bàn theo khách 0,5–3 EUR – resOS](https://resos.com/best-restaurant-booking-system-without-commission-fees/)
 
 ## Thông tin còn thiếu
 
@@ -519,17 +494,20 @@ Mục này giúp người trình dùng từ cho chuẩn và trả lời khi đư
 
 | Ưu tiên | Nội dung | Phục vụ slide |
 | --- | --- | --- |
-| Cao | Số merchant Tendoo chính xác (tổng, active) | 10, 11 |
-| Cao | Cơ chế phí Visa Accept: IRF, phí acquirer do bên nào trả, bên nào nhận; VDF nhận được phần nào | Phụ lục (mô hình doanh thu) |
-| Trung bình | Trả qua link nhận những loại thẻ nào | 13, phụ lục |
-| Trung bình | Tỉ lệ merchant Tendoo đã có thẻ Visa và đang dùng Android | 13, 18 |
-| Trung bình | Kết quả triển khai Visa Accept của VPBank, Sacombank, VIB | 7, phụ lục |
-| Trung bình | Nguồn xác nhận hợp tác VNPAY – Mastercard cho du khách | 6 |
-| Trung bình | Cách khách quốc tế trả tiền **tại Việt Nam** theo quốc tịch (đã có số liệu thói quen ở nước của khách; số đo tại Việt Nam xin Visa, NAPAS) | 3, 19 |
+| Cao | Số merchant Tendoo chính xác (tổng, active) | 7, 8, 13 |
+| Cao | Doanh thu của VDF theo từng kênh: tỉ lệ chia phí giao dịch với VTT (offline); mức affiliate và phần phí booking VDF được hưởng (online). Bổ sung sau | 8, 11, phụ lục |
+| Cao | Cơ chế phí Visa Accept: đã có mức IRF (miễn phí dưới 200.000đ, 200đ trên 200.000đ); còn thiếu phí acquirer do bên nào trả, bên nào nhận; VDF nhận được phần nào; mức phí áp dụng trước 01/02/2027 | 8, 9, phụ lục |
+| Trung bình | Trả qua link nhận những loại thẻ nào | 9, 10 |
+| Trung bình | Tỉ lệ merchant Tendoo đã có thẻ Visa và đang dùng Android | 9, phụ lục (rủi ro) |
+| Trung bình | Kết quả triển khai Visa Accept của VPBank, Sacombank, VIB | 5, phụ lục |
+| Trung bình | Nguồn xác nhận hợp tác VNPAY – Mastercard cho du khách | 5, phụ lục |
+| Trung bình | Link biểu phí Tap to Phone/SoftPOS của VPBank, Techcombank | 5 |
+| Trung bình | Đơn vị thực hiện hai khảo sát | 2, 3 |
+| Trung bình | Cách khách quốc tế trả tiền **tại Việt Nam** theo quốc tịch (đã có số liệu thói quen ở nước của khách; số đo tại Việt Nam xin Visa, NAPAS) | 3, 4 |
+| Trung bình | Kênh Viettel đưa khách đến AI: khả năng gắn link AI vào tin nhắn chào mừng roaming; số khách quốc tế roaming Viettel, số SIM/eSIM du lịch bán ra | 11, 15 |
+| Trung bình | Rủi ro và hướng xử lý riêng cho kênh online (khách hủy hoặc không đến, hoàn tiền trả trước, đặt cọc) | Phụ lục |
+| Trung bình | Tỉ lệ merchant vừa và nhỏ quanh điểm du lịch có mặt trên Google Maps, Tripadvisor, OTA và có thông tin tiếng nước ngoài (nhờ đội kênh bán VTT kiểm tra 3–5 điểm) | 6 |
+| Trung bình | Cách khách quốc tế tìm quán ăn, điểm mua sắm tại Việt Nam và tỉ lệ dùng AI (hỏi bổ sung trong khảo sát khách) | 6 |
+| Thấp | Cách trả tiền phổ biến ở Đài Loan; số so với cùng kỳ của Mỹ, Nhật Bản | 3 |
 | Thấp | Đối chiếu số liệu Worldpay của Úc, Anh, Nhật Bản với báo cáo gốc | 3 |
-| Trung bình | Đơn vị thực hiện hai khảo sát | 8, 9 |
-| Thấp | Ước tính doanh thu theo kịch bản; tỉ lệ merchant nâng gói | Phụ lục |
-| Thấp | Kiểm tra lại số liệu case thế giới (chủ yếu do doanh nghiệp công bố) | Phụ lục |
-| Trung bình | Chụp ảnh minh họa 3 giải pháp hiện có (QR quốc tế, app Việt Nam liên kết thẻ, Tap to Phone) | 5, 6, 7 |
-| Thấp | Kịch bản và video demo giải pháp VDF | 16 |
-| Trung bình | Số liệu về rào cản ngôn ngữ tại cửa hàng (hỏi bổ sung merchant và khách quốc tế, hoặc nguồn ngoài) | 10, 14 |
+| Thấp | Nguồn gốc số OTA 58,85% và hoa hồng 15–25% (đối chiếu báo cáo ngành hoặc hợp đồng thực tế); bản gốc báo cáo Agoda, Booking.com | 6 |
