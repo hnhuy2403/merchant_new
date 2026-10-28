@@ -16,22 +16,33 @@
 
     | Nhóm điểm | Số điểm | Số hộ mỗi điểm (giả định) | Tổng số hộ |
     | --- | --- | --- | --- |
-    | Khu du lịch lớn (kiểu Hội An, phố cổ Hà Nội, Sa Pa, Phú Quốc) | 61 khu được quy hoạch thành khu du lịch quốc gia (QĐ 509/QĐ-TTg, 6/2024) | 2.000–4.000 | 120–245 nghìn |
-    | Di tích quốc gia đặc biệt, gồm danh thắng (Hạ Long, Tràng An, Mỹ Sơn…) | 153 | 200–500 | 30–75 nghìn |
-    | Di tích, danh thắng cấp quốc gia | hơn 4.000 | 20–50 | 80–200 nghìn |
-    | **Tổng** | **khoảng 4.200 điểm** | | **230–520 nghìn, lấy khoảng 500 nghìn** |
+    | Khu du lịch lớn (kiểu Hội An, phố cổ Hà Nội, Sa Pa, Phú Quốc) | 61 khu được quy hoạch thành khu du lịch quốc gia (QĐ 509/QĐ-TTg, 6/2024) | 3.000–4.000 | 183–244 nghìn |
+    | Di tích quốc gia đặc biệt, gồm danh thắng (Hạ Long, Tràng An, Mỹ Sơn…) | 153 | 350–500 | 54–77 nghìn |
+    | Di tích, danh thắng cấp quốc gia | hơn 4.000 | 30–50 | 120–200 nghìn |
+    | **Tổng** | **khoảng 4.200 điểm** | | **360–520 nghìn, lấy khoảng 500 nghìn** |
 
-    - Mốc cho nhóm khu du lịch lớn: Hội An cũ khoảng 5.900 cơ sở kinh doanh (2 tuyến Trần Phú, Nguyễn Thị Minh Khai có 236 cơ sở, bằng 4% toàn thành phố, 3/2024); phường Hoàn Kiếm (phố cổ Hà Nội) 4.310 hộ kinh doanh. Đây là 2 điểm đông nhất nên lấy 2.000–4.000 cho trung bình.
+    - Mốc cho nhóm khu du lịch lớn: Hội An cũ khoảng 5.900 cơ sở kinh doanh (2 tuyến Trần Phú, Nguyễn Thị Minh Khai có 236 cơ sở, bằng 4% toàn thành phố, 3/2024); phường Hoàn Kiếm (phố cổ Hà Nội) 4.310 hộ kinh doanh. Đây là 2 điểm đông nhất nên lấy 3.000–4.000 cho trung bình.
     - Số hộ mỗi điểm ở 2 nhóm di tích là giả định, chưa có số đo. Nên nhờ đội kênh bán VTT đếm thử ở 3–5 điểm.
     - Không tính hơn 9.000 di tích cấp tỉnh vì phần lớn chỉ có khách trong nước. Một số di tích nằm trong khu du lịch lớn (ví dụ Hội An) nên tổng có đếm trùng.
-    - Số 500 nghìn nằm gần cận trên của khoảng ước tính. Nếu bị hỏi, nêu đủ khoảng 230–520 nghìn và các giả định ở bảng trên.
+    - Số 500 nghìn nằm gần cận trên của khoảng ước tính. Nếu bị hỏi, nêu đủ khoảng 360–520 nghìn và các giả định ở bảng trên.
     - Kiểm tra độ hợp lý: 500 nghìn hộ bằng khoảng 10% trong 5 triệu hộ kinh doanh.
+- Chi tiết khảo sát merchant: xem slide 2b.
+
+## Slide 2b – Khảo sát 132 merchant
+
 - Chi tiết khảo sát merchant (dùng khi được hỏi; các slide sau dẫn chiếu theo số insight):
     - Insight 1 – Phải chắp vá nhiều cách nhận tiền: 78% merchant dùng song song tiền mặt, QR và POS; 100% vẫn phải giữ tiền mặt để dự phòng. Có merchant mở cả tài khoản ngân hàng Malaysia để nhận tiền của khách Malaysia ("nhiều phương tiện quá", "phải thêm hình thức mới").
     - Insight 2 – Phí là rào cản lớn nhất: 48,5% coi phí POS là rắc rối lớn nhất (3–5% mỗi giao dịch); nhiều nơi phải cộng thêm khoảng 30.000đ mỗi giao dịch vào tiền của khách. 50,8% lo chi phí triển khai giải pháp mới.
-    - Insight 3 – Mất doanh thu tại quầy: 14,4% từng gặp khách không có tiền mặt VND hoặc tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài.
-    - Insight 4 – Cần chứng từ: 26,5% merchant tự nhắc đến đối soát, hóa đơn hoặc khiếu nại.
+    - Insight 3 – Mất doanh thu tại quầy: 14,4% bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài.
+    - Insight 4 – Cần niềm tin: 26,5% merchant cần đối soát minh bạch, nhận tiền nhanh, có hóa đơn hoặc bằng chứng giao dịch để chống gian lận, khiếu nại.
     - Chỉ 22% có xu hướng từ chối giải pháp mới.
+- Sẵn sàng theo mức phí: 81,5% sẵn sàng nếu phí 1–2%; kỳ vọng phí trên 3% thì chỉ 24,3% sẵn sàng. Trong nhóm "chưa chắc chắn", 42,5% chuyển sang sẵn sàng khi được báo một mức phí cụ thể và thấp.
+- Lưu ý khi trích dẫn: kịch bản khảo sát là giải pháp NFC Tag với phí 1–2%, không phải Visa Accept. "Sẵn sàng triển khai" mới là ý định, chưa phải hành vi thật. Một số tỉ lệ trong báo cáo dùng mẫu số không thống nhất (127 và 132); slide dùng tỉ lệ trên 132 merchant.
+- Mẫu: 78% điểm bán có khách quốc tế đóng góp trên 50% doanh thu; ngành chủ yếu là bán lẻ 36%, lưu niệm 30%, nhà hàng 23%.
+- Insight 2 theo bản phân tích khảo sát: phí POS thẻ quốc tế 3–5% buộc merchant thu phụ phí ngoài hoặc để khách chịu phí; 50,8% e ngại chi phí đầu tư thiết bị và thủ tục lắp đặt POS truyền thống.
+- Không dùng số "20% du khách bỏ đi tìm cửa hàng khác" trên slide này: đó là khảo sát 10 khách quốc tế (2/10), cỡ mẫu nhỏ, không phải khảo sát merchant.
+- Hai con số 78% khác nhau: 78% có trên 50% doanh thu từ khách quốc tế (mẫu khảo sát) và 78% dùng song song tiền mặt, QR và POS (insight 1). Nói rõ khi trình bày để tránh nhầm.
+- Không nêu mức phí của VDF: mức phí cho merchant sẽ thống nhất sau khi triển khai.
 
 ## Slide 3 – Khách quốc tế
 
@@ -85,8 +96,8 @@
 - Slide này tổng hợp các hạn chế đã nêu ở phần Bối cảnh (slide 2–6) thành 2 vấn đề và 2 cơ hội, mỗi cặp ứng với một kênh của giải pháp (slide 8). Hai cặp độc lập; không trình bày như một hành trình nối tiếp "khách tìm thấy cửa hàng qua AI rồi trả tiền tại chính cửa hàng đó".
 - Slide này chưa nhắc Visa Accept; Visa Accept xuất hiện lần đầu ở phần Giải pháp (slide 8, 9).
 - **Cột 1 – Tại cửa hàng:**
-    - Vấn đề có bằng chứng từ khảo sát 132 merchant và khảo sát 10 khách quốc tế. Insight 3 của khảo sát merchant: 14,4% từng gặp khách không có tiền mặt VND hoặc tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài. Cả nước chỉ có 737 nghìn máy POS, tính cả doanh nghiệp (slide 2), dùng khi được hỏi.
-    - 500 nghìn hộ là ước tính của VDF (khoảng 230–520 nghìn, xem ghi chú slide 2).
+    - Vấn đề có bằng chứng từ khảo sát 132 merchant và khảo sát 10 khách quốc tế. Insight 3 của khảo sát merchant: 14,4% bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài. Cả nước chỉ có 737 nghìn máy POS, tính cả doanh nghiệp (slide 2), dùng khi được hỏi.
+    - 500 nghìn hộ là ước tính của VDF (khoảng 360–520 nghìn, xem ghi chú slide 2).
     - Số 81,5% và 24,3% lấy từ khảo sát 132 merchant (7/2026). Trong nhóm "chưa chắc chắn", 42,5% chuyển sang sẵn sàng khi được báo một mức phí cụ thể và thấp.
     - Không nêu mức phí của VDF: mức phí cho merchant sẽ thống nhất sau khi triển khai. "Chi phí thấp" là so với phí POS 3–5% và Tap to Phone/SoftPOS thông thường của ngân hàng 2,5–3,9% (slide 5).
 - **Cột 2 – Trước khi khách đến:**
@@ -115,7 +126,7 @@
 - Không nói "chạy trên mọi điện thoại" (chạm thẻ cần điện thoại có NFC) và không nói "nhận mọi loại thẻ" (xem mục "Ghi chú giải pháp Visa Accept").
 - Không nêu tỉ lệ chia phí giao dịch giữa VDF và VTT khi chưa thống nhất.
 
-## Slide 10 – Demo giải pháp Visa Accept
+## Slide 10 – Demo Visa Accept: Đăng ký
 
 - Demo là minh họa, dựng theo luồng màn hình Visa đưa trong tài liệu *VDS – Acquiring discussion* (10/2026), Visa ghi "For illustration purposes only". Luồng thật trong Tendoo sẽ thống nhất với Visa.
 - **Bước đăng ký:** theo tài liệu Visa, merchant đăng ký trong app ngân hàng phát hành thẻ, ngân hàng làm bước xác minh (KYB). Demo không vẽ bước xác minh vì cách làm trong Tendoo chưa thống nhất. Nếu được hỏi, nói đúng như vậy.
@@ -125,6 +136,13 @@
 - **Nâng gói:** theo trang 22, chạm hạn mức thì không giao dịch tiếp được trong tháng; merchant chọn lên gói SMB hoặc ở lại Visa Accept. Việc nâng gói do VDF thực hiện (VDF làm mọi việc với Visa).
 - Tên cửa hàng, khách, số tiền và số thẻ trong demo đều là giả định.
 
+## Slide 10b – Demo Visa Accept: Chạm thẻ
+
+- Chạm thẻ là cách nhận tiền chính tại quầy; cần điện thoại Android có NFC.
+- Khách không chạm được thì trả qua link ngay trên màn hình chờ chạm (luồng chi tiết ở phụ lục).
+- Demo không hiện mức phí trên từng giao dịch, vì mức phí cho merchant thống nhất sau khi triển khai.
+- Ba kịch bản còn lại (Link thanh toán, Theo dõi và hoàn tiền, Nâng gói) ở phụ lục "Màn hình demo Visa Accept".
+
 ## Slide 11 – Giải pháp chi tiết 2 (Online)
 
 - Kênh online độc lập với kênh offline; không trình bày như hành trình "khách tìm thấy cửa hàng qua AI rồi chạm thẻ tại cửa hàng đó".
@@ -133,11 +151,17 @@
 - Chính sách affiliate (mức, cách tính) và phần phí booking VDF được hưởng thống nhất sau khi triển khai. Không nói giải pháp rẻ hơn OTA.
 - Chuỗi nhà hàng, khách sạn lớn chỉ tham gia phần booking online; VTT phát triển cả nhóm này.
 
-## Slide 12 – Demo kênh online
+## Slide 12 – Demo kênh online: Hạ cánh và hỏi tư vấn
 
 - Minji, các quán và khách sạn trong demo đều là giả định.
 - Hành trình dừng ở lúc đặt chỗ xong; không kể cảnh khách đến quán chạm thẻ, vì kênh online và offline độc lập.
 - Nếu được hỏi về mức phí booking hay affiliate: thống nhất sau khi triển khai.
+
+## Slide 12b – Demo kênh online: Đặt bàn
+
+- Hỏi tư vấn không cần đăng nhập; khách chỉ điền tên, số điện thoại, email khi chốt đặt chỗ.
+- Khách đặt cọc, hoặc trả trước toàn bộ, bằng thẻ quốc tế; quán nhận và xác nhận lượt đặt ngay trong app Tendoo.
+- Hai kịch bản còn lại (Đặt phòng, Kết quả) ở phụ lục "Màn hình demo AI tư vấn du lịch".
 
 ## Slide 13 – Phân vai VTT và VDF
 

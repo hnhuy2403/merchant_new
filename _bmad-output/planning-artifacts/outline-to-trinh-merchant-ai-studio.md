@@ -83,7 +83,7 @@ Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ
 ### Slide 2 – Merchant vừa và nhỏ: tệp lớn, đang số hóa, chưa nhận được thẻ của khách quốc tế
 
 - Tiêu đề: *Merchant vừa và nhỏ: tệp lớn, đang số hóa, nhưng phần lớn chưa nhận được thẻ của khách quốc tế.*
-- **Bố cục:** bên trái là biểu đồ tròn số hộ kinh doanh; bên phải là 2 khối số liệu ngắn (Thị trường, Khảo sát merchant). Mỗi số một dòng.
+- **Bố cục:** bên trái là biểu đồ tròn số hộ kinh doanh; bên phải là 4 ô số liệu thị trường (500 nghìn hộ kèm công thức ước tính ngắn, 308 nghìn, 737 nghìn, 79% so với 46%). Khảo sát merchant tách sang slide 2b.
 - **Biểu đồ tròn: 5 triệu hộ kinh doanh** (ghi ở giữa hoặc trên biểu đồ). Biểu đồ chỉ để phân tệp, không tô đậm lát nào làm tệp mục tiêu:
 
 | Lát | Số hộ |
@@ -94,17 +94,27 @@ Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ
 
 - Chú thích nhỏ dưới biểu đồ: *5 triệu hộ: Báo Chính phủ (2025). 3,24 triệu hộ và cá nhân kinh doanh đăng ký thuế, trong đó 2,03 triệu có địa điểm cố định: Tổng cục Thuế (8/2024).*
 - **Thị trường:**
-    - Khoảng **500 nghìn** hộ kinh doanh quanh hơn 4.000 điểm du lịch *(ước tính VDF)*
+    - Khoảng **500 nghìn** hộ kinh doanh quanh hơn 4.000 điểm du lịch *(ước tính VDF)*. Ghi công thức ngắn ngay dưới số: 61 khu du lịch quốc gia × 3.000–4.000 hộ + 153 di tích đặc biệt × 350–500 hộ + ~4.000 di tích quốc gia × 30–50 hộ ≈ 360–520 nghìn hộ
     - Từ 01/01/2026 bỏ thuế khoán; hơn **308 nghìn** hộ đã dùng hóa đơn điện tử từ máy tính tiền (Bộ Tài chính, 5/2026)
     - Cả nước chỉ có **737 nghìn** máy POS, tính cả doanh nghiệp (NHNN, cuối 2024)
-    - Chỉ khoảng **6%** điểm chấp nhận thanh toán nhận QR quốc tế (NHNN, 9/2026)
-    - Chỉ **42%** doanh nghiệp nhỏ nhận thẻ; nhóm nhận thẻ có **79%** tăng doanh thu, so với 46% ở nhóm không nhận thẻ (Visa, 2023)
-- **Khảo sát 132 merchant phục vụ khách quốc tế tại Hà Nội và TP.HCM (7/2026):**
-    - **78%** có trên một nửa khách là khách quốc tế
-    - **48,5%** coi phí POS (3–5%) là rắc rối lớn nhất
-    - **58%** sẵn sàng dùng giải pháp thanh toán mới
+    - Nhóm doanh nghiệp nhỏ nhận thẻ có **79%** tăng doanh thu, so với 46% ở nhóm không nhận thẻ (Visa, 2023)
 - Kết luận của slide (1 dòng): **Tệp lớn, đang số hóa, nhưng phần lớn chưa nhận được thẻ. Đây là khoảng trống cần một cách nhận thẻ phù hợp với hộ kinh doanh nhỏ.**
 - *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 2.*
+
+### Slide 2b – Khảo sát 132 merchant: muốn nhận tiền khách quốc tế, nhưng phí là rào cản lớn nhất
+
+- Tiêu đề: *Merchant muốn nhận tiền khách quốc tế, nhưng phí là rào cản lớn nhất.*
+- **Bố cục:** dải mẫu khảo sát ở trên; 4 ô insight (lưới 2×2) bên trái; cột phải là mức sẵn sàng và mức sẵn sàng theo phí kỳ vọng.
+- **Mẫu:** 132 merchant phục vụ khách quốc tế tại Hà Nội và TP.HCM (7/2026); **78%** có khách quốc tế đóng góp trên 50% doanh thu; chủ yếu bán lẻ 36%, lưu niệm 30%, nhà hàng 23%.
+- **4 insight:**
+    - Insight 1 – Phải chắp vá nhiều cách nhận tiền: **100%** vẫn giữ tiền mặt dự phòng; 78% dùng song song tiền mặt, QR và POS.
+    - Insight 2 – Phí là rào cản lớn nhất: **48,5%** bức xúc vì phí POS thẻ quốc tế 3–5%, phải thu phụ phí của khách; 50,8% ngại chi phí thiết bị, thủ tục lắp POS.
+    - Insight 3 – Mất doanh thu tại quầy: **14,4%** bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài.
+    - Insight 4 – Cần niềm tin: đối soát, chứng từ: **26,5%** cần đối soát minh bạch, nhận tiền nhanh, có hóa đơn hoặc bằng chứng giao dịch để xử lý gian lận, khiếu nại.
+- **Sẵn sàng dùng giải pháp mới:** sẵn sàng **58%**, có xu hướng từ chối 22%. Theo mức phí kỳ vọng: phí 1–2% là **81,5%**, phí trên 3% chỉ **24,3%**. 42,5% nhóm "chưa chắc chắn" chuyển sang sẵn sàng khi được báo mức phí cụ thể, thấp.
+- Chú thích nguồn: *kịch bản khảo sát là giải pháp NFC Tag, phí 1–2%; "sẵn sàng" là ý định, chưa phải hành vi thật.*
+- Kết luận của slide (1 dòng): **Nhu cầu có thật. Phí thấp là điều kiện để merchant chuyển sang nhận thẻ.**
+- *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 2b.*
 
 ### Slide 3 – Khách quốc tế: tăng nhanh, chi nhiều, quen trả không tiền mặt
 
@@ -253,9 +263,9 @@ Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ
 - Kết luận của slide (1 dòng): **Merchant vừa và nhỏ bắt đầu nhận thẻ với chi phí gần như bằng 0, rồi lớn lên theo lộ trình của Visa.**
 - *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 9.*
 
-### Slide 10 – Demo giải pháp Visa Accept
+### Slide 10 và 10b – Demo giải pháp Visa Accept
 
-- Slide nhúng nguyên file demo `demo-visa-accept/index.html` (không có tiêu đề, demo phủ kín slide). Người trình bấm vào demo để thao tác; phím mũi tên khi đó điều khiển demo.
+- Ảnh chụp màn hình demo `demo-visa-accept`, mỗi slide một luồng, các màn hình xếp theo thứ tự bước, mỗi bước một dòng mô tả: slide 10 là **Đăng ký** (6 màn hình), slide 10b là **Chạm thẻ** (5 màn hình). Ba luồng còn lại (Link thanh toán, Theo dõi và hoàn tiền, Nâng gói) ở phụ lục "Màn hình demo Visa Accept".
 - Màn hình đi theo luồng Visa Accept trong mục 2 tài liệu Visa (trang 14–18, 20, 22), đặt trong app Tendoo. Cửa hàng mẫu: Lan's House, bán trà và quà lưu niệm ở Hội An.
 - Năm kịch bản:
     1. **Đăng ký:** mở Visa Accept trong Tendoo, chọn thẻ Visa nhận tiền, đặt tên người bán (hiện trên sao kê của khách), đồng ý điều khoản và hạn mức.
@@ -268,7 +278,9 @@ Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ
 ### Slide 11 – Giải pháp chi tiết 2 (Online): AI tư vấn du lịch và booking online
 
 - Tiêu đề: *Online: AI tư vấn du lịch giới thiệu merchant vừa và nhỏ đến khách, và cho khách đặt chỗ ngay.*
-- **Bố cục:** trên cùng là khách hàng và kênh khách gặp AI; bên trái là 2 việc AI làm cho khách (tư vấn, booking online); bên phải là merchant tham gia và kết quả cho merchant; dải dưới cùng là phần của VDF và VTT.
+- **Bố cục:** 4 khối đánh số giống slide 9: (1) AI tư vấn du lịch là gì, (2) Khách gặp AI qua kênh Viettel (danh sách dọc: 3 kênh pilot là tin nhắn chào mừng roaming, SIM/eSIM du lịch Viettel, quầy SIM sân bay; dòng cuối mờ hơn là kênh sau pilot), (3) Luồng 1 – Tư vấn, (4) Luồng 2 – Booking online. Mỗi luồng vẽ 4 bước, dưới cùng ghi merchant tham gia và kết quả cho merchant.
+    - **Luồng 1 – Tư vấn:** khách hỏi AI → AI gợi ý merchant vừa và nhỏ (giờ mở cửa, giá tham khảo) → khách đến quán → merchant trả affiliate.
+    - **Luồng 2 – Booking online:** khách chọn từ gợi ý của AI → điền thông tin, trả trước bằng thẻ quốc tế → merchant xác nhận qua app Tendoo → VDF thu một phần phí booking. Merchant tham gia: chuỗi nhà hàng, khách sạn lớn.
 - **Khách hàng:** khách quốc tế và khách Việt dùng thẻ thanh toán quốc tế.
 - **Khách gặp AI qua kênh Viettel:** link mở AI trong tin nhắn chào mừng khi khách roaming vào Việt Nam, trên SIM/eSIM du lịch Viettel và tại quầy bán SIM ở sân bay. AI là web app, khách bấm link là dùng ngay, không cần cài app.
     - Sau pilot: mở thêm cổng du lịch của tỉnh và Tammi.
@@ -289,9 +301,9 @@ Trình bày với Tổng giám đốc VDF về giải pháp "Merchant thế hệ
 - Kết luận của slide (1 dòng): **AI đưa khách đến merchant vừa và nhỏ và cho khách đặt chỗ ngay; merchant có thêm khách, VDF có doanh thu từ affiliate và phí booking.**
 - *Ghi chú cho người trình: xem file `ghi-chu-nguoi-trinh-merchant-ai-studio.md`, mục Slide 11.*
 
-### Slide 12 – Demo giải pháp AI tư vấn du lịch và booking online
+### Slide 12 và 12b – Demo giải pháp AI tư vấn du lịch và booking online
 
-- Slide nhúng file demo của kênh online tại `demo-ai-online/index.html`, làm sau demo Visa Accept. Demo chạy theo hành trình của một khách, gồm 5 kịch bản: hạ cánh và mở AI (dòng 1–2 trong bảng dưới), hỏi tư vấn, đặt bàn, đặt phòng, kết quả.
+- Ảnh chụp màn hình demo `demo-ai-online`, theo hành trình của một khách, gồm 5 kịch bản: hạ cánh và mở AI (dòng 1–2 trong bảng dưới), hỏi tư vấn, đặt bàn, đặt phòng, kết quả. Slide 12 gồm **Hạ cánh** và **Hỏi tư vấn** (3 + 3 màn hình), slide 12b là **Đặt bàn** (6 màn hình, cả điện thoại khách và Tendoo của quán). Đặt phòng và Kết quả ở phụ lục "Màn hình demo AI tư vấn du lịch".
 - **Nhân vật:** Minji, 28 tuổi, nhân viên văn phòng ở Seoul, đi Đà Nẵng 5 ngày. Minji đã đặt khách sạn ở Đà Nẵng, chưa biết ăn gì, chơi gì, và muốn ghé Hội An 1 đêm.
 - **Hành trình:**
 
