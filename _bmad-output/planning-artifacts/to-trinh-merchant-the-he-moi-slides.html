@@ -598,6 +598,10 @@ table.mx{font-size:13.5px}
 .mx td:first-child{font-size:13.5px}
 .mx td:first-child small{display:block;font-weight:600;color:var(--muted);font-size:11.5px;margin-top:2px}
 .mx .focus{background:#FFF5F6}
+.mx th .pct{display:block;margin-top:6px;font-size:12px;font-weight:700;color:var(--muted)}
+.mx th .pct b{font-size:20px;font-weight:900;color:var(--ink);margin-right:4px}
+.mx th.focus .pct b{color:var(--red)}
+.mx.dsc td{padding-top:9px;padding-bottom:9px}
 .mx th.focus{background:#FFE4E6;color:var(--red)}
 .sy{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:middle;position:relative;top:-1px;font-size:0;line-height:0}
 .sy.f{background:#16A34A}.sy.h{background:#EAB308}.sy.e{background:#DC2626}
@@ -681,7 +685,7 @@ table.mt2 th.on{background:var(--on);color:#fff}
 /* placeholder */
 .blank{flex:1;border:2px dashed #CBD5E1;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#CBD5E1;font-size:15px;font-weight:700}
 /* business model */
-.bm{flex:1;min-height:0;display:grid;grid-template-columns:128px 50px 1fr 50px 1fr 50px 1fr;grid-template-rows:auto repeat(5,1fr);background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bm{flex:1;min-height:0;display:grid;grid-template-columns:128px 50px 1fr 50px 1fr 50px 1fr;grid-template-rows:auto repeat(6,1fr);background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .bm>div{border-bottom:1px solid var(--line);display:flex;align-items:center}
 .bm>.last{border-bottom:0}
 .bm .hd{padding:10px 16px;font-size:15px;font-weight:900;letter-spacing:.04em;justify-content:center;gap:8px}
@@ -695,8 +699,8 @@ table.mt2 th.on{background:var(--on);color:#fff}
 .bm .seg{grid-column:1;flex-direction:column;justify-content:center;gap:6px;background:var(--c);color:#fff;font-size:17px;font-weight:900;text-align:center;border-bottom-color:rgba(255,255,255,.25)}
 .bm .seg span{font-size:12px;font-weight:700;opacity:.85}
 .bm .seg.m{--c:var(--off);grid-row:2 / 5}
-.bm .seg.k{--c:var(--on);grid-row:5 / 7}
-.bm .c{padding:8px 14px;font-size:15px;font-weight:700;color:var(--ink);line-height:1.32;flex-wrap:wrap;gap:4px 8px}
+.bm .seg.k{--c:var(--on);grid-row:5 / 8}
+.bm .c{padding:6px 14px;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.32;flex-wrap:wrap;gap:4px 8px}
 .bm .c.no{background:var(--bg)}
 .bm .c .tg{font-size:12px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line);white-space:nowrap}
 .bm .a{position:relative;--c:var(--off)}
@@ -712,7 +716,7 @@ table.mt2 th.on{background:var(--on);color:#fff}
 .tlt td .on-t{color:var(--on);font-weight:800}
 .tlt td .off-t{color:var(--red);font-weight:800}
 .tlt td:first-child small{display:block;font-weight:600;color:var(--muted);font-size:11.5px}
-.rm{display:grid;grid-template-columns:132px repeat(5,1fr);grid-template-rows:auto auto 1fr 1fr 1fr;gap:6px 8px;flex:1;min-height:0}
+.rm{display:grid;grid-template-columns:132px repeat(4,1fr);grid-template-rows:auto auto 1fr 1fr 1fr;gap:6px 8px;flex:1;min-height:0}
 .rm .ph{border-radius:8px;padding:7px 12px;color:#fff;font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rm .ph small{font-weight:600;opacity:.85;font-size:12px}
 .rm .ph.p0{background:var(--ink2)}
@@ -725,7 +729,7 @@ table.mt2 th.on{background:var(--on);color:#fff}
 .rm .ln{border-radius:12px;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 14px;font-size:17px;font-weight:900;line-height:1.2}
 .rm .ln small{font-size:11.5px;font-weight:600;opacity:.85;margin-top:3px}
 .rm .bgc{background:#fff;border:1px solid var(--line);border-radius:10px}
-.rm .cl{display:flex;flex-direction:column;gap:6px;padding:7px;z-index:1;min-height:0}
+.rm .cl{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:7px;z-index:1;min-height:0}
 .rm .it{border:1.5px solid var(--line);background:var(--slate);border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;line-height:1.32;color:var(--ink2)}
 .rm .it.go{background:var(--amber-bg);border-color:var(--amber-line);color:#78350F}
 .rm .it.sc{background:var(--green-bg);border-color:var(--green-line);color:var(--green-d)}
@@ -759,12 +763,25 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 .lean2 .sx{padding:16px 0}
 .lean2 .sx .num{font-size:36px;min-width:0}
 .lean2 .sx{flex-direction:column;gap:4px}
+.lean2 .sx.sxd{flex-direction:row;align-items:center;gap:16px;padding:10px 0}
+.sxd svg{width:132px;height:132px;flex:none}
+.sxd .sl{font-size:14px}
 .lean2 .sx .sl{font-size:15.5px}
 .cg.lean3 .cl{font-size:15px;display:flex;flex-direction:column;justify-content:center}
 .cg.lean3 .cl .k{font-size:17.5px}
 .cg.lean3 .cl.opp2{font-size:16.5px}
 .cg.lean3 .rl2{font-size:14.5px}
 .cg.lean3 .rl2.vdf,.cg.lean3 .rl2.vtt{font-size:24px}
+.cg.big .ch b{font-size:22px}
+.cg.big .rl2{font-size:19px;padding:12px 18px}
+.cg.big .cl{font-size:17px;padding:14px 22px}
+.cg.big .cl .k{font-size:21px;margin-bottom:6px;line-height:1.3}
+.cg.big .cl.opp2{font-size:20px;line-height:1.4}
+.cg .cl.sol2{background:#fff;border:2px solid;gap:6px}
+.cg .cl.sol2.off{border-color:var(--off)}.cg .cl.sol2.on{border-color:var(--on)}
+.cg .cl.sol2 b{font-size:28px;font-weight:900;line-height:1.2}
+.cg .cl.sol2.off b{color:var(--off)}.cg .cl.sol2.on b{color:var(--on)}
+.cg .cl.sol2 span{font-size:17px;font-weight:600;color:var(--ink2)}
 .cg .cl.nums{flex-direction:row!important;justify-content:space-between;align-items:center;gap:12px}
 .cl.nums span{display:flex;flex-direction:column;font-size:12.5px;font-weight:700;color:var(--muted);line-height:1.3}
 .cl.nums b{font-size:24px;font-weight:900;color:var(--ink);letter-spacing:-.02em}
@@ -798,6 +815,23 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 .fee{font-size:14.5px;font-weight:600;color:var(--ink2);background:var(--slate);border-radius:10px;padding:10px 14px;line-height:1.45}
 .tlt.lean4 td{font-size:15px;padding:14px 16px}
 .band{font-size:15px}
+/* Slide Giải pháp tổng thể: tăng cỡ chữ nhỏ */
+.s-sol .chcard .hd{padding:11px 20px}
+.s-sol .chcard .hd span{font-size:17px}
+.s-sol .kv.aud{height:92px;grid-template-columns:auto 1fr;gap:14px;padding:6px 20px}
+.s-sol .kv.aud>span{white-space:nowrap}
+.s-sol .kv>span{font-size:13px}
+.s-sol .aud-g{font-size:16.5px;grid-template-columns:auto 1fr;gap:3px 12px}
+.s-sol .aud-g i{font-size:13px}
+.s-sol .csol{margin:0 12px 12px;padding:12px 18px;gap:5px}
+.s-sol .csol .ck{font-size:13px}
+.s-sol .csol .ct{font-size:22px}
+.s-sol .csol .cd{font-size:16.5px;min-height:0;line-height:1.35}
+.s-sol .csol ol{gap:7px;margin-top:4px}
+.s-sol .csol li{font-size:16.5px;line-height:1.35;gap:10px}
+.s-sol .csol li::before{font-size:14px}
+.s-sol .band{font-size:17px}
+.s-sol .band .label{font-size:14px}
 
 .sol .sb{justify-content:space-between;padding:22px 24px}
 .p.lg{font-size:20px}
@@ -886,6 +920,27 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 .flow .fs img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 14px rgba(15,23,42,.16))}
 .flow .fc{display:flex;gap:8px;align-items:flex-start;width:100%;font-size:12.5px;line-height:1.38;color:var(--ink2);font-weight:600}
 .flow .fc i{flex:none;font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+/* demo focus: từng bước, trái danh sách bước, phải màn hình */
+.fx{flex:1;min-height:0;display:flex;gap:36px}
+.fx-l{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+.fx-l .persona{max-width:none}
+.fx-steps{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.fx-step{display:flex;gap:14px;align-items:center;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:16px;line-height:1.35;font-weight:600;color:var(--muted)}
+.fx-step i{flex:none;font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--slate);color:var(--muted);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.fx-step.done{color:var(--ink2)}
+.fx-step.done i{background:#FFE4E6;color:var(--red)}
+.fx-step.on{background:var(--rose);border:1.5px solid var(--red);color:var(--ink);font-size:18px;font-weight:800;padding:15px 18px;box-shadow:0 6px 16px rgba(225,29,72,.12)}
+.fx-step.on i{background:var(--red);color:#fff;width:32px;height:32px;font-size:15px}
+.fx-r{width:500px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--slate);border-radius:16px;padding:14px 0;min-height:0}
+.fx-r img{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(15,23,42,.18))}
+/* S2b insight donuts */
+.ins.pd{flex-direction:row;align-items:center;gap:16px;min-height:0;overflow:hidden}
+.pd-donut{position:relative;width:132px;height:132px;flex:none}
+.pd-donut svg{width:100%;height:100%;display:block}
+.pd-donut b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;letter-spacing:-.03em;color:var(--c)}
+.pd-tx{min-width:0}
+.pd-tx .h3{margin-top:6px;min-height:0}
+.pd-tx .sl{font-size:14px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -970,18 +1025,18 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:14px;min-width:0">
         <div class="g2 lean" style="flex:1;grid-template-rows:1fr 1fr">
-          <div class="stat top c-red"><div class="num">~500 nghìn</div><div class="sl">hộ quanh điểm du lịch</div>
-            <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.5;font-weight:600;color:var(--muted)">61 khu du lịch quốc gia × 3.000–4.000 hộ<br>+ 153 di tích đặc biệt × 350–500 hộ<br>+ ~4.000 di tích quốc gia × 30–50 hộ<br><b style="color:var(--ink2)">≈ 360–520 nghìn hộ</b></div>
+          <div class="stat top c-red"><div class="num">~500k</div><div class="sl">hộ quanh điểm du lịch</div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.5;font-weight:600;color:var(--muted)">61 khu du lịch quốc gia × 3.000–4.000 hộ<br>+ 153 di tích đặc biệt × 350–500 hộ<br>+ ~4.000 di tích quốc gia × 30–50 hộ<br><b style="color:var(--ink2)">≈ 360–520k hộ</b></div>
           </div>
-          <div class="stat top c-ink"><div class="num">308 nghìn+</div><div class="sl">hộ đã dùng hóa đơn điện tử, sau khi bỏ thuế khoán</div></div>
-          <div class="stat top c-ink"><div class="num">737 nghìn</div><div class="sl">máy POS cả nước</div></div>
-          <div class="stat top c-green"><div class="num">79% <small style="font-size:20px;color:var(--faint)">vs 46%</small></div><div class="sl">tăng doanh thu: nhóm nhận thẻ so với nhóm không nhận</div></div>
+          <div class="stat top c-ink"><div class="num">308k+</div><div class="sl">hộ đã dùng hóa đơn điện tử, sau khi bỏ thuế khoán</div></div>
+          <div class="stat top c-ink"><div class="num">737k</div><div class="sl">máy POS cả nước</div></div>
+          <div class="stat top c-green"><div class="num">79% <small style="font-size:20px;color:var(--faint)">vs 46%</small></div><div class="sl">tỉ lệ DN có doanh thu tăng: nhận thẻ 79%, không nhận thẻ 46%</div></div>
         </div>
       </div>
     </div>
     <div class="takeaway">Tệp lớn, đang số hóa, <span class="g">nhưng phần lớn chưa nhận được thẻ.</span></div>
   </div>
-  <div class="source">Nguồn: Báo Chính phủ (2025); Tổng cục Thuế (8/2024); Bộ Tài chính (5/2026); NHNN (cuối 2024); Visa (2023). 500 nghìn hộ: ước tính VDF, số hộ mỗi điểm là giả định.</div>
+  <div class="source">Nguồn: Báo Chính phủ (2025); Tổng cục Thuế (8/2024); Bộ Tài chính (5/2026); NHNN (cuối 2024); Visa (2023). 500k hộ: ước tính VDF, số hộ mỗi điểm là giả định.</div>
 </section>
 <aside class="notes">
   <h4>Chi tiết đã rút khỏi slide</h4>
@@ -1006,29 +1061,61 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
     </div>
     <div class="row" style="flex:1;min-height:0">
       <div class="g2" style="flex:1;grid-template-rows:1fr 1fr;min-width:0">
-        <div class="card ins">
-          <div class="ih"><span class="pill grey">Insight 1</span></div>
-          <div class="h3">Phải chắp vá nhiều cách nhận tiền</div>
-          <div class="num md c-ink">100%</div>
-          <div class="sl">vẫn giữ tiền mặt dự phòng; 78% dùng song song tiền mặt, QR và POS</div>
+        <div class="card ins pd" title="Phải chắp vá nhiều cách nhận tiền: 78% trên 132 merchant">
+          <div class="pd-donut">
+            <svg viewBox="0 0 200 200"><g transform="rotate(-90 100 100)" fill="none" stroke-width="28">
+              <circle cx="100" cy="100" r="72" stroke="#E2E8F0"/>
+              <circle cx="100" cy="100" r="72" stroke="#334155" stroke-dasharray="352.86 452.39"/>
+            </g></svg>
+            <b class="c-ink">78%</b>
+          </div>
+          <div class="pd-tx">
+            <div class="ih"><span class="pill grey">Insight 1</span></div>
+            <div class="h3">Chắp vá cách nhận tiền</div>
+            <div class="sl">dùng song song tiền mặt, QR và POS</div>
+          </div>
         </div>
-        <div class="card ins rose">
-          <div class="ih"><span class="pill red">Insight 2</span></div>
-          <div class="h3">Phí là rào cản lớn nhất</div>
-          <div class="num md c-red">48,5%</div>
-          <div class="sl">bức xúc vì phí POS thẻ quốc tế 3–5%, phải thu phụ phí của khách; 50,8% ngại chi phí thiết bị, thủ tục lắp POS</div>
+        <div class="card ins pd rose" title="Phí là rào cản lớn nhất: 48,5% trên 132 merchant">
+          <div class="pd-donut">
+            <svg viewBox="0 0 200 200"><g transform="rotate(-90 100 100)" fill="none" stroke-width="28">
+              <circle cx="100" cy="100" r="72" stroke="#E2E8F0"/>
+              <circle cx="100" cy="100" r="72" stroke="#E11D48" stroke-dasharray="219.41 452.39"/>
+            </g></svg>
+            <b class="c-red">48,5%</b>
+          </div>
+          <div class="pd-tx">
+            <div class="ih"><span class="pill red">Insight 2</span></div>
+            <div class="h3">Phí là rào cản lớn nhất</div>
+            <div class="sl">bức xúc vì phí POS thẻ quốc tế 3–5%</div>
+          </div>
         </div>
-        <div class="card ins">
-          <div class="ih"><span class="pill grey">Insight 3</span></div>
-          <div class="h3">Mất doanh thu tại quầy</div>
-          <div class="num md c-orange">14,4%</div>
-          <div class="sl">bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài</div>
+        <div class="card ins pd" title="Mất doanh thu tại quầy: 14,4% trên 132 merchant">
+          <div class="pd-donut">
+            <svg viewBox="0 0 200 200"><g transform="rotate(-90 100 100)" fill="none" stroke-width="28">
+              <circle cx="100" cy="100" r="72" stroke="#E2E8F0"/>
+              <circle cx="100" cy="100" r="72" stroke="#334155" stroke-dasharray="65.14 452.39"/>
+            </g></svg>
+            <b class="c-ink">14,4%</b>
+          </div>
+          <div class="pd-tx">
+            <div class="ih"><span class="pill grey">Insight 3</span></div>
+            <div class="h3">Mất doanh thu tại quầy</div>
+            <div class="sl">bị hủy đơn vì khách thiếu tiền mặt VND</div>
+          </div>
         </div>
-        <div class="card ins">
-          <div class="ih"><span class="pill grey">Insight 4</span></div>
-          <div class="h3">Cần niềm tin: đối soát, chứng từ</div>
-          <div class="num md c-blue">26,5%</div>
-          <div class="sl">cần đối soát minh bạch, nhận tiền nhanh, có hóa đơn hoặc bằng chứng giao dịch để xử lý gian lận, khiếu nại</div>
+        <div class="card ins pd" title="Cần niềm tin: đối soát, chứng từ: 26,5% trên 132 merchant">
+          <div class="pd-donut">
+            <svg viewBox="0 0 200 200"><g transform="rotate(-90 100 100)" fill="none" stroke-width="28">
+              <circle cx="100" cy="100" r="72" stroke="#E2E8F0"/>
+              <circle cx="100" cy="100" r="72" stroke="#334155" stroke-dasharray="119.88 452.39"/>
+            </g></svg>
+            <b class="c-ink">26,5%</b>
+          </div>
+          <div class="pd-tx">
+            <div class="ih"><span class="pill grey">Insight 4</span></div>
+            <div class="h3">Cần niềm tin</div>
+            <div class="sl">cần đối soát minh bạch, có chứng từ</div>
+          </div>
         </div>
       </div>
       <div class="card" style="width:360px;flex:none;display:flex;flex-direction:column">
@@ -1069,7 +1156,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
       <div style="width:250px;flex:none;display:flex;flex-direction:column;gap:12px">
         <div class="stat bar c-blue" style="flex:1;display:flex;flex-direction:column;justify-content:center"><div class="num md">17,7 triệu</div><div class="sl">lượt, 9 tháng 2026 <span class="up">+14,5%</span></div></div>
         <div class="stat bar c-orange" style="flex:1;display:flex;flex-direction:column;justify-content:center"><div class="num md">700–1.150</div><div class="sl">USD mỗi lượt khách</div></div>
-        <div class="stat bar c-red" style="flex:1;display:flex;flex-direction:column;justify-content:center"><div class="num md">5–8 tỷ USD</div><div class="sl">mỗi năm cho ăn uống, mua sắm</div><div style="margin-top:8px;height:8px;border-radius:4px;background:#FDE2E2;overflow:hidden"><div style="width:34%;height:100%;background:var(--c,var(--red))"></div></div><div class="sl" style="margin-top:4px;font-size:12.5px"><b style="color:var(--c,var(--red))">~34%</b> tổng chi tiêu của khách</div></div>
+        <div class="stat bar c-red" style="flex:1;display:flex;flex-direction:column;justify-content:center"><div class="num md" style="white-space:nowrap">5–8 tỷ USD <span style="font-size:16px">(~34%)</span></div><div class="sl">mỗi năm cho ăn uống, mua sắm, trên tổng chi tiêu của khách</div></div>
       </div>
       <div class="card" style="flex:1;display:flex;flex-direction:column;min-width:0">
         <div class="label">Khách đến từ đâu · 9 tháng 2026</div>
@@ -1164,24 +1251,24 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
   <div class="eyebrow">Bối cảnh và vấn đề · Khách trả tiền thế nào, theo nhóm merchant</div>
   <h2 class="title">Merchant càng nhỏ, <em>khách quốc tế càng ít cách trả tiền</em></h2>
   <div class="content">
-    <table class="t mx">
-      <colgroup><col style="width:270px"><col><col><col></colgroup>
+    <table class="t mx dsc">
+      <colgroup><col style="width:330px"><col><col><col></colgroup>
       <tr>
         <th>Khách trả bằng</th>
-        <th class="focus">Vừa và nhỏ<small>quán ăn, cà phê, sạp chợ, homestay</small></th>
-        <th>Trung bình<small>nhà hàng, spa, khách sạn nhỏ</small></th>
-        <th>Lớn (chuỗi)<small>khách sạn chuỗi, TTTM, chuỗi bán lẻ</small></th>
+        <th class="focus">Vừa và nhỏ<small>quán ăn, cà phê, sạp chợ, homestay</small><span class="pct"><b>~95%</b>số merchant</span></th>
+        <th>Trung bình<small>nhà hàng, spa, khách sạn nhỏ</small><span class="pct"><b>~4%</b>số merchant</span></th>
+        <th>Lớn (chuỗi)<small>khách sạn chuỗi, TTTM, chuỗi bán lẻ</small><span class="pct"><b>&lt;1%</b>số merchant</span></th>
       </tr>
-      <tr><td>Tiền mặt, đổi ngoại tệ</td><td class="focus"><span class="sy f">●</span>gần như duy nhất</td><td><span class="sy f">●</span></td><td><span class="sy h">◐</span></td></tr>
-      <tr><td>Thẻ qua máy POS</td><td class="focus"><span class="sy e">○</span>không có máy</td><td><span class="sy h">◐</span>thường cộng phụ phí</td><td><span class="sy f">●</span></td></tr>
-      <tr><td>QR quốc tế</td><td class="focus"><span class="sy e">○</span></td><td><span class="sy e">○</span></td><td><span class="sy h">◐</span>chỉ chuỗi lớn</td></tr>
-      <tr><td>App Việt Nam liên kết thẻ</td><td class="focus"><span class="sy h">◐</span>khách ít dùng</td><td><span class="sy h">◐</span></td><td><span class="sy h">◐</span></td></tr>
-      <tr><td>Tap to Phone</td><td class="focus"><span class="sy e">○</span></td><td><span class="sy h">◐</span>qua app ngân hàng</td><td><span class="sy h">◐</span>qua app ngân hàng</td></tr>
+      <tr><td>Tiền mặt, đổi ngoại tệ<small>trả tiền Việt đã đổi, hoặc USD</small></td><td class="focus"><span class="sy f">●</span>gần như duy nhất</td><td><span class="sy f">●</span></td><td><span class="sy h">◐</span></td></tr>
+      <tr><td>Thẻ qua máy POS<small>quẹt, chạm thẻ Visa/Mastercard trên máy ngân hàng</small></td><td class="focus"><span class="sy e">○</span>không có máy</td><td><span class="sy h">◐</span>thường cộng phụ phí</td><td><span class="sy f">●</span></td></tr>
+      <tr><td>QR quốc tế<small>quét QR bằng app ngân hàng, ví của nước mình</small></td><td class="focus"><span class="sy e">○</span></td><td><span class="sy e">○</span></td><td><span class="sy h">◐</span>chỉ chuỗi lớn</td></tr>
+      <tr><td>App Việt Nam liên kết thẻ<small>cài ví Việt Nam, liên kết thẻ quốc tế rồi quét QR nội địa</small></td><td class="focus"><span class="sy h">◐</span>khách ít dùng</td><td><span class="sy h">◐</span></td><td><span class="sy h">◐</span></td></tr>
+      <tr><td>Tap to Phone<small>chạm thẻ vào điện thoại người bán, không cần POS</small></td><td class="focus"><span class="sy e">○</span></td><td><span class="sy h">◐</span>qua app ngân hàng</td><td><span class="sy h">◐</span>qua app ngân hàng</td></tr>
     </table>
     <div class="mxl"><span><span class="sy f">●</span>Phổ biến</span><span><span class="sy h">◐</span>Có nhưng hạn chế</span><span><span class="sy e">○</span>Gần như không có</span></div>
     <div class="takeaway" style="margin-top:auto">Nhóm lớn đã nhận được thẻ. <span class="r">Nhóm vừa và nhỏ, đông nhất, vẫn chủ yếu nhận tiền mặt.</span></div>
   </div>
-  <div class="source">Đánh giá của VDF dựa trên khảo sát 132 merchant (7/2026) và thông tin công khai về các giải pháp hiện có.</div>
+  <div class="source">Đánh giá của VDF dựa trên khảo sát 132 merchant (7/2026) và thông tin công khai về các giải pháp hiện có. Tỷ trọng theo nhóm: ước tính từ Tổng điều tra kinh tế 2026 và Sách trắng doanh nghiệp (Cục Thống kê).</div>
 </section>
 <aside class="notes">
   <h4>Chi tiết đã rút khỏi slide</h4>
@@ -1189,6 +1276,8 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
     <li>Ví dụ nhóm: vừa và nhỏ, cá nhân (quán ăn, cà phê, quầy lưu niệm, sạp chợ, homestay); trung bình (nhà hàng, cửa hàng có mặt bằng, spa, khách sạn nhỏ); lớn (khách sạn chuỗi, trung tâm thương mại, chuỗi bán lẻ, chuỗi nhà hàng).</li>
     <li>Ghi chú ô: POS ở nhóm nhỏ: không có máy, ngại phí; QR quốc tế: khách quét bằng ví, app nước mình; app Việt Nam: cửa hàng có QR nội địa nhưng khách ít khi dùng.</li>
     <li>Câu nối: ba giải pháp mới đang có trên thị trường (slide sau) chưa lấp được khoảng trống này.</li>
+    <li>Tỷ trọng số merchant là ước tính, tính trên khoảng 5,84 triệu đơn vị kinh doanh: 5 triệu hộ kinh doanh (cùng mốc với slide 2) và 838.753 doanh nghiệp có kết quả sản xuất kinh doanh tại 31/12/2024 (Sách trắng doanh nghiệp Việt Nam 2026, Cục Thống kê, 10/2026). Cơ cấu doanh nghiệp: siêu nhỏ 562.521 (67,1%), nhỏ 223.290 (26,6%), vừa 30.746 (3,7%), lớn 22.196 (2,6%). Nếu dùng số của Tổng điều tra kinh tế 2026 (gần 5,3 triệu cơ sở cá thể) thì tỷ lệ gần như không đổi.</li>
+    <li>Cách quy nhóm: vừa và nhỏ = hộ kinh doanh + DN siêu nhỏ (~5,56 triệu, ~95%); trung bình = DN nhỏ + DN vừa (~254 nghìn, ~4%); lớn = DN lớn (~22 nghìn, ~0,4%). Số được đếm theo doanh nghiệp, không theo điểm bán: một chuỗi có hàng trăm cửa hàng vẫn tính là 1, nên nếu đếm theo điểm bán thì tỷ lệ nhóm lớn sẽ cao hơn. Mẫu số tính cả cơ sở không bán lẻ cho khách (sản xuất, xây dựng…), nên chỉ dùng để minh họa quy mô.</li>
   </ul>
   <div data-md="Slide 4"><h4>Slide 4 – Khách quốc tế đang trả tiền thế nào, theo từng nhóm merchant</h4><ul><li>QR quốc tế hiện chỉ có ở nhóm lớn. Tap to Phone đã có ở nhóm trung bình và lớn, chủ yếu dùng qua app ngân hàng (VPBank, Sacombank, VIB, VCB…), chưa đến được nhóm vừa và nhỏ.</li><li>Ma trận là đánh giá của VDF, dựa trên khảo sát 132 merchant (78% dùng song song tiền mặt, QR và POS; 100% vẫn giữ tiền mặt; 48,5% coi phí POS 3–5% là rắc rối lớn nhất) và thông tin công khai về các giải pháp hiện có (slide 5). Chưa có số liệu công khai về cách khách quốc tế trả tiền theo từng nhóm merchant.</li><li>Nhóm vừa và nhỏ ứng với tệp hộ kinh doanh ở slide 2, gồm cả hộ không có địa điểm cố định (Tap to Phone không cần mặt bằng). Nhóm lớn (chuỗi nhà hàng, khách sạn) là đối tượng thêm của booking online (slide 8), không phải trọng tâm của Visa Accept tại quầy.</li><li>Dòng "QR quốc tế" ở nhóm vừa và nhỏ là khoảng trống VDF lấp bằng VietQR Global trong Tendoo (slide 9b); dòng "Tap to Phone" lấp bằng Visa Accept (slide 9).</li><li>Nhu cầu là có thật: giao dịch VietQR Global của khách Thái Lan, Lào, Campuchia 8 tháng 2026 tăng khoảng 8 lần so với 2025; của khách Trung Quốc tăng khoảng 3 lần (NAPAS).</li><li>Cửa hàng đặc sản, quán ăn ở địa phương còn vướng rào cản thiết bị và chi phí (VCCI).</li></ul></div>
 </aside></div>
@@ -1266,18 +1355,33 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 <!-- ============ S6 KHÁCH TÌM VÀ ĐẶT CHỖ ============ -->
 <div class="frame"><section class="slide">
   <div class="eyebrow">Bối cảnh và vấn đề · Khách tìm và đặt chỗ thế nào</div>
-  <h2 class="title">Khách hỏi AI và đặt chỗ online, <em>merchant nhỏ chưa có mặt ở đó</em></h2>
+  <h2 class="title">Xu hướng: Khách hỏi AI và đặt chỗ online, <em>merchant nhỏ chưa có mặt ở đó</em></h2>
   <div class="content">
     <div class="g3 fill" style="flex:1;min-height:0">
       <div class="card lean2 tight">
         <div class="label red">1 · Khách hỏi AI khi lên kế hoạch</div>
-        <div class="sx"><div class="num" style="--c:var(--on)">56%</div><div class="sl">khách Mỹ đã dùng AI cho chuyến đi trong 12 tháng qua, để lên kế hoạch hoặc đặt chỗ</div></div>
-        <div class="sx"><div class="num" style="--c:var(--on)">81%</div><div class="sl">khách Việt dự định dùng AI cho chuyến tới, cao nhất châu Á (trung bình 63%)</div></div>
+        <div class="sx sxd"><svg viewBox="0 0 100 100" role="img" aria-label="56% khách Mỹ đã dùng AI cho chuyến đi">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E2E8F0" stroke-width="13"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1E3A8A" stroke-width="13" pathLength="100" stroke-dasharray="56 44" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-size="22" font-weight="900" fill="#1E3A8A">56%</text>
+            <text x="50" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#64748B">đã dùng AI</text>
+          </svg><div class="sl">khách Mỹ đã dùng AI cho chuyến đi trong 12 tháng qua, để lên kế hoạch hoặc đặt chỗ</div></div>
+        <div class="sx sxd"><svg viewBox="0 0 100 100" role="img" aria-label="81% khách Việt dự định dùng AI">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E2E8F0" stroke-width="13"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1E3A8A" stroke-width="13" pathLength="100" stroke-dasharray="81 19" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-size="22" font-weight="900" fill="#1E3A8A">81%</text>
+            <text x="50" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#64748B">dự định</text>
+          </svg><div class="sl">khách Việt dự định dùng AI cho chuyến tới, cao nhất châu Á (trung bình 63%)</div></div>
       </div>
       <div class="card lean2 tight">
         <div class="label red">2 · Đặt chỗ đã lên mạng</div>
-        <div class="sx"><div class="num c-ink">~4 tỷ USD</div><div class="sl">thị trường du lịch trực tuyến Việt Nam 2025, tăng 16%, gồm khách nội địa và quốc tế</div></div>
-        <div class="sx"><div class="num c-red">15–25%</div><div class="sl">hoa hồng khách sạn trả OTA mỗi lượt đặt; OTA chiếm khoảng 59% lượt đặt phòng</div></div>
+        <div class="sx"><div class="num c-ink" style="white-space:nowrap">~4 tỷ USD <span class="up" style="font-size:20px">(+16%)</span></div><div class="sl">thị trường du lịch trực tuyến Việt Nam 2025, gồm khách nội địa và quốc tế</div></div>
+        <div class="sx sxd"><svg viewBox="0 0 100 100" role="img" aria-label="OTA chiếm khoảng 59% lượt đặt phòng khách sạn">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E2E8F0" stroke-width="13"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E11D48" stroke-width="13" pathLength="100" stroke-dasharray="59 41" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-size="22" font-weight="900" fill="#E11D48">59%</text>
+            <text x="50" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#64748B">qua OTA</text>
+          </svg><div class="sl">lượt đặt phòng khách sạn qua OTA (2025)<br><i>Khách sạn trả OTA 15–25% hoa hồng mỗi lượt</i></div></div>
       </div>
       <div class="card rose lean2">
         <div class="label red">3 · AI của nền tảng lớn chỉ giới thiệu merchant của mình</div>
@@ -1310,7 +1414,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
   <div class="eyebrow">Bối cảnh và vấn đề · Vấn đề và cơ hội của VDF</div>
   <h2 class="title">Merchant nhỏ <em>mất khách ở cả hai đầu</em>: hai khoảng trống VDF có thể lấp</h2>
   <div class="content">
-    <div class="cg lean3" style="flex:1;min-height:0;grid-template-rows:auto 1fr 1fr 1fr">
+    <div class="cg lean3 big" style="flex:1;min-height:0;grid-template-rows:auto 1fr 1fr 1fr">
       <div></div>
       <div class="ch off"><b>1 · Tại cửa hàng</b></div>
       <div class="ch on"><b>2 · Trước khi khách đến</b></div>
@@ -1319,26 +1423,25 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
       <div class="cl"><span class="k">Khách muốn trả thẻ, quét QR, cửa hàng không nhận được</span>Chủ yếu nhận tiền mặt: không có máy POS, chỉ ~6% điểm bán nhận QR quốc tế. Khách phải đi rút tiền hoặc sang quán khác.</div>
       <div class="cl"><span class="k">Khách hỏi AI để chọn quán, cửa hàng không xuất hiện</span>AI của Booking.com, Expedia chỉ gợi ý merchant có trên nền tảng của mình. Merchant nhỏ không có mặt nên mất khách ngay từ khi khách lên kế hoạch.</div>
 
-      <div class="rl2">Quy mô, sẵn sàng</div>
-      <div class="cl nums"><span><b>~500 nghìn</b>hộ quanh điểm du lịch</span><span><b>5–8 tỷ USD</b>khách quốc tế chi ăn uống, mua sắm/năm</span><span><b>81,5%</b>merchant sẵn sàng nếu phí 1–2%</span></div>
-      <div class="cl nums"><span><b>~4 tỷ USD</b>du lịch online Việt Nam 2025</span><span><b>56%</b>khách Mỹ đã dùng AI cho chuyến đi</span><span><b>81%</b>khách Việt dự định dùng AI</span></div>
-
       <div class="rl2" style="background:var(--green-bg);color:var(--green-d)">Cơ hội cho VDF</div>
       <div class="cl opp2">Cách nhận thẻ và QR quốc tế cho hộ nhỏ, gắn bán hàng, chi phí thấp</div>
       <div class="cl opp2">Kênh AI giới thiệu merchant nhỏ, cho khách đặt chỗ ngay</div>
+
+      <div class="rl2">Giải pháp</div>
+      <div class="cl sol2 off"><b>Thanh toán tại cửa hàng</b><span>Visa Accept và VietQR Global trong app Tendoo</span></div>
+      <div class="cl sol2 on"><b>AI tư vấn du lịch</b><span>Trợ lý AI giới thiệu merchant, khách đặt chỗ ngay</span></div>
     </div>
-    <div class="band"><span class="label">Lợi thế cùng VTT</span><span>Có sẵn kênh đến merchant: <b>tệp hộ kinh doanh Tendoo</b> và <b>đội kênh bán thực địa</b></span></div>
   </div>
-  <div class="source">Số liệu dẫn từ slide trước; mức phí kỳ vọng từ khảo sát 132 merchant (7/2026).</div>
 </section>
 <aside class="notes">
   <h4>Chi tiết đã rút khỏi slide</h4>
   <ul>
     <li>Tại cửa hàng: chỉ khoảng 6% điểm chấp nhận thanh toán nhận QR quốc tế. Khách phải mang tiền mặt, đi rút hoặc đổi tiền, có khách sang cửa hàng khác. 58% merchant sẵn sàng dùng giải pháp mới; kỳ vọng phí trên 3% thì chỉ 24,3% sẵn sàng.</li>
     <li>Trước khi khách đến: khách đã hỏi AI và đặt chỗ online; merchant vừa và nhỏ chưa có mặt trên các nền tảng. 81% khách Việt dự định dùng AI.</li>
-    <li>Kết luận: Hai vấn đề, hai cơ hội độc lập, cần hai cách giải quyết riêng. Cùng VTT, VDF có kênh đến merchant để lấp cả hai.</li>
+    <li>Quy mô (dẫn từ slide trước): ~500 nghìn hộ quanh điểm du lịch; khách quốc tế chi 5–8 tỷ USD/năm cho ăn uống, mua sắm; 81,5% merchant sẵn sàng nếu phí 1–2%. Du lịch online Việt Nam ~4 tỷ USD (2025); 56% khách Mỹ đã dùng AI cho chuyến đi; 81% khách Việt dự định dùng AI.</li>
+    <li>Kết luận: Hai vấn đề, hai cơ hội độc lập, dẫn đến hai giải pháp riêng: Thanh toán tại cửa hàng và AI tư vấn du lịch.</li>
   </ul>
-  <div data-md="Slide 7"><h4>Slide 7 – Vấn đề và cơ hội của VDF</h4><ul><li>Slide này tổng hợp các hạn chế đã nêu ở các slide trước (slide 2–6) thành 2 vấn đề và 2 cơ hội, mỗi cặp ứng với một kênh của giải pháp (slide 8). Hai cặp độc lập; không trình bày như một hành trình nối tiếp "khách tìm thấy cửa hàng qua AI rồi trả tiền tại chính cửa hàng đó".</li><li>Slide này chưa nhắc Visa Accept và VietQR Global; hai giải pháp xuất hiện lần đầu ở phần Giải pháp (slide 8, 9, 9b).</li><li><b>Cột 1 – Tại cửa hàng:</b><ul><li>Vấn đề có bằng chứng từ khảo sát 132 merchant và khảo sát 10 khách quốc tế. Insight 3 của khảo sát merchant: 14,4% bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài. Cả nước chỉ có 737 nghìn máy POS, tính cả doanh nghiệp (slide 2), dùng khi được hỏi.</li><li>500 nghìn hộ là ước tính của VDF (khoảng 360–520 nghìn, xem ghi chú slide 2).</li><li>Số 81,5% và 24,3% lấy từ khảo sát 132 merchant (7/2026). Trong nhóm "chưa chắc chắn", 42,5% chuyển sang sẵn sàng khi được báo một mức phí cụ thể và thấp.</li><li>Không nêu mức phí của VDF: mức phí cho merchant sẽ thống nhất sau khi triển khai. "Chi phí thấp" là so với phí POS 3–5% và Tap to Phone/SoftPOS thông thường của ngân hàng 2,5–3,9% (slide 5).</li></ul></li><li><b>Cột 2 – Trước khi khách đến:</b><ul><li>Chưa có khảo sát riêng. Ý "merchant vừa và nhỏ chưa có mặt trên các nền tảng" là đánh giá của VDF, chưa có số đo (xem ghi chú slide 6). Số 56% là khách Mỹ, 81% khách Việt là ý định; nói đúng như vậy khi trình bày. Số 4 tỷ USD gồm cả khách nội địa và quốc tế. Đã bỏ số 50,2 triệu thẻ quốc tế khỏi slide: đây là thẻ của người Việt, dễ bị hiểu nhầm là thẻ của khách nước ngoài; dùng khi được hỏi về khách Việt (ghi chú slide 6).</li><li>Cũng gồm các chuỗi nhà hàng, khách sạn lớn ở phần booking online: đặt chỗ đang tập trung qua OTA (khoảng 59% lượt đặt phòng, hoa hồng 15–25%, slide 6). Không nói giải pháp của VDF rẻ hơn OTA; chính sách affiliate và booking online sẽ thống nhất sau khi triển khai.</li></ul></li><li><b>Lợi thế khi hợp tác với VTT:</b> tệp hộ kinh doanh Tendoo là hơn 200.000 lượt được hỗ trợ chuyển đổi thuế, không phải số merchant đang dùng.</li><li>Bỏ các ý của bản cũ: slide "Vấn đề nội tại của Tendoo và Tammi" (AI của Tendoo hướng vào trong, quá tải khi livestream, thiếu người trực tin nhắn, Tammi chưa có thương mại); trợ lý livestream, tin nhắn, trợ lý tại quầy (đã bỏ khỏi giải pháp); mở rộng sang khách Việt trên Tammi (chưa có trong giải pháp chốt 25/10). Nội dung cũ lưu ở bản v0.7.</li></ul></div>
+  <div data-md="Slide 7"><h4>Slide 7 – Vấn đề và cơ hội của VDF</h4><ul><li>Slide này tổng hợp các hạn chế đã nêu ở các slide trước (slide 2–6) thành 2 vấn đề và 2 cơ hội, mỗi cặp ứng với một kênh của giải pháp (slide 8). Hai cặp độc lập; không trình bày như một hành trình nối tiếp "khách tìm thấy cửa hàng qua AI rồi trả tiền tại chính cửa hàng đó".</li><li>Hàng cuối nêu tên hai giải pháp, suy ra trực tiếp từ hai cơ hội; chi tiết ở phần Giải pháp (slide 8, 9, 9b).</li><li><b>Cột 1 – Tại cửa hàng:</b><ul><li>Vấn đề có bằng chứng từ khảo sát 132 merchant và khảo sát 10 khách quốc tế. Insight 3 của khảo sát merchant: 14,4% bị hủy đơn vì khách không có tiền mặt VND hoặc thiếu tiền lẻ; 9,1% không nhận được Apple Pay, Google Pay, ví nước ngoài. Cả nước chỉ có 737 nghìn máy POS, tính cả doanh nghiệp (slide 2), dùng khi được hỏi.</li><li>500 nghìn hộ là ước tính của VDF (khoảng 360–520 nghìn, xem ghi chú slide 2).</li><li>Số 81,5% và 24,3% lấy từ khảo sát 132 merchant (7/2026). Trong nhóm "chưa chắc chắn", 42,5% chuyển sang sẵn sàng khi được báo một mức phí cụ thể và thấp.</li><li>Không nêu mức phí của VDF: mức phí cho merchant sẽ thống nhất sau khi triển khai. "Chi phí thấp" là so với phí POS 3–5% và Tap to Phone/SoftPOS thông thường của ngân hàng 2,5–3,9% (slide 5).</li></ul></li><li><b>Cột 2 – Trước khi khách đến:</b><ul><li>Chưa có khảo sát riêng. Ý "merchant vừa và nhỏ chưa có mặt trên các nền tảng" là đánh giá của VDF, chưa có số đo (xem ghi chú slide 6). Số 56% là khách Mỹ, 81% khách Việt là ý định; nói đúng như vậy khi trình bày. Số 4 tỷ USD gồm cả khách nội địa và quốc tế. Đã bỏ số 50,2 triệu thẻ quốc tế khỏi slide: đây là thẻ của người Việt, dễ bị hiểu nhầm là thẻ của khách nước ngoài; dùng khi được hỏi về khách Việt (ghi chú slide 6).</li><li>Cũng gồm các chuỗi nhà hàng, khách sạn lớn ở phần booking online: đặt chỗ đang tập trung qua OTA (khoảng 59% lượt đặt phòng, hoa hồng 15–25%, slide 6). Không nói giải pháp của VDF rẻ hơn OTA; chính sách affiliate và booking online sẽ thống nhất sau khi triển khai.</li></ul></li><li>Bỏ các ý của bản cũ: slide "Vấn đề nội tại của Tendoo và Tammi" (AI của Tendoo hướng vào trong, quá tải khi livestream, thiếu người trực tin nhắn, Tammi chưa có thương mại); trợ lý livestream, tin nhắn, trợ lý tại quầy (đã bỏ khỏi giải pháp); mở rộng sang khách Việt trên Tammi (chưa có trong giải pháp chốt 25/10). Nội dung cũ lưu ở bản v0.7.</li></ul></div>
 </aside></div>
 
 <!-- ============ DIVIDER 02 ============ -->
@@ -1348,7 +1451,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 </section></div>
 
 <!-- ============ S8 GIẢI PHÁP TỔNG THỂ ============ -->
-<div class="frame"><section class="slide">
+<div class="frame"><section class="slide s-sol">
   <div class="eyebrow">Giải pháp · Tổng thể <span class="cpill">Hai kênh độc lập</span></div>
   <h2 class="title">Merchant thế hệ mới: <em>thanh toán tại cửa hàng</em> và <em>AI tư vấn du lịch</em></h2>
   <div class="content">
@@ -1358,8 +1461,8 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
         <div class="kv aud"><span>Đối tượng</span><div class="aud-g"><i>Merchant</i><div>Vừa và nhỏ</div><i>Khách</i><div>Khách quốc tế tại cửa hàng</div></div></div>
         <div class="csol">
           <div class="ck">Giải pháp</div>
-          <div class="ct">Visa Accept và VietQR Global trong app Tendoo</div>
-          <div class="cd">Điện thoại của merchant nhận cả thẻ và QR quốc tế, không cần POS</div>
+          <div class="ct">Visa Accept và VietQR Global trong app&nbsp;Tendoo</div>
+          <div class="cd">Điện thoại của merchant nhận cả thẻ và QR quốc tế, không cần&nbsp;POS</div>
           <ol>
             <li><span>Merchant <b>bật nhận thanh toán ngay trong app Tendoo</b> đang dùng để bán hàng</span></li>
             <li><span>Khách <b>chạm thẻ</b> hoặc <b>trả qua link</b>; khách dùng ví, app ngân hàng nước mình thì <b>quét QR</b></span></li>
@@ -1528,11 +1631,11 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
     <li>Đã kết nối: Thái Lan, Lào, Campuchia, Trung Quốc, Hàn Quốc, Singapore. Đang mở rộng: Nhật Bản, Ấn Độ, Malaysia.</li>
     <li>Gần 40%: Trung Quốc 22% và Hàn Quốc 17% tổng lượt khách quốc tế 9 tháng 2026 (slide 3).</li>
   </ul>
-  <div data-md="Slide 9b"><h4>Slide 9b – Giải pháp chi tiết 1b (Offline): VietQR Global</h4><ul><li><b>VDF làm việc với NAPAS</b> để nhận thanh toán VietQR Global, giống như VDF làm việc với Visa cho Visa Accept. Dòng tiền xử lý qua Viettel Money.</li><li>Khách Trung Quốc quét bằng ví hoặc app ngân hàng theo đúng kết nối của NAPAS. Không cần nêu tên app cụ thể khi trình bày.</li><li><b>Không nêu phí</b> VietQR Global với merchant. Mức phí cho merchant thống nhất sau khi triển khai.</li><li>VietQR Global đi cùng Visa Accept từ Phase 1 (Q2/2027), trong cùng app Tendoo.</li><li>Hai cách bổ sung cho nhau: Visa Accept cho khách dùng thẻ (khách từ nước nào cũng có thẻ Visa, Mastercard); VietQR Global cho khách dùng ví, app ngân hàng nước mình, trong đó có phần lớn khách Trung Quốc mà Visa Accept không phục vụ được. Khách Hàn Quốc dùng được cả hai.</li><li>Nhu cầu là có thật: giao dịch VietQR Global của khách Thái Lan, Lào, Campuchia 8 tháng 2026 tăng khoảng 8 lần so với 2025; của khách Trung Quốc tăng khoảng 3 lần (NAPAS). Nhưng mới khoảng 6% điểm chấp nhận thanh toán nhận QR quốc tế (slide 5): đây là bài toán phủ điểm bán, đúng việc VTT làm được qua đội kênh bán.</li><li>Tendoo hiện chưa có VietQR nội địa; VietQR Global là tính năng mới trong Tendoo.</li><li>Không nói "khách nước nào cũng quét được": chỉ khách từ các nước đã kết nối.</li></ul></div>
+  <div data-md="Slide 9b"><h4>Slide 9b – Giải pháp chi tiết 1b (Offline): VietQR Global</h4><ul><li><b>VDF làm việc với NAPAS</b> để nhận thanh toán VietQR Global, giống như VDF làm việc với Visa cho Visa Accept. Dòng tiền xử lý qua Viettel Money.</li><li>Khách Trung Quốc quét bằng ví hoặc app ngân hàng theo đúng kết nối của NAPAS. Không cần nêu tên app cụ thể khi trình bày.</li><li><b>Không nêu phí</b> VietQR Global với merchant. Mức phí cho merchant thống nhất sau khi triển khai.</li><li>VietQR Global đi cùng Visa Accept từ Phase 1 (Q1/2027), trong cùng app Tendoo.</li><li>Hai cách bổ sung cho nhau: Visa Accept cho khách dùng thẻ (khách từ nước nào cũng có thẻ Visa, Mastercard); VietQR Global cho khách dùng ví, app ngân hàng nước mình, trong đó có phần lớn khách Trung Quốc mà Visa Accept không phục vụ được. Khách Hàn Quốc dùng được cả hai.</li><li>Nhu cầu là có thật: giao dịch VietQR Global của khách Thái Lan, Lào, Campuchia 8 tháng 2026 tăng khoảng 8 lần so với 2025; của khách Trung Quốc tăng khoảng 3 lần (NAPAS). Nhưng mới khoảng 6% điểm chấp nhận thanh toán nhận QR quốc tế (slide 5): đây là bài toán phủ điểm bán, đúng việc VTT làm được qua đội kênh bán.</li><li>Tendoo hiện chưa có VietQR nội địa; VietQR Global là tính năng mới trong Tendoo.</li><li>Không nói "khách nước nào cũng quét được": chỉ khách từ các nước đã kết nối.</li></ul></div>
 </aside></div>
 
 <!-- ============ S10 DEMO VISA ACCEPT: ĐĂNG KÝ ============ -->
-<div class="frame"><section class="slide" data-title="Demo Visa Accept: Đăng ký">
+<div class="frame"><section class="slide" data-title="Demo Visa Accept: Đăng ký" data-focus="1">
   <div class="eyebrow">Demo giải pháp chi tiết 1 · Visa Accept trong Tendoo · ① Đăng ký</div>
   <h2 class="title">Đăng ký Visa Accept <em>ngay trong Tendoo</em>, dùng thẻ Visa đang có</h2>
   <div class="content">
@@ -1561,7 +1664,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 </aside></div>
 
 <!-- ============ S10b DEMO VISA ACCEPT: CHẠM THẺ ============ -->
-<div class="frame"><section class="slide" data-title="Demo Visa Accept: Chạm thẻ">
+<div class="frame"><section class="slide" data-title="Demo Visa Accept: Chạm thẻ" data-focus="1">
   <div class="eyebrow">Demo giải pháp chi tiết 1 · Visa Accept trong Tendoo · ② Chạm thẻ</div>
   <h2 class="title">Khách <em>chạm thẻ vào điện thoại</em> của cửa hàng, tiền về gần như tức thì</h2>
   <div class="content">
@@ -1644,7 +1747,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 </aside></div>
 
 <!-- ============ S12 DEMO ONLINE: HẠ CÁNH VÀ HỎI TƯ VẤN ============ -->
-<div class="frame"><section class="slide" data-title="Demo AI tư vấn du lịch: Hạ cánh và hỏi tư vấn">
+<div class="frame"><section class="slide" data-title="Demo AI tư vấn du lịch: Hạ cánh và hỏi tư vấn" data-focus="1">
   <div class="eyebrow">Demo giải pháp chi tiết 2 · AI tư vấn du lịch và booking online · ① Hạ cánh · ② Hỏi tư vấn</div>
   <h2 class="title">Hạ cánh là gặp AI, <em>hỏi và được trả lời bằng tiếng của mình</em></h2>
   <div class="content">
@@ -1678,7 +1781,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 </aside></div>
 
 <!-- ============ S12b DEMO ONLINE: ĐẶT BÀN ============ -->
-<div class="frame"><section class="slide" data-title="Demo AI tư vấn du lịch: Đặt bàn">
+<div class="frame"><section class="slide" data-title="Demo AI tư vấn du lịch: Đặt bàn" data-focus="1">
   <div class="eyebrow">Demo giải pháp chi tiết 2 · AI tư vấn du lịch và booking online · ③ Đặt bàn</div>
   <h2 class="title">Đặt bàn, cọc bằng thẻ quốc tế, <em>quán xác nhận ngay trên Tendoo</em></h2>
   <div class="content">
@@ -1766,36 +1869,40 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
       <div class="hd visa">VISA · NAPAS</div>
 
       <div class="seg m">Merchant<span>Hộ kinh doanh trên Tendoo</span></div>
-      <div class="a l"></div><div class="c">Cung cấp ưu đãi cho merchant</div>
+      <div class="a l"></div><div class="c">Ưu đãi cho merchant</div>
       <div class="a l"></div><div class="c">Trả phí phát triển merchant</div>
-      <div class="a l"></div><div class="c">Tài trợ chi phí phát triển merchant</div>
+      <div class="a l"></div><div class="c">Tài trợ phí phát triển merchant SME</div>
 
-      <div class="a r"></div><div class="c">Cung cấp gói thanh toán trên Tendoo</div>
-      <div class="a r"></div><div class="c">Thu phí trên giao dịch phát sinh</div>
-      <div class="a r"></div><div class="c">Nhận MDR cho giao dịch thẻ, QR</div>
+      <div class="a r"></div><div class="c">Giải pháp thanh toán trên Tendoo <span class="tg">Chia sẻ 50% chênh lệch</span></div>
+      <div class="a r"></div><div class="c">Thu phí trên giao dịch phát sinh = phí Visa + chênh lệch</div>
+      <div class="a r"></div><div class="c">Nhận phí MDR cho giao dịch phát sinh</div>
 
-      <div class="a l"></div><div class="c">Offer gói tín dụng <span class="tg">Ăn chia Δ</span></div>
-      <div class="a l"></div><div class="c">Cấp gói tín dụng SME <span class="tg">Ăn chia Δ</span></div>
+      <div class="a l"></div><div class="c">Offer gói tín dụng trên Tendoo <span class="tg">Chia sẻ 50% doanh thu</span></div>
+      <div class="a l"></div><div class="c">Cấp gói tín dụng SME, thưởng doanh thu tín dụng</div>
       <div class="a x"></div><div class="c no"></div>
 
-      <div class="seg k last">Du khách<span>Thanh toán thẻ, dùng AI Booking</span></div>
-      <div class="a l k"></div><div class="c">Cấp ưu đãi khi dùng Visa Accept <span class="tg">80% Δ</span></div>
-      <div class="a l k"></div><div class="c">Thu phí giao dịch booking phát sinh <span class="tg">Ăn chia Δ 50%</span></div>
+      <div class="seg k last">Du khách<span>Thanh toán thẻ, dùng AI tư vấn</span></div>
+      <div class="a l k"></div><div class="c">Ưu đãi cho khách thanh toán thẻ</div>
+      <div class="a l k"></div><div class="c">Trả phí phát triển thẻ thanh toán quốc tế</div>
+      <div class="a l k"></div><div class="c">Tài trợ phí phát triển khách dùng thẻ quốc tế</div>
+
+      <div class="a r k"></div><div class="c">Cho phép booking trên Tendoo qua AI tư vấn <span class="tg">Chia sẻ 50% doanh thu</span></div>
+      <div class="a r k"></div><div class="c">Thu phí trên giao dịch booking phát sinh</div>
       <div class="a x"></div><div class="c no"></div>
 
-      <div class="a r k last"></div><div class="c last">Cung cấp gói sub khi dùng dịch vụ booking AI</div>
-      <div class="a r k last"></div><div class="c last">Thu phí <span class="tg">Ăn chia Δ</span></div>
+      <div class="a r k last"></div><div class="c last">Cung cấp gói sub <span class="tg">Chia sẻ 50% doanh thu</span></div>
+      <div class="a r k last"></div><div class="c last">Thu phí gói sub <span class="tg">Chia sẻ 50% doanh thu</span></div>
       <div class="a x last"></div><div class="c no last"></div>
     </div>
-    <div class="bmf"><span><b>Mũi tên</b>: chiều dòng tiền, ưu đãi, sản phẩm</span><span><b>Δ</b>: phần chênh lệch ăn chia; tỷ lệ chưa ghi sẽ thống nhất sau</span></div>
+    <div class="bmf"><span><b>Mũi tên</b>: chiều dòng tiền, ưu đãi, sản phẩm</span></div>
   </div>
 </section>
-<aside class="notes" data-md="Slide 14"><h4>Slide 14 – Mô hình kinh doanh</h4><ul><li><b>Phát triển merchant:</b> Visa tài trợ chi phí phát triển merchant cho VDF; VDF trả phí phát triển merchant cho VTT; VTT dùng để cấp ưu đãi cho merchant.</li><li><b>Thanh toán:</b> VTT cung cấp gói thanh toán trên Tendoo cho merchant; VDF thu phí trên giao dịch phát sinh và trả MDR cho Visa (giao dịch thẻ qua Visa Accept), NAPAS (giao dịch VietQR Global).</li><li><b>Tín dụng:</b> VDF cấp gói tín dụng SME, VTT offer cho merchant; hai bên ăn chia phần chênh lệch.</li><li><b>Du khách – ưu đãi và booking:</b> VTT cấp ưu đãi cho du khách khi thanh toán qua Visa Accept (80% phần chênh lệch); VDF thu phí giao dịch booking phát sinh, ăn chia 50% phần chênh lệch với VTT.</li><li><b>Du khách – gói sub:</b> VTT cung cấp gói sub khi du khách dùng dịch vụ booking AI; VDF thu phí, ăn chia với VTT.</li></ul></aside></div>
+<aside class="notes" data-md="Slide 14"><h4>Slide 14 – Mô hình kinh doanh</h4><ul><li><b>Phát triển merchant:</b> Visa, NAPAS tài trợ phí phát triển merchant SME cho VDF; VDF trả phí phát triển merchant cho VTT; VTT dùng làm ưu đãi cho merchant.</li><li><b>Thanh toán:</b> VTT cung cấp giải pháp thanh toán trên Tendoo cho merchant; VDF thu phí trên giao dịch phát sinh, bằng phí Visa cộng phần chênh lệch; Visa, NAPAS nhận phí MDR cho giao dịch phát sinh. VTT: chia sẻ 50% chênh lệch.</li><li><b>Tín dụng:</b> VDF cấp gói tín dụng SME, thưởng doanh thu tín dụng; VTT offer gói tín dụng trên Tendoo, chia sẻ 50% doanh thu.</li><li><b>Du khách – ưu đãi thẻ:</b> Visa, NAPAS tài trợ phí phát triển khách dùng thẻ quốc tế cho VDF; VDF trả phí phát triển thẻ thanh toán quốc tế cho VTT; VTT dùng làm ưu đãi cho khách thanh toán thẻ.</li><li><b>Du khách – booking:</b> VTT cho phép booking trên Tendoo qua AI tư vấn; chia sẻ 50% doanh thu; VDF thu phí trên giao dịch booking phát sinh.</li><li><b>Du khách – gói sub:</b> VTT cung cấp gói sub, chia sẻ 50% doanh thu; VDF thu phí gói sub, chia sẻ 50% doanh thu.</li></ul></aside></div>
 
 <!-- ============ S15 LỘ TRÌNH ============ -->
 <div class="frame"><section class="slide">
   <div class="eyebrow">Lộ trình triển khai</div>
-  <h2 class="title"><em>Pilot offline Q2/2027</em>, online Q3/2027</h2>
+  <h2 class="title"><em>Pilot offline Q1/2027</em>, online Q2/2027</h2>
   <div class="content" style="gap:10px;margin-top:14px">
     <div class="rm-lg">
       <span><i style="background:var(--slate);border-color:var(--line)"></i>Chuẩn bị, tích hợp</span>
@@ -1805,39 +1912,37 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
     </div>
     <div class="rm">
       <!-- phase bands -->
-      <div class="ph p0" style="grid-area:1/2/2/4">PHASE 0 · Chuẩn bị <small>· Q4/2026–Q1/2027</small></div>
-      <div class="ph p1" style="grid-area:1/4/2/6">PHASE 1 · Pilot <small>· Q2–Q3/2027</small></div>
-      <div class="ph p2" style="grid-area:1/6/2/7">PHASE 2 · Mở rộng</div>
+      <div class="ph p0" style="grid-area:1/2/2/3">PHASE 0 · Chuẩn bị <small>· Q4/2026</small></div>
+      <div class="ph p1" style="grid-area:1/3/2/5">PHASE 1 · Pilot <small>· Q1–Q2/2027</small></div>
+      <div class="ph p2" style="grid-area:1/5/2/6">PHASE 2 · Mở rộng</div>
       <!-- quarters -->
       <div class="q" style="grid-area:2/2">Q4/2026<span class="now">Hiện tại</span></div>
-      <div class="q" style="grid-area:2/3">Q1/2027</div>
+      <div class="q p1" style="grid-area:2/3">Q1/2027</div>
       <div class="q p1" style="grid-area:2/4">Q2/2027</div>
-      <div class="q p1" style="grid-area:2/5">Q3/2027</div>
-      <div class="q p2" style="grid-area:2/6">Từ Q4/2027</div>
+      <div class="q p2" style="grid-area:2/5">Từ Q3/2027</div>
       <!-- lane labels -->
       <div class="ln" style="grid-area:3/1;background:var(--off)">Offline<small>Visa Accept, VietQR Global</small></div>
       <div class="ln" style="grid-area:4/1;background:var(--on)">Online<small>AI tư vấn, booking</small></div>
       <div class="ln" style="grid-area:5/1;background:var(--ink)">Merchant, kênh bán<small>VTT</small></div>
       <!-- lane backgrounds -->
-      <div class="bgc" style="grid-area:3/2"></div><div class="bgc" style="grid-area:3/3"></div><div class="bgc" style="grid-area:3/4"></div><div class="bgc" style="grid-area:3/5"></div><div class="bgc" style="grid-area:3/6"></div>
-      <div class="bgc" style="grid-area:4/2"></div><div class="bgc" style="grid-area:4/3"></div><div class="bgc" style="grid-area:4/4"></div><div class="bgc" style="grid-area:4/5"></div><div class="bgc" style="grid-area:4/6"></div>
-      <div class="bgc" style="grid-area:5/2"></div><div class="bgc" style="grid-area:5/3"></div><div class="bgc" style="grid-area:5/4"></div><div class="bgc" style="grid-area:5/5"></div><div class="bgc" style="grid-area:5/6"></div>
+      <div class="bgc" style="grid-area:3/2"></div><div class="bgc" style="grid-area:3/3"></div><div class="bgc" style="grid-area:3/4"></div><div class="bgc" style="grid-area:3/5"></div>
+      <div class="bgc" style="grid-area:4/2"></div><div class="bgc" style="grid-area:4/3"></div><div class="bgc" style="grid-area:4/4"></div><div class="bgc" style="grid-area:4/5"></div>
+      <div class="bgc" style="grid-area:5/2"></div><div class="bgc" style="grid-area:5/3"></div><div class="bgc" style="grid-area:5/4"></div><div class="bgc" style="grid-area:5/5"></div>
       <!-- offline -->
-      <div class="cl" style="grid-area:3/2"><div class="it">Chốt hợp tác Visa Accept, VietQR Global<br><span class="dp">Visa · NAPAS</span></div></div>
-      <div class="cl" style="grid-area:3/3"><div class="it">Thiết kế, tích hợp vào app Tendoo<br><span class="dp">VTT</span></div></div>
-      <div class="cl" style="grid-area:3/4"><div class="it go"><span class="ms">★ Golive Q2/2027</span>Mở chạm thẻ, link thanh toán, quét QR cho cửa hàng pilot</div></div>
-      <div class="cl" style="grid-area:3/5"><div class="it">Theo dõi tỉ lệ cửa hàng còn giao dịch sau 30 ngày</div></div>
-      <div class="cl" style="grid-area:3/6"><div class="it sc">Nhân rộng; merchant chạm hạn mức nâng gói SMB, nhận thẻ đầy đủ<br><span class="dp">Visa</span></div></div>
+      <div class="cl" style="grid-area:3/2"><div class="it">Chốt hợp tác Visa Accept, VietQR Global <span class="dp">Visa · NAPAS</span></div><div class="it">Thiết kế, tích hợp vào Tendoo <span class="dp">VTT</span></div></div>
+      <div class="cl" style="grid-area:3/3"><div class="it go"><span class="ms">★ Golive Q1/2027</span>Mở chạm thẻ, link thanh toán, quét QR cho cửa hàng pilot</div></div>
+      <div class="cl" style="grid-area:3/4"><div class="it">Theo dõi tỉ lệ cửa hàng còn giao dịch sau 30 ngày</div></div>
+      <div class="cl" style="grid-area:3/5"><div class="it sc">Nhân rộng; merchant chạm hạn mức nâng gói SMB, nhận thẻ đầy đủ<br><span class="dp">Visa</span></div></div>
       <!-- online -->
-      <div class="cl" style="grid-area:4/2"><div class="it">Thiết kế AI tư vấn du lịch và booking online (web app)</div></div>
-      <div class="cl" style="grid-area:4/3"><div class="it">Thống nhất kênh Viettel: tin nhắn roaming, SIM/eSIM du lịch, quầy SIM sân bay<br><span class="dp">VTT</span></div></div>
-      <div class="cl" style="grid-area:4/5"><div class="it go"><span class="ms">★ Golive Q3/2027</span>Pilot AI tư vấn và booking qua kênh Viettel</div></div>
-      <div class="cl" style="grid-area:4/6"><div class="it sc">Nhân rộng; thêm cổng du lịch của tỉnh, Tammi<br><span class="dp">Tỉnh · Tammi</span></div></div>
+      <div class="cl" style="grid-area:4/2"><div class="it">Thiết kế AI tư vấn, booking online (web app)</div><div class="it">Thống nhất kênh Viettel: roaming, SIM/eSIM, quầy sân bay <span class="dp">VTT</span></div></div>
+      <div class="cl" style="grid-area:4/3"><div class="it">Phát triển AI tư vấn, booking online</div></div>
+      <div class="cl" style="grid-area:4/4"><div class="it go"><span class="ms">★ Golive Q2/2027</span>Pilot AI tư vấn và booking qua kênh Viettel</div></div>
+      <div class="cl" style="grid-area:4/5"><div class="it sc">Nhân rộng; thêm cổng du lịch của tỉnh, Tammi</div></div>
       <!-- merchant, kênh bán -->
-      <div class="cl" style="grid-area:5/2/6/4"><div class="it">Làm việc với VTT: chốt phạm vi, đầu mối</div></div>
-      <div class="cl" style="grid-area:5/4"><div class="it go"><span class="ms">Từ Q2/2027</span>Phát triển merchant pilot kênh offline: Hội An, Đà Nẵng, Phú Quốc</div></div>
-      <div class="cl" style="grid-area:5/5"><div class="it go"><span class="ms">Từ Q3/2027</span>Thêm kênh online tại các điểm pilot</div></div>
-      <div class="cl" style="grid-area:5/6"><div class="it sc">Nhân rộng qua đội kênh bán VTT, phủ merchant Tendoo phục vụ khách quốc tế</div></div>
+      <div class="cl" style="grid-area:5/2"><div class="it">Làm việc với VTT: chốt phạm vi, đầu mối</div></div>
+      <div class="cl" style="grid-area:5/3"><div class="it go"><span class="ms">Từ Q1/2027</span>Phát triển merchant pilot kênh offline: Hội An, Đà Nẵng, Phú Quốc</div></div>
+      <div class="cl" style="grid-area:5/4"><div class="it go"><span class="ms">Từ Q2/2027</span>Thêm kênh online tại các điểm pilot</div></div>
+      <div class="cl" style="grid-area:5/5"><div class="it sc">Nhân rộng qua đội kênh bán VTT, phủ merchant Tendoo phục vụ khách quốc tế</div></div>
     </div>
     <div class="kpi">
       <div class="kh">KPI chính</div>
@@ -1849,13 +1954,13 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 <aside class="notes">
   <h4>Chi tiết đã rút khỏi slide</h4>
   <ul>
-    <li>Phase 0 (Q4/2026–Q1/2027): chốt hợp tác Visa Accept với Visa, VietQR Global với NAPAS; thiết kế tích hợp vào Tendoo. Thiết kế AI tư vấn du lịch và booking online (web app); thống nhất với VTT về kênh tin nhắn roaming, SIM/eSIM du lịch, quầy SIM sân bay. Làm việc với VTT, chốt phạm vi và đầu mối.</li>
-    <li>Phase 1: Q2/2027 mở Visa Accept (chạm thẻ, link thanh toán) và VietQR Global (quét QR) trong Tendoo cho nhóm cửa hàng pilot; Q3/2027 pilot AI tư vấn và booking online qua kênh Viettel. VTT phát triển merchant pilot tại một nhóm điểm đông khách quốc tế (Hội An, Đà Nẵng, Phú Quốc): kênh offline từ Q2, kênh online từ Q3.</li>
-    <li>Phase 2 (từ Q4/2027): nhân rộng; merchant chạm hạn mức nâng lên gói SMB, nhận thẻ đầy đủ theo lộ trình của Visa; mở thêm cổng du lịch của tỉnh và Tammi; nhân rộng ra các điểm du lịch qua đội kênh bán VTT, tiến tới phủ các merchant Tendoo phục vụ khách quốc tế.</li>
+    <li>Phase 0 (Q4/2026): chốt hợp tác Visa Accept với Visa, VietQR Global với NAPAS; thiết kế tích hợp vào Tendoo. Thiết kế AI tư vấn du lịch và booking online (web app); thống nhất với VTT về kênh tin nhắn roaming, SIM/eSIM du lịch, quầy SIM sân bay. Làm việc với VTT, chốt phạm vi và đầu mối.</li>
+    <li>Phase 1: Q1/2027 mở Visa Accept (chạm thẻ, link thanh toán) và VietQR Global (quét QR) trong Tendoo cho nhóm cửa hàng pilot, đồng thời phát triển AI tư vấn và booking online; Q2/2027 pilot AI tư vấn và booking online qua kênh Viettel. VTT phát triển merchant pilot tại một nhóm điểm đông khách quốc tế (Hội An, Đà Nẵng, Phú Quốc): kênh offline từ Q1, kênh online từ Q2.</li>
+    <li>Phase 2 (từ Q3/2027): nhân rộng; merchant chạm hạn mức nâng lên gói SMB, nhận thẻ đầy đủ theo lộ trình của Visa; mở thêm cổng du lịch của tỉnh và Tammi; nhân rộng ra các điểm du lịch qua đội kênh bán VTT, tiến tới phủ các merchant Tendoo phục vụ khách quốc tế.</li>
     <li>Hai kênh độc lập: kênh online triển khai sau kênh offline một quý, nhưng không có bước nào của kênh này phụ thuộc kênh kia.</li>
     <li>KPI đầy đủ: Offline: GMV của cửa hàng qua Visa Accept và VietQR Global (theo dõi riêng thẻ và QR); số cửa hàng phát sinh giao dịch. Online: số lượt đặt phòng, đặt bàn qua AI; GMV booking online.</li>
   </ul>
-  <div data-md="Slide 15"><h4>Slide 15 – Lộ trình triển khai</h4><ul><li><b>Pilot kênh offline:</b> hộ kinh doanh vừa và nhỏ, mọi ngành hàng, ưu tiên quán ăn, quán cà phê và cửa hàng gần điểm tham quan (bối cảnh được 7/10 khách quốc tế chọn). Ưu tiên điểm có nhiều khách dùng thẻ (Hàn Quốc, châu Âu, Mỹ, Úc) hoặc khách từ các nước đã kết nối VietQR Global (Trung Quốc, Hàn Quốc, ASEAN). Chỉ tiêu kênh bán theo <b>cửa hàng phát sinh giao dịch</b>, không theo số tài khoản mở.</li><li><b>Pilot kênh online (từ Q3/2027, sau kênh offline):</b> khách gặp AI qua kênh Viettel (tin nhắn chào mừng roaming, SIM/eSIM du lịch, quầy SIM sân bay). Cổng du lịch của tỉnh và Tammi mở sau pilot.</li><li>Hai kênh độc lập: không đo GMV tại quầy theo lượt khách đến từ AI.</li><li><b>Chỉ số theo dõi kênh offline:</b> tỉ lệ cửa hàng còn giao dịch sau 30 ngày; số merchant chạm hạn mức và nâng gói.</li><li>Mức phí cho merchant, chính sách affiliate và booking online: thống nhất sau khi triển khai.</li></ul></div>
+  <div data-md="Slide 15"><h4>Slide 15 – Lộ trình triển khai</h4><ul><li><b>Pilot kênh offline:</b> hộ kinh doanh vừa và nhỏ, mọi ngành hàng, ưu tiên quán ăn, quán cà phê và cửa hàng gần điểm tham quan (bối cảnh được 7/10 khách quốc tế chọn). Ưu tiên điểm có nhiều khách dùng thẻ (Hàn Quốc, châu Âu, Mỹ, Úc) hoặc khách từ các nước đã kết nối VietQR Global (Trung Quốc, Hàn Quốc, ASEAN). Chỉ tiêu kênh bán theo <b>cửa hàng phát sinh giao dịch</b>, không theo số tài khoản mở.</li><li><b>Pilot kênh online (từ Q2/2027, sau kênh offline):</b> khách gặp AI qua kênh Viettel (tin nhắn chào mừng roaming, SIM/eSIM du lịch, quầy SIM sân bay). Cổng du lịch của tỉnh và Tammi mở sau pilot.</li><li>Hai kênh độc lập: không đo GMV tại quầy theo lượt khách đến từ AI.</li><li><b>Chỉ số theo dõi kênh offline:</b> tỉ lệ cửa hàng còn giao dịch sau 30 ngày; số merchant chạm hạn mức và nâng gói.</li><li>Mức phí cho merchant, chính sách affiliate và booking online: thống nhất sau khi triển khai.</li></ul></div>
 </aside></div>
 
 <!-- ============ THANK YOU ============ -->
@@ -1864,7 +1969,7 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
   <div class="thanks">Trân trọng cảm ơn<br>Thank you!</div>
   <div class="meta">VDF · 10/2026</div>
 </section>
-<aside class="notes" data-md="Câu hỏi Tổng giám đốc có thể hỏi xoáy"><h4>Câu hỏi Tổng giám đốc có thể hỏi xoáy</h4><ol><li><b>"VPBank, Sacombank, VIB đã có Visa Accept rồi. VDF làm sau thì khác gì?"</b> Ở ngân hàng, Visa Accept chỉ là một nút trong app, chờ khách hàng tự bật. VDF đưa Visa Accept vào phần mềm bán hàng Tendoo, đến tệp hộ kinh doanh Tendoo qua đội kênh bán thực địa (slide 5).</li><li><b>"Phí gần như bằng 0 thì VDF kiếm tiền ở đâu?"</b> Kênh offline: VDF chia phí giao dịch với VTT. Kênh online: tiền affiliate do merchant trả và một phần phí booking online (slide 8). Mức cụ thể bổ sung sau.</li><li><b>"Hạn mức 8 triệu mỗi giao dịch, 100 triệu mỗi tháng có đủ không?"</b> Đủ cho phần lớn hộ kinh doanh nhỏ phục vụ du khách. Cửa hàng vượt hạn mức được VDF nâng lên gói SMB của Visa.</li><li><b>"Đã có VietQR Global, sao còn cần Visa Accept?"</b> QR chỉ dùng được với khách từ 6 nước đã kết nối (đang mở rộng Nhật Bản, Ấn Độ, Malaysia). Khách châu Âu, Mỹ, Úc chủ yếu trả bằng thẻ, mà thẻ Visa, Mastercard thì khách nước nào cũng có. Vì vậy VDF làm cả hai trong cùng app Tendoo (slide 9, 9b).</li><li><b>"Khách Trung Quốc chủ yếu dùng Alipay, WeChat Pay. Có phục vụ được không?"</b> Có, từ Phase 1 (Q2/2027): khách Trung Quốc quét VietQR Global của cửa hàng bằng app nước mình, theo kết nối của NAPAS.</li><li><b>"Phí VietQR Global với merchant là bao nhiêu?"</b> Mức phí cho merchant thống nhất sau khi triển khai.</li><li><b>"Merchant dùng iPhone thì sao?"</b> Vẫn nhận được tiền qua link; chạm thẻ cần điện thoại Android.</li><li><b>"Đội kênh bán của VTT chính là kênh đã tạo ra merchant ảo. Lần này khác gì?"</b> Chỉ tiêu theo cửa hàng phát sinh giao dịch, không theo số tài khoản mở.</li><li><b>"Khảo sát khách chỉ có 10 người, có tin được không?"</b> Đây là khảo sát thăm dò, chỉ dùng làm tín hiệu bổ sung. Bằng chứng chính là khảo sát 132 merchant. Pilot sẽ đo giao dịch thật thay cho ý định khảo sát.</li></ol></aside></div>
+<aside class="notes" data-md="Câu hỏi Tổng giám đốc có thể hỏi xoáy"><h4>Câu hỏi Tổng giám đốc có thể hỏi xoáy</h4><ol><li><b>"VPBank, Sacombank, VIB đã có Visa Accept rồi. VDF làm sau thì khác gì?"</b> Ở ngân hàng, Visa Accept chỉ là một nút trong app, chờ khách hàng tự bật. VDF đưa Visa Accept vào phần mềm bán hàng Tendoo, đến tệp hộ kinh doanh Tendoo qua đội kênh bán thực địa (slide 5).</li><li><b>"Phí gần như bằng 0 thì VDF kiếm tiền ở đâu?"</b> Kênh offline: VDF chia phí giao dịch với VTT. Kênh online: tiền affiliate do merchant trả và một phần phí booking online (slide 8). Mức cụ thể bổ sung sau.</li><li><b>"Hạn mức 8 triệu mỗi giao dịch, 100 triệu mỗi tháng có đủ không?"</b> Đủ cho phần lớn hộ kinh doanh nhỏ phục vụ du khách. Cửa hàng vượt hạn mức được VDF nâng lên gói SMB của Visa.</li><li><b>"Đã có VietQR Global, sao còn cần Visa Accept?"</b> QR chỉ dùng được với khách từ 6 nước đã kết nối (đang mở rộng Nhật Bản, Ấn Độ, Malaysia). Khách châu Âu, Mỹ, Úc chủ yếu trả bằng thẻ, mà thẻ Visa, Mastercard thì khách nước nào cũng có. Vì vậy VDF làm cả hai trong cùng app Tendoo (slide 9, 9b).</li><li><b>"Khách Trung Quốc chủ yếu dùng Alipay, WeChat Pay. Có phục vụ được không?"</b> Có, từ Phase 1 (Q1/2027): khách Trung Quốc quét VietQR Global của cửa hàng bằng app nước mình, theo kết nối của NAPAS.</li><li><b>"Phí VietQR Global với merchant là bao nhiêu?"</b> Mức phí cho merchant thống nhất sau khi triển khai.</li><li><b>"Merchant dùng iPhone thì sao?"</b> Vẫn nhận được tiền qua link; chạm thẻ cần điện thoại Android.</li><li><b>"Đội kênh bán của VTT chính là kênh đã tạo ra merchant ảo. Lần này khác gì?"</b> Chỉ tiêu theo cửa hàng phát sinh giao dịch, không theo số tài khoản mở.</li><li><b>"Khảo sát khách chỉ có 10 người, có tin được không?"</b> Đây là khảo sát thăm dò, chỉ dùng làm tín hiệu bổ sung. Bằng chứng chính là khảo sát 132 merchant. Pilot sẽ đo giao dịch thật thay cho ý định khảo sát.</li></ol></aside></div>
 
 <!-- ============ PHỤ LỤC DEMO VISA ACCEPT: LINK THANH TOÁN 1 ============ -->
 <div class="frame"><section class="slide" data-title="Phụ lục: Demo Visa Accept – Link thanh toán (1/2)">
@@ -1994,6 +2099,28 @@ ul.dots.big li{font-size:16px;line-height:1.4;margin-top:10px}
 
 <script>
 document.querySelectorAll(".d10").forEach(function(el){var n=+el.getAttribute("data-n")||0,h="";for(var k=0;k<10;k++)h+="<i"+(k<n?" class=\"on\"":"")+"></i>";el.innerHTML=h;});
+</script>
+<script>
+/* Sinh chuỗi slide focus sau mỗi slide demo tổng quan có data-focus */
+(function(){
+  [].slice.call(document.querySelectorAll('.slide[data-focus]')).forEach(function(s){
+    var f=s.closest('.frame'), figs=[].slice.call(s.querySelectorAll('.flow .fs')), N=figs.length;
+    var caps=figs.map(function(g){return g.querySelector('.fc span').innerHTML;});
+    var eb=s.querySelector('.eyebrow').outerHTML, tt=s.querySelector('.title').outerHTML;
+    var ps=s.querySelector('.persona'), src=s.querySelector('.source');
+    var after=f;
+    figs.forEach(function(g,k){
+      var li=caps.map(function(c,j){return '<div class="fx-step'+(j===k?' on':j<k?' done':'')+'"><i>'+(j+1)+'</i><span>'+c+'</span></div>';}).join('');
+      var img=g.querySelector('img');
+      var nf=document.createElement('div');nf.className='frame';
+      nf.innerHTML='<section class="slide" data-title="'+s.dataset.title+' · Bước '+(k+1)+'/'+N+'">'+eb+tt+
+        '<div class="content"><div class="fx"><div class="fx-l">'+(ps?ps.outerHTML:'')+'<div class="fx-steps">'+li+'</div></div>'+
+        '<div class="fx-r"><img src="'+img.getAttribute('src')+'" alt="'+img.getAttribute('alt').replace(/"/g,'&quot;')+'"></div></div></div>'+
+        (src?src.outerHTML:'')+'</section><aside class="notes"><h4>Bước '+(k+1)+'/'+N+'</h4><p>'+caps[k]+'</p></aside>';
+      after.parentNode.insertBefore(nf,after.nextSibling);after=nf;
+    });
+  });
+})();
 </script>
 <script>
 (function(){
